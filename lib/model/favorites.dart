@@ -1,9 +1,9 @@
-class Favorites_shops{
+class Favorite_shop{
   int id;
   int customerId;
   int shopId;
 
-  const Favorites_shops({
+  const Favorite_shop({
     required this.id,
     required this.customerId,
     required this.shopId,
@@ -19,16 +19,16 @@ class Favorites_shops{
 
   @override
   String toString() {
-    return 'Favorites_shops : {id: $id, customerId: $customerId, shopId: $shopId}';
+    return 'Favorite Shop : {id: $id, customerId: $customerId, shopId: $shopId}';
   }
 }
 
-class Favorites_Products{
+class Favorite_Product{
   int id;
   int customerId;
   int productId;
 
-  const Favorites_Products({
+  const Favorite_Product({
     required this.id,
     required this.customerId,
     required this.productId,
@@ -44,6 +44,6 @@ class Favorites_Products{
 
   @override
   String toString() {
-    return ' favorites_Products : {id: $id, customerId: $customerId, productId: $productId}';
+    return ' Favorite Product : {id: $id, customerId: $customerId, productId: $productId}';
   }
 }

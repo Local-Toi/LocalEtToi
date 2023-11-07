@@ -1,4 +1,4 @@
-class Products {
+class Product {
   int id;
   String name;
   int id_category;
@@ -8,7 +8,7 @@ class Products {
   int shopId;
   String image;
 
-  const Products({
+  const Product({
     required this.id,
     required this.name,
     required this.id_category,
@@ -34,6 +34,6 @@ class Products {
 
   @override
   String toString() {
-    return 'Products : {id: $id, name: $name, id_category: $id_category, description: $description, price: $price, isAvailable: $isAvailable, shopId: $shopId, image: $image}';
+    return 'Product : {id: $id, name: $name, id_category: $id_category, description: $description, price: $price, isAvailable: $isAvailable, shopId: $shopId, image: $image}';
   }
 }

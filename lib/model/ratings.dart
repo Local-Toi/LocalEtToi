@@ -1,4 +1,4 @@
-class Ratings {
+class Rating {
   int id;
   int customerId;
   int productId;
@@ -6,7 +6,7 @@ class Ratings {
   String description;
   float rating;
 
-  const Ratings({
+  const Rating({
     required this.id,
     required this.customerId,
     required this.productId,
@@ -28,6 +28,6 @@ class Ratings {
 
   @override
   String toString() {
-    return 'Ratings : {id: $id, customerId: $customerId, productId: $productId, shopId: $shopId, description: $description, rating: $rating}';
+    return 'Rating : {id: $id, customerId: $customerId, productId: $productId, shopId: $shopId, description: $description, rating: $rating}';
   }
 }

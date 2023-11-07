@@ -1,4 +1,4 @@
-class Shops {
+class Shop {
   int id;
   int producerId;
   String name;
@@ -9,7 +9,7 @@ class Shops {
   String city;
   int postcode;
 
-  const Shops({
+  const Shop({
     required this.id,
     required this.producerId,
     required this.name,
@@ -37,6 +37,6 @@ class Shops {
 
   @override
   String toString() {
-    return 'Shops : {id: $id, producerId: $producerId, name: $name, description: $description, latitude: $latitude, longitude: $longitude, address: $address, city: $city, postcode: $postcode}';
+    return 'Shop : {id: $id, producerId: $producerId, name: $name, description: $description, latitude: $latitude, longitude: $longitude, address: $address, city: $city, postcode: $postcode}';
   }
 }
