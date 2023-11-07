@@ -88,3 +88,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/images/blurred_loading_screen.png
+    - assets/images/loading_screen.png
+    - assets/images/logo1.png
+    - assets/images/logo2.png
+    - assets/images/logo3.png
+    - assets/images/logo4.png
+    - assets/images/logo5.png
+    - assets/images/logo6.png
