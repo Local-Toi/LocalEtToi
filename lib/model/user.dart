@@ -24,6 +24,8 @@ class User {
   })
 
   Map<String, dynamic> toJson() => {
+
+  return {
     'id': id,
     'firstName': firstName,
     'lastName': lastName,
@@ -35,6 +37,7 @@ class User {
     'isProducer': isProducer,
     'image': image,
   };
+}
 
   @override
   String toString() {
