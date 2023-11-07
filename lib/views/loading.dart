@@ -79,7 +79,6 @@ class Background extends StatelessWidget {
                       decoration: ShapeDecoration(
                         color: Color(0xFF40B65D),
                         shape: OvalBorder(),
-                        durati
                       ),
                     ),
                     Container(

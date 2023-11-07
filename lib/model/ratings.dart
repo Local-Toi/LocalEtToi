@@ -1,12 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
 class Rating {
   int id;
   int customerId;
   int productId;
   int shopId;
   String description;
-  float rating;
+  double rating;
 
-  const Rating({
+   Rating({
     required this.id,
     required this.customerId,
     required this.productId,
@@ -16,7 +19,6 @@ class Rating {
   });
 
   Map<String, dynamic> toJson() => {
-    return {
       'id': id,
       'customerId': customerId,
       'productId': productId,
@@ -24,7 +26,7 @@ class Rating {
       'description': description,
       'rating': rating,
     };
-  }
+
 
   @override
   String toString() {

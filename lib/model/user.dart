@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+
+
+@JsonSerializable()
 class User {
   int id;
   String firstName;
@@ -10,7 +14,7 @@ class User {
   bool isProducer;
   String image;
 
-  const User({
+   User({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -21,11 +25,10 @@ class User {
     required this.newsletter,
     required this.isProducer,
     required this.image,
-  })
+  });
 
   Map<String, dynamic> toJson() => {
 
-  return {
     'id': id,
     'firstName': firstName,
     'lastName': lastName,
@@ -37,7 +40,7 @@ class User {
     'isProducer': isProducer,
     'image': image,
   };
-}
+
 
   @override
   String toString() {

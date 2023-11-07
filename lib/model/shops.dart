@@ -1,15 +1,19 @@
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
+
 class Shop {
   int id;
   int producerId;
   String name;
   String description;
-  float latitude;
-  float longitude;
+  double latitude;
+  double longitude;
   String address;
   String city;
   int postcode;
 
-  const Shop({
+   Shop({
     required this.id,
     required this.producerId,
     required this.name,
@@ -22,7 +26,6 @@ class Shop {
   });
 
   Map<String, dynamic> toJson() => {
-    return {
       'id': id,
       'producerId': producerId,
       'name': name,
@@ -33,7 +36,7 @@ class Shop {
       'city': city,
       'postcode': postcode,
     };
-  }
+
 
   @override
   String toString() {

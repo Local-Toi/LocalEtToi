@@ -4,37 +4,42 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class database {
+import '../model/favorites.dart';
+import '../model/products.dart';
+import '../model/ratings.dart';
+import '../model/shops.dart';
+import '../model/user.dart';
 
-  void init() async {
+class DatabaseHelper {
+  Database? _database;
 
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    } else {
+      _database = await initDB();
+      return _database!;
+    }
+  }
+
+  Future<Database> initDB() async {
     WidgetsFlutterBinding.ensureInitialized();
-    final database = openDatabase(
-        join(await getDatabasesPath(), 'localettoi.db'),
-    );
+    final databasePath = await getDatabasesPath();
+    final path = join(databasePath, 'localettoi.db');
 
-    onCreate: (db, version) {
-      return db.execute('CREATE TABLE users(id INTEGER PRIMARY KEY, firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, birthdate TEXT NOT NULL, created TEXT NOT NULL, newsletter NUMERIC NOT NULL, isProducer NUMERIC NOT NULL, image TEXT)',
-                        'CREATE TABLE favorites_shops(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id))',
-                        'CREATE TABLE favorites_products(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id))',
-                        'CREATE TABLE ratings(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id), shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id), description TEXT NOT NULL, rating NUMERIC NOT NULL )',
-                        'CREATE TABLE shops(id INTEGER PRIMARY KEY, producerId INTEGER NOT NULL, FOREIGN KEY(producerId) REFERENCES users(id), name TEXT NOT NULL, description TEXT NOT NULL, latitude NUMERIC NOT NULL, longitude NUMERIC NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, postcode INT NOT NULL)',
-                        'CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT NOT NULL, id_category INTEGER NOT NULL, description TEXT NOT NULL, price NUMERIC NOT NULL, isAvailable NUMERIC NOT NULL, shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id), image TEXT NOT NULL)',);
-    },
-    version: 1,
-    );
-
+    return await openDatabase(path, onCreate: (db, version) async {
+      await db.execute('CREATE TABLE users(id INTEGER PRIMARY KEY, firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, birthdate TEXT NOT NULL, created TEXT NOT NULL, newsletter NUMERIC NOT NULL, isProducer NUMERIC NOT NULL, image TEXT)');
+      await db.execute('CREATE TABLE favorites_shops(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id))');
+      await db.execute('CREATE TABLE favorites_products(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id))');
+      await db.execute('CREATE TABLE ratings(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id), shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id), description TEXT NOT NULL, rating NUMERIC NOT NULL )');
+      await db.execute('CREATE TABLE shops(id INTEGER PRIMARY KEY, producerId INTEGER NOT NULL, FOREIGN KEY(producerId) REFERENCES users(id), name TEXT NOT NULL, description TEXT NOT NULL, latitude NUMERIC NOT NULL, longitude NUMERIC NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, postcode INT NOT NULL)');
+      await db.execute('CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT NOT NULL, id_category INTEGER NOT NULL, description TEXT NOT NULL, price NUMERIC NOT NULL, isAvailable NUMERIC NOT NULL, shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id), image TEXT NOT NULL)');
+    }, version: 1);
   }
 
   Future<void> insertUser(User user) async {
     final db = await database;
-
-    await db.insert(
-      'users',
-      user.toJson(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-
+    await db.insert('users', user.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<List<User>> getUsers() async {
@@ -79,7 +84,7 @@ class database {
     );
   }
 
-    Future<void> insertProduct(Product product) async {
+  Future<void> insertProduct(Product product) async {
     final db = await database;
 
     await db.insert(
@@ -87,9 +92,9 @@ class database {
       product.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-}
+  }
 
-    Future<List<Product>> getProducts() async {
+  Future<List<Product>> getProducts() async {
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('products');
@@ -106,9 +111,9 @@ class database {
         image: maps[i]['image'] as String,
       );
     });
-    }
+  }
 
-    Future<void> updateProduct(Product product) async {
+  Future<void> updateProduct(Product product) async {
     final db = await database;
 
     await db.update(
@@ -117,9 +122,9 @@ class database {
       where: 'id = ?',
       whereArgs: [product.id],
     );
-    }
+  }
 
-    Future<void> deleteProduct(int id) async {
+  Future<void> deleteProduct(int id) async {
     final db = await database;
 
     await db.delete(
@@ -127,9 +132,9 @@ class database {
       where: 'id = ?',
       whereArgs: [id],
     );
-    }
+  }
 
-    Future<void> insertShop(Shop shop) async {
+  Future<void> insertShop(Shop shop) async {
     final db = await database;
 
     await db.insert(
@@ -137,9 +142,9 @@ class database {
       shop.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    }
+  }
 
-    Future<List<Shop>> getShops() async {
+  Future<List<Shop>> getShops() async {
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('shops');
@@ -157,9 +162,9 @@ class database {
         postcode: maps[i]['postcode'] as int,
       );
     });
-    }
+  }
 
-    Future<void> updateShop(Shop shop) async {
+  Future<void> updateShop(Shop shop) async {
     final db = await database;
 
     await db.update(
@@ -168,9 +173,9 @@ class database {
       where: 'id = ?',
       whereArgs: [shop.id],
     );
-    }
+  }
 
-    Future<void> deleteShop(int id) async {
+  Future<void> deleteShop(int id) async {
     final db = await database;
 
     await db.delete(
@@ -178,9 +183,9 @@ class database {
       where: 'id = ?',
       whereArgs: [id],
     );
-    }
+  }
 
-    Future<void> insertRating(Rating rating) async {
+  Future<void> insertRating(Rating rating) async {
     final db = await database;
 
     await db.insert(
@@ -188,9 +193,9 @@ class database {
       rating.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    }
+  }
 
-    Future<List<Rating>> getRatings() async {
+  Future<List<Rating>> getRatings() async {
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('ratings');
@@ -205,9 +210,9 @@ class database {
         rating: maps[i]['rating'] as double,
       );
     });
-    }
+  }
 
-    Future<void> updateRating(Rating rating) async {
+  Future<void> updateRating(Rating rating) async {
     final db = await database;
 
     await db.update(
@@ -216,106 +221,109 @@ class database {
       where: 'id = ?',
       whereArgs: [rating.id],
     );
-    }
+  }
 
-    Future<void> deleteRating(int id) async {
+  Future<void> deleteRating(int id) async {
     final db = await database;
 
     await db.delete(
-      'ratings',
-      where: 'id = ?',
-      whereArgs: [id],
-
+        'ratings',
+        where: 'id = ?',
+        whereArgs: [id]
+    );
   }
 
-    Future<void> insertFavoriteShop(Favorite_shop favorite_shop) async {
+  Future<void> insertFavoriteShop(Favorite_shop favoriteShop) async {
     final db = await database;
 
     await db.insert(
       'favorites_shops',
-      favorite_shop.toJson(),
+      favoriteShop.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    }
+  }
 
-    Future<List<Favorite_shop>> getFavorites_shops() async {
-      final db = await database;
+  Future<List<Favorite_shop>> getFavoritesShops() async {
+    final db = await database;
 
-      final List<Map<String, dynamic>> maps = await db.query('favorites_shops');
+    final List<Map<String, dynamic>> maps = await db.query('favorites_shops');
 
-      return List.generate(maps.length, (i) {
-        return Favorite_shop(
-          id: maps[i]['id'] as int,
-          customerId: maps[i]['customerId'] as int,
-          shopId: maps[i]['shopId'] as int,
-        );
-      });
-    }
-
-    Future<void> updateFavoriteShop(Favorite_shop favorite_shop) async {
-      final db = await database;
-
-      await db.update(
-        'favorites_shops',
-        favorite_shop.toJson(),
-        where: 'id = ?',
-        whereArgs: [favorite_shop.id],
+    return List.generate(maps.length, (i) {
+      return Favorite_shop(
+        id: maps[i]['id'] as int,
+        customerId: maps[i]['customerId'] as int,
+        shopId: maps[i]['shopId'] as int,
       );
-    }
+    });
+  }
 
-    Future<void> deleteFavoriteShop(int id) async {
-      final db = await database;
+  Future<void> updateFavoriteShop(Favorite_shop favoriteShop) async {
+    final db = await database;
 
-      await db.delete(
-        'favorites_shops',
-        where: 'id = ?',
-        whereArgs: [id],
+    await db.update(
+      'favorites_shops',
+      favoriteShop.toJson(),
+      where: 'id = ?',
+      whereArgs: [favoriteShop.id],
+    );
+  }
+
+  Future<void> deleteFavoriteShop(int id) async {
+    final db = await database;
+
+    await db.delete(
+      'favorites_shops',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  Future<void> insertFavoriteProduct(Favorite_Product favoriteProduct) async {
+    final db = await database;
+
+    await db.insert(
+      'favorites_products',
+      favoriteProduct.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<Favorite_Product>> getFavoritesProducts() async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+        'favorites_products');
+
+    return List.generate(maps.length, (i) {
+      return Favorite_Product(
+        id: maps[i]['id'] as int,
+        customerId: maps[i]['customerId'] as int,
+        productId: maps[i]['productId'] as int,
       );
-    }
+    });
+  }
 
-    Future<void> insertFavoriteProduct(Favorite_Product favorite_Product) async {
-      final db = await database;
+  Future<void> updateFavoriteProduct(Favorite_Product favoriteProduct) async {
+    final db = await database;
 
-      await db.insert(
-        'favorites_products',
-        favorite_Product.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
+    await db.update(
+      'favorites_products',
+      favoriteProduct.toJson(),
+      where: 'id = ?',
+      whereArgs: [favoriteProduct.id],
+    );
+  }
 
-    Future<List<Favorite_Product>> getFavorites_Products() async {
-      final db = await database;
+  Future<void> deleteFavoriteProduct(int id) async {
+    final db = await database;
 
-      final List<Map<String, dynamic>> maps = await db.query('favorites_products');
-
-      return List.generate(maps.length, (i) {
-        return Favorite_Product(
-          id: maps[i]['id'] as int,
-          customerId: maps[i]['customerId'] as int,
-          productId: maps[i]['productId'] as int,
-        );
-      });
-    }
-
-    Future<void> updateFavoriteProduct(Favorite_Product favorite_Product) async {
-      final db = await database;
-
-      await db.update(
-        'favorites_products',
-        favorite_Product.toJson(),
-        where: 'id = ?',
-        whereArgs: [favorite_Product.id],
-      );
-    }
-
-    Future<void> deleteFavoriteProduct(int id) async {
-      final db = await database;
-
-      await db.delete(
-        'favorites_products',
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    }
+    await db.delete(
+      'favorites_products',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
+
+
 
