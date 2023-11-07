@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/favorites.dart';
+import '../model/favorite_products.dart';
+import '../model/favorite_shops.dart';
 import '../model/products.dart';
 import '../model/ratings.dart';
 import '../model/shops.dart';
@@ -30,7 +31,7 @@ class DatabaseHelper {
     return await openDatabase(path, onCreate: (db, version) async {
       await db.execute('CREATE TABLE users(id INTEGER PRIMARY KEY, firstName TEXT NOT NULL, lastName TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, birthdate TEXT NOT NULL, created TEXT NOT NULL, newsletter NUMERIC NOT NULL, isProducer NUMERIC NOT NULL, image TEXT)');
       await db.execute('CREATE TABLE favorites_shops(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id))');
-      await db.execute('CREATE TABLE favorites_products(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id))');
+      await db.execute('CREATE TABLE favorite_products.dart(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id))');
       await db.execute('CREATE TABLE ratings(id INTEGER PRIMARY KEY, userId INTEGER NOT NULL, FOREIGN KEY(userId) REFERENCES users(id), productId INTEGER NOT NULL, FOREIGN KEY(productId) REFERENCES products(id), shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id), description TEXT NOT NULL, rating NUMERIC NOT NULL )');
       await db.execute('CREATE TABLE shops(id INTEGER PRIMARY KEY, producerId INTEGER NOT NULL, FOREIGN KEY(producerId) REFERENCES users(id), name TEXT NOT NULL, description TEXT NOT NULL, latitude NUMERIC NOT NULL, longitude NUMERIC NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, postcode INT NOT NULL)');
       await db.execute('CREATE TABLE products(id INTEGER PRIMARY KEY, name TEXT NOT NULL, id_category INTEGER NOT NULL, description TEXT NOT NULL, price NUMERIC NOT NULL, isAvailable NUMERIC NOT NULL, shopId INTEGER NOT NULL, FOREIGN KEY(shopId) REFERENCES shops(id), image TEXT NOT NULL)');
@@ -282,7 +283,7 @@ class DatabaseHelper {
     final db = await database;
 
     await db.insert(
-      'favorites_products',
+      'favorite_products.dart',
       favoriteProduct.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -292,7 +293,7 @@ class DatabaseHelper {
     final db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query(
-        'favorites_products');
+        'favorite_products.dart');
 
     return List.generate(maps.length, (i) {
       return Favorite_Product(
@@ -307,7 +308,7 @@ class DatabaseHelper {
     final db = await database;
 
     await db.update(
-      'favorites_products',
+      'favorite_products.dart',
       favoriteProduct.toJson(),
       where: 'id = ?',
       whereArgs: [favoriteProduct.id],
@@ -318,7 +319,7 @@ class DatabaseHelper {
     final db = await database;
 
     await db.delete(
-      'favorites_products',
+      'favorite_products.dart',
       where: 'id = ?',
       whereArgs: [id],
     );

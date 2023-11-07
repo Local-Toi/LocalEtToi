@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'ratings.g.dart';
+
 @JsonSerializable()
 class Rating {
   int id;
@@ -18,7 +20,7 @@ class Rating {
     required this.rating,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
       'id': id,
       'customerId': customerId,
       'productId': productId,
@@ -26,6 +28,10 @@ class Rating {
       'description': description,
       'rating': rating,
     };
+
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 
 
   @override

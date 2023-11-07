@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'user.g.dart';
+
 
 @JsonSerializable()
 class User {
@@ -27,7 +29,7 @@ class User {
     required this.image,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
 
     'id': id,
     'firstName': firstName,
@@ -40,6 +42,10 @@ class User {
     'isProducer': isProducer,
     'image': image,
   };
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
 
   @override

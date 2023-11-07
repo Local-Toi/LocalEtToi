@@ -1,30 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-
-@JsonSerializable()
-class Favorite_shop{
-  int id;
-  int customerId;
-  int shopId;
-
-   Favorite_shop({
-    required this.id,
-    required this.customerId,
-    required this.shopId,
-  });
-
-  Map<String, dynamic> toJson() => {
-      'id': id,
-      'customerId': customerId,
-      'shopId': shopId,
-    };
-
-
-  @override
-  String toString() {
-    return 'Favorite Shop : {id: $id, customerId: $customerId, shopId: $shopId}';
-  }
-}
+part 'favorite_products.g.dart';
 
 @JsonSerializable()
 class Favorite_Product{
@@ -38,11 +14,15 @@ class Favorite_Product{
     required this.productId,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
       'id': id,
       'customerId': customerId,
       'productId': productId,
     };
+
+  factory Favorite_Product.fromJson(Map<String, dynamic> json) => _$Favorite_ProductFromJson(json);
+
+  Map<String, dynamic> toJson() => _$Favorite_ProductToJson(this);
 
 
   @override

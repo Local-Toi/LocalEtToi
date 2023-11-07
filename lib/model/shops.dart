@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'shops.g.dart';
+
 @JsonSerializable()
 
 class Shop {
@@ -25,7 +27,7 @@ class Shop {
     required this.postcode,
   });
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
       'id': id,
       'producerId': producerId,
       'name': name,
@@ -36,6 +38,10 @@ class Shop {
       'city': city,
       'postcode': postcode,
     };
+
+  factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShopToJson(this);
 
 
   @override
