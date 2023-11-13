@@ -57,9 +57,9 @@
     },
     {
       "name": "build_daemon",
-      "rootUri": "file:///Users/adrian/.pub-cache/hosted/pub.dev/build_daemon-4.0.0",
+      "rootUri": "file:///Users/adrian/.pub-cache/hosted/pub.dev/build_daemon-4.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "build_resolvers",
@@ -183,9 +183,9 @@
     },
     {
       "name": "flutter_lints",
-      "rootUri": "file:///Users/adrian/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3",
+      "rootUri": "file:///Users/adrian/.pub-cache/hosted/pub.dev/flutter_lints-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_login",
@@ -291,7 +291,7 @@
     },
     {
       "name": "lints",
-      "rootUri": "file:///Users/adrian/.pub-cache/hosted/pub.dev/lints-2.1.1",
+      "rootUri": "file:///Users/adrian/.pub-cache/hosted/pub.dev/lints-3.0.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -578,7 +578,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-13T12:59:41.659454Z",
+  "generated": "2023-11-13T13:46:39.988866Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }
