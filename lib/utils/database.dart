@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -62,6 +63,32 @@ class DatabaseHelper {
         image: maps[i]['image'] as String,
       );
     });
+  }
+
+  Future<User?> getUserByEmailAndPassword(String email, String password) async {
+    final db = await database;
+    List<Map<String, dynamic>> maps = await db.query(
+      'users',
+      where: 'email = ? AND password = ?',
+      whereArgs: [email, password],
+    );
+
+    if (maps.isNotEmpty) {
+      return User(
+        id: maps[0]['id'] as int,
+        firstName: maps[0]['firstName'] as String,
+        lastName: maps[0]['lastName'] as String,
+        email: maps[0]['email'] as String,
+        password: maps[0]['password'] as String,
+        birthdate: maps[0]['birthdate'] as DateTime,
+        created: maps[0]['created'] as DateTime,
+        newsletter: maps[0]['newsletter'] as bool,
+        isProducer: maps[0]['isProducer'] as bool,
+        image: maps[0]['image'] as String,
+      );
+    } else {
+      return null;
+    }
   }
 
   Future<void> updateUser(User user) async {

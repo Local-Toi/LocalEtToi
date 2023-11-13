@@ -37,7 +37,7 @@ class Background extends StatelessWidget {
             bottom: 70,
           ),
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFFFFBE2)),
+          decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
