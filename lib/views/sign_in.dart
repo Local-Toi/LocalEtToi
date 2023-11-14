@@ -26,7 +26,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   late String username, password;
-
+  late bool _obscured = true;
+  final textFieldFocusNode = FocusNode();
   late LoginResponse loginResponse;
 
   /*TextEditingController emailController =
@@ -46,6 +47,14 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
         loginResponse.doLogin(username, password);
       });
     }
+  }
+
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus) return;
+      textFieldFocusNode.canRequestFocus = false;
+    });
   }
 
   @override
@@ -221,20 +230,39 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                         child: TextFormField(
                           onSaved: (val) => password = val!,
                           //controller: passwordController,
-                          obscureText: true,
+                          obscureText: _obscured,
+                          focusNode: textFieldFocusNode,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
                             }
                             return null;
                           },
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             contentPadding:
-                            EdgeInsets.symmetric(horizontal: 10),
+                            const EdgeInsets.symmetric(horizontal: 10),
                             border: InputBorder.none,
                             hintText: 'Mot de passe',
-                            hintStyle: TextStyle(color: Colors.grey),
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            labelText: "Password",
+                            filled: true,
+                            fillColor: const Color(0x2640B65D),
+                            isDense: true,
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                              child: GestureDetector(
+                                onTap: _toggleObscured,
+                                child: Icon(
+                                  _obscured
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded, color: const Color(0xFF095D40),
+                                  size: 24,
+                                ),
+                              ),
+                            ),
                           ),
+
                         ),
                       ),
                     ],
@@ -264,7 +292,6 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
         ),
       );
     }
-    // TODO: implement onLoginSuccess
   }
 }
 
