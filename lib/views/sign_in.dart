@@ -169,106 +169,98 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                 ),
               ),
             ),
-            Positioned(
-              left: 0,
-              top: 133,
-              child: SizedBox(
-                width: 390,
-                height: 300, // Adjust the height as needed
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 355,
-                        height: 45,
-                        decoration: ShapeDecoration(
-                          color: const Color(0x2640B65D),
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              width: 1,
-                              strokeAlign: BorderSide.strokeAlignCenter,
-                              color: Color(0xFF095D40),
+            Stack(
+              children: [Positioned(
+                left: 0,
+                top: 133,
+                child: SizedBox(
+                  width: 390,
+                  height: 300,
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 355,
+                          height: 45,
+                          child: TextFormField(
+                            onSaved: (val) => username = val!,
+                            //controller: emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Veuillez entrer une adresse email';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: const Color(0x2640B65D),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
+                              border: InputBorder.none,
+                              hintText: 'Adresse email',
+                              hintStyle: const TextStyle(color: Colors.grey),
                             ),
-                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        child: TextFormField(
-                          onSaved: (val) => username = val!,
-                          //controller: emailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email address';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            contentPadding:
-                            EdgeInsets.symmetric(horizontal: 10),
-                            border: InputBorder.none,
-                            hintText: 'Adresse email',
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        width: 355,
-                        height: 45,
-                        decoration: ShapeDecoration(
-                          color: const Color(0x2640B65D),
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              width: 1,
-                              strokeAlign: BorderSide.strokeAlignCenter,
-                              color: Color(0xFF095D40),
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: TextFormField(
-                          onSaved: (val) => password = val!,
-                          //controller: passwordController,
-                          obscureText: _obscured,
-                          focusNode: textFieldFocusNode,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                            border: InputBorder.none,
-                            hintText: 'Mot de passe',
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            labelText: "Password",
-                            filled: true,
-                            fillColor: const Color(0x2640B65D),
-                            isDense: true,
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                              child: GestureDetector(
-                                onTap: _toggleObscured,
-                                child: Icon(
-                                  _obscured
-                                      ? Icons.visibility_off_rounded
-                                      : Icons.visibility_rounded, color: const Color(0xFF095D40),
-                                  size: 24,
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          width: 355,
+                          height: 45,
+                          child: TextFormField(
+                            onSaved: (val) => password = val!,
+                            //controller: passwordController,
+                            obscureText: _obscured,
+                            focusNode: textFieldFocusNode,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Veuillez entrer un mot de passe';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: const Color(0x2640B65D),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
+                              border: InputBorder.none,
+                              hintText: 'Mot de passe',
+                              hintStyle: const TextStyle(color: Colors.grey),
+                              //floatingLabelBehavior: FloatingLabelBehavior.never,
+                              isDense: true,
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                child: GestureDetector(
+                                  onTap: _toggleObscured,
+                                  child: Icon(
+                                    _obscured
+                                        ? Icons.visibility_off_rounded
+                                        : Icons.visibility_rounded, color: const Color(0xFF095D40),
+                                    size: 24,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ),],
             ),
           ],
         ),
