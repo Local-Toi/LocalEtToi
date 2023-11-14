@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/model/user.dart';
 import 'package:local_et_toi/utils/login_response.dart';
+import 'package:local_et_toi/views/loading.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -11,7 +14,7 @@ void main() {
 }
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -26,10 +29,10 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 
   late LoginResponse loginResponse;
 
-  TextEditingController emailController =
+  /*TextEditingController emailController =
   TextEditingController(text: 'user@example.com');
   TextEditingController passwordController =
-  TextEditingController(text: 'password123');
+  TextEditingController(text: 'password123');*/
 
   _LoginPageState() {
     loginResponse = LoginResponse(this);
@@ -182,7 +185,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                           ),
                         ),
                         child: TextFormField(
-                          controller: emailController,
+                          onSaved: (val) => username = val!,
+                          //controller: emailController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email address';
@@ -215,7 +219,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                           ),
                         ),
                         child: TextFormField(
-                          controller: passwordController,
+                          onSaved: (val) => password = val!,
+                          //controller: passwordController,
                           obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -244,12 +249,22 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   }
 
   @override
-  void onLoginError(String error) {
-    // TODO: implement onLoginError
+  String onLoginError(String error) {
+    log("Authentication error: $error");
+    return error;
   }
 
   @override
   void onLoginSuccess(User? user) {
+    log("Authentication success");
+    if (user != null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LoadingView(),
+        ),
+      );
+    }
     // TODO: implement onLoginSuccess
   }
 }
+
