@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/model/user.dart';
-import 'package:local_et_toi/utils/login_response.dart';
+import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/views/loading.dart';
+
+import 'first.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -67,6 +69,20 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
         decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
         child: Stack(
           children: [
+            Positioned(
+              top: 16,
+              left: 16,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const MainView(),
+                    ),
+                  );
+                },
+              ),
+            ),
             const Positioned(
               left: 140,
               top: 39,
@@ -79,8 +95,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     'Connexion',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 24,
-                      fontFamily: 'Eczar',
+                      fontSize: 18,
+                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w400,
                       height: 0,
                     ),
@@ -90,7 +106,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
             ),
             Positioned(
               left: 45,
-              top: 352,
+              top: 655,
               child: Container(
                   width: 300,
                   height: 40,
@@ -110,7 +126,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     backgroundColor: const Color(0xFF095D40),
                     padding: EdgeInsets.zero,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   child: const SizedBox(
@@ -121,7 +137,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
-                        fontFamily: 'Eczar',
+                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ),
@@ -132,7 +148,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
             ),
             Positioned(
               left: 45,
-              top: 422,
+              top: 720,
               child: Container(
                 width: 300,
                 height: 40,
@@ -141,7 +157,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     width: 3,
                     color: const Color(0xFF095D40),
                   ),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(30),
               ),
                 child: TextButton(
                   onPressed: () {},
@@ -149,7 +165,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     padding: EdgeInsets.zero,
                     backgroundColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   child: const SizedBox(
@@ -160,7 +176,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                       style: TextStyle(
                         color: Color(0xFF095D40),
                         fontSize: 18,
-                        fontFamily: 'Eczar',
+                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ),
@@ -180,6 +196,24 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     key: formKey,
                     child: Column(
                       children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left : 17, bottom: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Adresse email',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+
+                                ),
+                    ),
+                            ],
+                          ),
+                        ),
                         SizedBox(
                           width: 355,
                           height: 45,
@@ -197,19 +231,37 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                               filled: true,
                               fillColor: const Color(0x2640B65D),
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                const BorderSide(width: 1, color: Color(0xFF095D40)),
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
                               contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
                               border: InputBorder.none,
-                              hintText: 'Adresse email',
-                              hintStyle: const TextStyle(color: Colors.grey),
                             ),
                           ),
                         ),
                         const SizedBox(height: 16),
+                        const Padding(
+                          padding: EdgeInsets.only(left : 17, bottom: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Mot de Passe',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         SizedBox(
                           width: 355,
                           height: 45,
@@ -229,15 +281,16 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                               filled: true,
                               fillColor: const Color(0x2640B65D),
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                const BorderSide(width: 1, color: Color(0xFF095D40)),
-                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
                               contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
                               border: InputBorder.none,
-                              hintText: 'Mot de passe',
-                              hintStyle: const TextStyle(color: Colors.grey),
                               //floatingLabelBehavior: FloatingLabelBehavior.never,
                               isDense: true,
                               suffixIcon: Padding(

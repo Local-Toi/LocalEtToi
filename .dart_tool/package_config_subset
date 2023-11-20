@@ -235,9 +235,9 @@ phone_numbers_parser
 file:///Users/adrian/.pub-cache/hosted/pub.dev/phone_numbers_parser-8.0.0/
 file:///Users/adrian/.pub-cache/hosted/pub.dev/phone_numbers_parser-8.0.0/lib/
 plugin_platform_interface
-2.19
-file:///Users/adrian/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.6/
-file:///Users/adrian/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.6/lib/
+3.0
+file:///Users/adrian/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.7/
+file:///Users/adrian/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.7/lib/
 pool
 2.12
 file:///Users/adrian/.pub-cache/hosted/pub.dev/pool-1.5.1/
@@ -288,8 +288,8 @@ file:///Users/adrian/.pub-cache/hosted/pub.dev/sqflite-2.3.0/
 file:///Users/adrian/.pub-cache/hosted/pub.dev/sqflite-2.3.0/lib/
 sqflite_common
 3.0
-file:///Users/adrian/.pub-cache/hosted/pub.dev/sqflite_common-2.5.0+1/
-file:///Users/adrian/.pub-cache/hosted/pub.dev/sqflite_common-2.5.0+1/lib/
+file:///Users/adrian/.pub-cache/hosted/pub.dev/sqflite_common-2.5.0+2/
+file:///Users/adrian/.pub-cache/hosted/pub.dev/sqflite_common-2.5.0+2/lib/
 stack_trace
 2.18
 file:///Users/adrian/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/
@@ -335,9 +335,9 @@ url_launcher_android
 file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.0/
 file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.0/lib/
 url_launcher_ios
-2.19
-file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.0/
-file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.0/lib/
+3.0
+file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.1/
+file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_ios-6.2.1/lib/
 url_launcher_linux
 2.19
 file:///Users/adrian/.pub-cache/hosted/pub.dev/url_launcher_linux-3.1.0/
