@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/model/user.dart';
+import 'package:local_et_toi/utils/button/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/views/loading.dart';
 
@@ -10,19 +11,19 @@ import 'first.dart';
 void main() {
   runApp(const MaterialApp(
     home: Scaffold(
-      body: LoginPage(),
+      body: SignInPage(),
     ),
   ));
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> implements LoginCallBack {
+class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   late BuildContext _context;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   TextEditingController passwordController =
   TextEditingController(text: 'password123');*/
 
-  _LoginPageState() {
+  _SignInPageState() {
     loginResponse = LoginResponse(this);
   }
 
@@ -107,82 +108,28 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
             Positioned(
               left: 45,
               top: 655,
-              child: Container(
+              child: SizedBox(
                   width: 300,
                   height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                child: TextButton(
-                  onPressed: () { _submit();},
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color(0xFF095D40),
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const SizedBox(
-                    width: 300,
-                    child: Text(
-                      'Se connecter',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
-                    ),
-                  ),
+                child: GreenRoundedButton(
+                  onPressed: () {
+                    _submit();
+                  },
+                  buttonText: 'Se connecter',
                 ),
               ),
             ),
             Positioned(
               left: 45,
               top: 720,
-              child: Container(
+              child: SizedBox(
                 width: 300,
                 height: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 3,
-                    color: const Color(0xFF095D40),
-                  ),
-                    borderRadius: BorderRadius.circular(30),
-              ),
-                child: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const SizedBox(
-                    width: 300,
-                    child: Text(
-                      'Mot de passe oublié',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF095D40),
-                        fontSize: 18,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
-                    ),
-                  ),
+                child: TransparentRoundedButtonWithBorder(
+                  onPressed: () {
+                    //navigation to forgot password page
+                  },
+                  buttonText: 'Mot de passe oublié',
                 ),
               ),
             ),

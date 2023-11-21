@@ -5,12 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/favorite_products.dart';
-import '../model/favorite_shops.dart';
-import '../model/products.dart';
-import '../model/ratings.dart';
-import '../model/shops.dart';
-import '../model/user.dart';
+import '../../model/favorite_products.dart';
+import '../../model/favorite_shops.dart';
+import '../../model/products.dart';
+import '../../model/ratings.dart';
+import '../../model/shops.dart';
+import '../../model/user.dart';
 
 class DatabaseHelper {
   Database? _database;

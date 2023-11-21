@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:local_et_toi/utils/database.dart';
+import 'package:local_et_toi/utils/database/database.dart';
 import '../../model/user.dart';
 
 class LoginRequest {
