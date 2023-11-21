@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/model/user.dart';
-import 'package:local_et_toi/utils/button/buttons.dart';
+import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
+import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/views/loading.dart';
 
 import 'first.dart';
@@ -99,7 +100,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                       'Connexion',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 18,
+                        fontSize: 24,
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         height: 0,
@@ -138,7 +139,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const ForgotPasswordPage(),
+                          builder: (context) => ForgotPasswordPage(),
                         ),
                       );
                     },
@@ -179,9 +180,8 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                         SizedBox(
                           width: 355,
                           height: 45,
-                          child: TextFormField(
+                          child: GreenTextFieldWithGreenerBorder(
                             onSaved: (val) => username = val!,
-                            //controller: emailController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Veuillez entrer une adresse email';
@@ -189,21 +189,6 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                               return null;
                             },
                             keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: const Color(0x2640B65D),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10),
-                              border: InputBorder.none,
-                            ),
                           ),
                         ),
                         const SizedBox(height: 16),

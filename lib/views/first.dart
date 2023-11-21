@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/button/buttons.dart';
+import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/views/sign_in.dart';
 import 'package:local_et_toi/views/sign_up.dart';
 
