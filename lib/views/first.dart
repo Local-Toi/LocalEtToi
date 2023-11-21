@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/button/buttons.dart';
 import 'package:local_et_toi/views/sign_in.dart';
@@ -27,66 +25,77 @@ class MainView extends StatelessWidget {
 
             ),
             Positioned(
-              left: 46,
+              left: 0,
+              right: 0,
               top: 516,
-              child: SizedBox(
-                width: 300,
-                height: 40,
-                child: GreenRoundedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const SignInPage(),
-                      ),
-                    );
-                  },
-                  buttonText: 'Se connecter',
+              child: Center(
+                child: SizedBox(
+                  width: 300,
+                  height: 40,
+                  child: GreenRoundedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const SignInPage(),
+                        ),
+                      );
+                    },
+                    buttonText: 'Se connecter',
+                  ),
                 ),
               ),
             ),
             const Positioned(
-              left: 58,
+              left: 0,
+              right: 0,
               top: 592,
-              child: SizedBox(
-                width: 274,
-                child: Divider(
-                  color: Color(0xFF095D40),
-                  thickness: 1,
+              child: Center(
+                child: SizedBox(
+                  width: 274,
+                  child: Divider(
+                    color: Color(0xFF095D40),
+                    thickness: 1,
+                  ),
                 ),
               ),
             ),
             Positioned(
-              left: 45,
+              left: 0,
+              right: 0,
               top: 626,
-              child:
-              SizedBox(
-                width: 300,
-                height: 40,
-                child:
-                GreenRoundedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const SignUpPage(),
-                      ),
-                    );
-                  },
-                  buttonText: 'S\'inscrire',
-                ),
+              child: Center(
+                child: SizedBox(
+                  width: 300,
+                  height: 40,
+                  child:
+                  GreenRoundedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpPage(),
+                        ),
+                      );
+                    },
+                    buttonText: 'S\'inscrire',
+                  ),
 
+                ),
               ),
             ),
             Positioned(
-              left: 45,
+              left: 0,
+              right: 0,
               top: 701,
-              child: SizedBox(
-                width: 300,
-                height: 40,
-                child: TransparentRoundedButtonWithBorder(
-                  onPressed: () {
+              child: Center(
+                child: SizedBox(
+                  width: 300,
+                  height: 40,
+                  child: TransparentRoundedButtonWithBorder(
+                    onPressed: () {
 
-                  }, buttonText: 'Continuer en tant qu\invité',
-                )
+                    }, buttonText: 'Continuer en tant qu\'invité',
+                  )
+                ),
               )
             )
           ],

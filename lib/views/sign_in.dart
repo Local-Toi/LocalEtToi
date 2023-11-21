@@ -7,6 +7,7 @@ import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/views/loading.dart';
 
 import 'first.dart';
+import 'forgot_password.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -85,51 +86,64 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
               ),
             ),
             const Positioned(
-              left: 140,
+              left: 0,
+              right: 0,
               top: 39,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Connexion',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
+              child: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Connexion',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 45,
-              top: 655,
-              child: SizedBox(
-                  width: 300,
-                  height: 40,
-                child: GreenRoundedButton(
-                  onPressed: () {
-                    _submit();
-                  },
-                  buttonText: 'Se connecter',
+                  ],
                 ),
               ),
             ),
             Positioned(
-              left: 45,
+              left: 0,
+              right: 0,
+              top: 655,
+              child: Center(
+                child: SizedBox(
+                    width: 300,
+                    height: 40,
+                  child: GreenRoundedButton(
+                    onPressed: () {
+                      _submit();
+                    },
+                    buttonText: 'Se connecter',
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
               top: 720,
-              child: SizedBox(
-                width: 300,
-                height: 40,
-                child: TransparentRoundedButtonWithBorder(
-                  onPressed: () {
-                    //navigation to forgot password page
-                  },
-                  buttonText: 'Mot de passe oublié',
+              child: Center(
+                child: SizedBox(
+                  width: 300,
+                  height: 40,
+                  child: TransparentRoundedButtonWithBorder(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordPage(),
+                        ),
+                      );
+                    },
+                    buttonText: 'Mot de passe oublié',
+                  ),
                 ),
               ),
             ),
