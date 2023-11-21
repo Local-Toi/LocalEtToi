@@ -27,49 +27,50 @@ class MainView extends StatelessWidget {
             Positioned(
               left: 46,
               top: 516,
-              child: SizedBox(
+              child: Container(
                 width: 300,
                 height: 40,
-                child: Material(
-                  color: Colors.transparent,
-                  elevation: 100, // Ajustez cela pour le niveau d'ombre
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                decoration:  BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 4,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: TextButton(
+                  onPressed: () { Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginPage(),
+                    ),
+                  );},
+                  style: TextButton.styleFrom(
+                    backgroundColor: const Color(0xFF095D40),
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF095D40),
-                        padding: EdgeInsets.zero,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
-                        );
-                      },
-                      child: const SizedBox(
-                        width: 300,
-                        child: Text(
-                          'Se connecter',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
+                  child: const SizedBox(
+                    width: 300,
+                    child: Text(
+                      'Se connecter',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
                       ),
                     ),
                   ),
                 ),
               ),
-
-            )
+            ),
           ]
         ),
 

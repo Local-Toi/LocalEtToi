@@ -110,8 +110,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
               child: Container(
                   width: 300,
                   height: 40,
-                  decoration: const BoxDecoration(
-                    boxShadow: [
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: const [
                       BoxShadow(
                         color: Color(0x3F000000),
                         blurRadius: 4,
