@@ -3,6 +3,7 @@ import 'package:local_et_toi/views/sign_in.dart';
 
 void main() {
   runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: Scaffold(
       body: SignInPage(),
     ),

@@ -3,7 +3,7 @@ import 'package:local_et_toi/views/sign_in.dart';
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
-import 'first.dart';
+import 'landing_page_connexion.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/views/sign_in.dart';
-import 'package:local_et_toi/views/sign_up.dart';
+import 'package:local_et_toi/views/sign_up_part1.dart';
 
 class MainView extends StatelessWidget {
   const MainView({super.key});
@@ -70,7 +70,7 @@ class MainView extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const SignUpPage(),
+                          builder: (context) => const SignUpPage1(),
                         ),
                       );
                     },
