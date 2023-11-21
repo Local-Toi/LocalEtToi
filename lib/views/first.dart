@@ -10,19 +10,17 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: 390,
-        height: 844,
+        //width: 390,
+        //height: 844,
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
         child: Stack (
           children: [
             Positioned(
-              left: 44,
               top: 107,
-              width: 300,
-              height: 300,
-              child: Image.asset("assets/images/logo1.png"),
-
+              right: 0,
+              left: 0,
+              child: Center(child: Image.asset("assets/images/logo1.png",width: 300, height: 300,)),
             ),
             Positioned(
               left: 0,

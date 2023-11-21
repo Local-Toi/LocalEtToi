@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:local_et_toi/views/sign_in.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(
+    home: Scaffold(
+      body: SignInPage(),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {

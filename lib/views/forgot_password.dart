@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/views/sign_in.dart';
 
+import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
 import 'first.dart';
 
@@ -17,8 +18,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: 390,
-        height: 844,
+        //width: 390,
+        //height: 844,
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
         child: Stack (
@@ -75,49 +76,67 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             Stack(
               children: [Positioned(
                 left: 0,
+                right: 0,
                 top: 242,
-                child: SizedBox(
-                  width: 390,
-                  height: 300,
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left : 17, bottom: 10),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Adresse email',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
+                child: Center(
+                  child: SizedBox(
+                    width: 390,
+                    height: 300,
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left : 17, bottom: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Adresse email',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
 
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 355,
-                        height: 45,
-                        child: GreenTextFieldWithGreenerBorder(
-                          onSaved: (val) => email = val!,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Veuillez entrer une adresse email';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
+                        SizedBox(
+                          width: 355,
+                          height: 45,
+                          child: GreenTextFieldWithGreenerBorder(
+                            onSaved: (val) => email = val!,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Veuillez entrer une adresse email';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),],
             ),
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 720,
+              child: Center(
+                child: SizedBox(
+                  width: 300,
+                  height: 40,
+                  child: GreenRoundedButton(
+                    onPressed: () {},
+                    buttonText: 'Envoyer le lien',
+                  ),
+                )
+              )
+            )
           ],
         ),
       ),

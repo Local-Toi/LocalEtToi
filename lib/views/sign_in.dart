@@ -66,8 +66,8 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: 390,
-        height: 844,
+        //width: 390,
+        //height: 844,
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
         child: Stack(
@@ -151,112 +151,115 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
             Stack(
               children: [Positioned(
                 left: 0,
+                right: 0,
                 top: 133,
-                child: SizedBox(
-                  width: 390,
-                  height: 300,
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left : 17, bottom: 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Adresse email',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 18,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
+                child: Center(
+                  child: SizedBox(
+                    width: 390,
+                    height: 300,
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left : 17, bottom: 10),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Adresse email',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
 
+                                  ),
+                      ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 355,
+                            height: 45,
+                            child: GreenTextFieldWithGreenerBorder(
+                              onSaved: (val) => username = val!,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Veuillez entrer une adresse email';
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Padding(
+                            padding: EdgeInsets.only(left : 17, bottom: 10),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Mot de Passe',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
                                 ),
-                    ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 355,
-                          height: 45,
-                          child: GreenTextFieldWithGreenerBorder(
-                            onSaved: (val) => username = val!,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Veuillez entrer une adresse email';
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Padding(
-                          padding: EdgeInsets.only(left : 17, bottom: 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Mot de Passe',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 18,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
+                          SizedBox(
+                            width: 355,
+                            height: 45,
+                            child: TextFormField(
+                              onSaved: (val) => password = val!,
+                              //controller: passwordController,
+                              obscureText: _obscured,
+                              focusNode: textFieldFocusNode,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Veuillez entrer un mot de passe';
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.visiblePassword,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: const Color(0x2640B65D),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                  borderRadius: BorderRadius.circular(5.0),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 355,
-                          height: 45,
-                          child: TextFormField(
-                            onSaved: (val) => password = val!,
-                            //controller: passwordController,
-                            obscureText: _obscured,
-                            focusNode: textFieldFocusNode,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Veuillez entrer un mot de passe';
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.visiblePassword,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: const Color(0x2640B65D),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
-                              border: InputBorder.none,
-                              //floatingLabelBehavior: FloatingLabelBehavior.never,
-                              isDense: true,
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                                child: GestureDetector(
-                                  onTap: _toggleObscured,
-                                  child: Icon(
-                                    _obscured
-                                        ? Icons.visibility_off_rounded
-                                        : Icons.visibility_rounded, color: const Color(0xFF095D40),
-                                    size: 24,
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
+                                border: InputBorder.none,
+                                //floatingLabelBehavior: FloatingLabelBehavior.never,
+                                isDense: true,
+                                suffixIcon: Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                  child: GestureDetector(
+                                    onTap: _toggleObscured,
+                                    child: Icon(
+                                      _obscured
+                                          ? Icons.visibility_off_rounded
+                                          : Icons.visibility_rounded, color: const Color(0xFF095D40),
+                                      size: 24,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
 
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
