@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:local_et_toi/Routes/generated_routes.dart';
 import 'package:local_et_toi/views/sign_in.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Scaffold(
@@ -20,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Local & Toi',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/landing_page',
+      initialRoute: '/home_page',
       onGenerateRoute: RouteGenerator().generateRoute,
     );
   }
