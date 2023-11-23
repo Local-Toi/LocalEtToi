@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_et_toi/Routes/generated_routes.dart';
 import 'package:local_et_toi/views/sign_in.dart';
 
 void main() {
