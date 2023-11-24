@@ -1,3 +1,7 @@
+void main() => runApp(const App());
+
+/*
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:local_et_toi/Routes/generated_routes.dart';
@@ -31,3 +35,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+*/
