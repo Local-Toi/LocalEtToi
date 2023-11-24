@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/login/login.dart';
 import 'package:formz/formz.dart';
+import 'package:local_et_toi/login/bloc/login_bloc.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -43,12 +43,10 @@ class _UsernameInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_usernameInput_textField'),
-          onChanged: (username) =>
-              context.read<LoginBloc>().add(LoginUsernameChanged(username)),
+          onChanged: (username) => context.read<LoginBloc>().add(LoginUsernameChanged(username)),
           decoration: InputDecoration(
             labelText: 'username',
-            errorText:
-                state.username.displayError != null ? 'invalid username' : null,
+            errorText: state.username.displayError != null ? 'invalid username' : null,
           ),
         );
       },
@@ -64,13 +62,11 @@ class _PasswordInput extends StatelessWidget {
       builder: (context, state) {
         return TextField(
           key: const Key('loginForm_passwordInput_textField'),
-          onChanged: (password) =>
-              context.read<LoginBloc>().add(LoginPasswordChanged(password)),
+          onChanged: (password) => context.read<LoginBloc>().add(LoginPasswordChanged(password)),
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'password',
-            errorText:
-                state.password.displayError != null ? 'invalid password' : null,
+            errorText: state.password.displayError != null ? 'invalid password' : null,
           ),
         );
       },
