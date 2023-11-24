@@ -1,8 +1,9 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:local_et_toi/login/login.dart';
 import 'package:formz/formz.dart';
+import 'package:local_et_toi/login/models/password.dart';
+import 'package:local_et_toi/login/models/username.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

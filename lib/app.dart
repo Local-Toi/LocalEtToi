@@ -1,10 +1,10 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/authentication/authentication.dart';
-import 'package:local_et_toi/home/home.dart';
-import 'package:local_et_toi/login/login.dart';
-import 'package:local_et_toi/splash/splash.dart';
+import 'package:local_et_toi/authentication/bloc/authentication_bloc.dart';
+import 'package:local_et_toi/home/view/home_page.dart';
+import 'package:local_et_toi/login/view/login_page.dart';
+import 'package:local_et_toi/splash/view/splash_page.dart';
 import 'package:user_repository/user_repository.dart';
 
 class App extends StatefulWidget {
