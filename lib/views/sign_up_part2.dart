@@ -1,16 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/views/sign_up_part1.dart';
 
+import '../Bloc/signup/signup.dart';
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
 import 'landing_page_connexion.dart';
 
 class SignUpPage2 extends StatefulWidget {
   const SignUpPage2({super.key, required this.identifiant, required this.nom, required this.prenom, required this.email});
-  final String identifiant;
-  final String nom;
-  final String prenom;
-  final String email;
+  final String identifiant, nom, prenom, email;
 
   @override
   _SignUpPageState2 createState() => _SignUpPageState2();
@@ -71,7 +72,17 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                           width: 300,
                           height: 40,
                           child: GreenRoundedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.read<SignUpBloc>().add(
+                                SignUpPressed(
+                                  identifiant: widget.identifiant,
+                                  nom: widget.nom,
+                                  prenom: widget.prenom,
+                                  email: widget.email,
+                                  password: password,
+                                ),
+                              );
+                            },
                             buttonText: 'S\'inscrire',
                           )
                       )
