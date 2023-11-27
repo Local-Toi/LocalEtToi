@@ -27,6 +27,7 @@ class AuthenticationRepository {
       const Duration(milliseconds: 300),
       () => _controller.add(AuthenticationStatus.authenticated),
     );*/
+
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: username,
@@ -35,12 +36,16 @@ class AuthenticationRepository {
       _controller.add(AuthenticationStatus.authenticated);
     } on firebase_auth.FirebaseAuthException catch (e) {
       print(e);
-      _controller.add(AuthenticationStatus.unauthenticated);
     }
   }
 
-  void logOut() {
-    _controller.add(AuthenticationStatus.unauthenticated);
+  void logOut() async {
+    try {
+      await _firebaseAuth.signOut();
+      _controller.add(AuthenticationStatus.unauthenticated);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 
   void dispose() => _controller.close();
