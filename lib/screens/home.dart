@@ -151,7 +151,9 @@ class Connexion extends StatelessWidget {
                 left: 331,
                 top: 592,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(3.14),
                   child: Container(
                     width: 274,
                     decoration: ShapeDecoration(

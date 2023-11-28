@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/views/sign_up_part1.dart';
+import 'package:local_et_toi/screens/sign_up_part1.dart';
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
-import 'landing_page_connexion.dart';
+import 'home/home_screen.dart';
 
 class SignUpPage2 extends StatefulWidget {
-  const SignUpPage2({super.key, required this.identifiant, required this.nom, required this.prenom, required this.email});
+  const SignUpPage2(
+      {super.key, required this.identifiant, required this.nom, required this.prenom, required this.email});
   final String identifiant;
   final String nom;
   final String prenom;
@@ -14,11 +15,9 @@ class SignUpPage2 extends StatefulWidget {
 
   @override
   _SignUpPageState2 createState() => _SignUpPageState2();
-
 }
 
 class _SignUpPageState2 extends State<SignUpPage2> {
-
   final formKey = GlobalKey<FormState>();
   late String password, confirmedPassword;
 
@@ -28,7 +27,7 @@ class _SignUpPageState2 extends State<SignUpPage2> {
       body: Container(
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
-        child: Stack (
+        child: Stack(
           children: [
             Positioned(
               left: 16,
@@ -65,35 +64,27 @@ class _SignUpPageState2 extends State<SignUpPage2> {
               left: 0,
               right: 0,
               top: 720,
-              child: (
-                  Center(
-                      child: SizedBox(
-                          width: 300,
-                          height: 40,
-                          child: GreenRoundedButton(
-                            onPressed: () {},
-                            buttonText: 'S\'inscrire',
-                          )
-                      )
-                  )
-              ),
+              child: (Center(
+                  child: SizedBox(
+                      width: 300,
+                      height: 40,
+                      child: GreenRoundedButton(
+                        onPressed: () {},
+                        buttonText: 'S\'inscrire',
+                      )))),
             ),
             Positioned(
               left: 0,
               right: 0,
               top: 720,
-              child: (
-                  Center(
-                      child: SizedBox(
-                          width: 300,
-                          height: 40,
-                          child: GreenRoundedButton(
-                            onPressed: () {},
-                            buttonText: 'S\'inscrire',
-                          )
-                      )
-                  )
-              ),
+              child: (Center(
+                  child: SizedBox(
+                      width: 300,
+                      height: 40,
+                      child: GreenRoundedButton(
+                        onPressed: () {},
+                        buttonText: 'S\'inscrire',
+                      )))),
             ),
             Positioned(
                 left: 0,
@@ -104,10 +95,10 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                     width: 300,
                     child: Form(
                       key: formKey,
-                      child:  Column(
+                      child: Column(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only( bottom: 10),
+                            padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               children: [
                                 Text(
@@ -163,8 +154,7 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Veuillez confirmer votre mot de passe';
-                                }
-                                else if (value != password) {
+                                } else if (value != password) {
                                   return 'Les mots de passe ne sont pas identiques';
                                 }
                                 return null;
@@ -172,20 +162,14 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                               keyboardType: TextInputType.visiblePassword,
                             ),
                           ),
-
                         ],
                       ),
                     ),
                   ),
-                )
-            ),
+                )),
           ],
         ),
       ),
     );
-
   }
-
-
-
 }
