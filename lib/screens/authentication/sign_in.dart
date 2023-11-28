@@ -11,6 +11,7 @@ import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
+import 'package:user_repository/user_repository.dart';
 
 import '../home/home_screen.dart';
 import '../forgot_password.dart';
@@ -116,6 +117,13 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                           // get email and password form fields
                           formKey.currentState!.save();
                           context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
+                          if (context.read<SignInBloc>().state is SignInSuccess) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const LoadingView(),
+                              ),
+                            );
+                          }
                         }
                       },
                       buttonText: 'Se connecter',
