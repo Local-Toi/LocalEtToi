@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/views/sign_up_part2.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:local_et_toi/screens/home/landing_page_connexion.dart';
+import 'package:local_et_toi/screens/sign_up_part2.dart';
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
-import 'landing_page_connexion.dart';
 
 class SignUpPage1 extends StatefulWidget {
-const SignUpPage1({super.key});
+  const SignUpPage1({super.key});
 
-@override
-_SignUpPageState1 createState() => _SignUpPageState1();
-
+  @override
+  _SignUpPageState1 createState() => _SignUpPageState1();
 }
 
- class _SignUpPageState1 extends State<SignUpPage1> {
+class _SignUpPageState1 extends State<SignUpPage1> {
+  final formKey = GlobalKey<FormState>();
+  late String identifiant, nom, prenom, email;
 
-   final formKey = GlobalKey<FormState>();
-   late String identifiant, nom, prenom, email;
+  bool validateForm() {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      return true;
+    }
+    return false;
+  }
 
-   bool validateForm() {
-     if (formKey.currentState!.validate()) {
-       formKey.currentState!.save();
-       return true;
-     }
-     return false;
-   }
-
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
-        child: Stack (
+        child: Stack(
           children: [
             Positioned(
               left: 16,
@@ -69,26 +68,27 @@ _SignUpPageState1 createState() => _SignUpPageState1();
               left: 0,
               right: 0,
               top: 720,
-              child: (
-                Center(
+              child: (Center(
                   child: SizedBox(
-                    width: 300,
-                    height: 40,
-                    child: GreenRoundedButton(
-                      onPressed: () {
-                        if(validateForm()) {
-                          Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => SignUpPage2(identifiant: identifiant, nom: nom, prenom: prenom, email: email,),
-                          ),
-                        );
-                        }
-                      },
-                      buttonText: 'S\'inscrire',
-                    )
-                  )
-                )
-              ),
+                      width: 300,
+                      height: 40,
+                      child: GreenRoundedButton(
+                        onPressed: () {
+                          if (validateForm()) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => SignUpPage2(
+                                  identifiant: identifiant,
+                                  nom: nom,
+                                  prenom: prenom,
+                                  email: email,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        buttonText: 'S\'inscrire',
+                      )))),
             ),
             Positioned(
                 left: 0,
@@ -99,10 +99,10 @@ _SignUpPageState1 createState() => _SignUpPageState1();
                     width: 300,
                     child: Form(
                       key: formKey,
-                      child:  Column(
+                      child: Column(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only( bottom: 10),
+                            padding: EdgeInsets.only(bottom: 10),
                             child: Row(
                               children: [
                                 Text(
@@ -222,6 +222,8 @@ _SignUpPageState1 createState() => _SignUpPageState1();
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Veuillez entrer votre email';
+                                } else if (!EmailValidator.validate(value)) {
+                                  return 'Veuillez entrer une adresse e-mail valide';
                                 }
                                 return null;
                               },
@@ -232,15 +234,10 @@ _SignUpPageState1 createState() => _SignUpPageState1();
                       ),
                     ),
                   ),
-                )
-            ),
+                )),
           ],
         ),
       ),
     );
-
   }
-
-
-
 }

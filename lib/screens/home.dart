@@ -31,7 +31,7 @@ class Connexion extends StatelessWidget {
           width: 390,
           height: 844,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFFFFBE2)),
+          decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
           child: Stack(
             children: [
               Positioned(
@@ -40,7 +40,7 @@ class Connexion extends StatelessWidget {
                 child: Container(
                   width: 299,
                   height: 41,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Color(0x3F095D40),
@@ -50,7 +50,7 @@ class Connexion extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Stack(
+                  child: const Stack(
                     children: [
                       Positioned(
                         left: 0,
@@ -81,7 +81,7 @@ class Connexion extends StatelessWidget {
                 child: Container(
                   width: 299,
                   height: 41,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Color(0x3F000000),
@@ -91,7 +91,7 @@ class Connexion extends StatelessWidget {
                       )
                     ],
                   ),
-                  child: Stack(
+                  child: const Stack(
                     children: [
                       Positioned(
                         left: 0,
@@ -122,7 +122,7 @@ class Connexion extends StatelessWidget {
                 child: Container(
                   width: 299,
                   height: 41,
-                  child: Stack(
+                  child: const Stack(
                     children: [
                       Positioned(
                         left: 0,
@@ -151,10 +151,12 @@ class Connexion extends StatelessWidget {
                 left: 331,
                 top: 592,
                 child: Transform(
-                  transform: Matrix4.identity()..translate(0.0, 0.0)..rotateZ(3.14),
+                  transform: Matrix4.identity()
+                    ..translate(0.0, 0.0)
+                    ..rotateZ(3.14),
                   child: Container(
                     width: 274,
-                    decoration: ShapeDecoration(
+                    decoration: const ShapeDecoration(
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 1,
@@ -179,7 +181,7 @@ class Connexion extends StatelessWidget {
                       Container(
                         width: 300,
                         height: 300,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage("https://via.placeholder.com/300x300"),
                             fit: BoxFit.fill,

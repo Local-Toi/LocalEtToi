@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/Bloc/navigation_bloc/navigation_bloc.dart';
-import 'package:local_et_toi/views/navigation.dart';
+import 'package:local_et_toi/blocs/navigation_bloc/navigation_bloc.dart';
+import 'package:local_et_toi/screens/home.dart';
+import 'package:local_et_toi/screens/navigation.dart';
 
 class RouteGenerator {
   final NavigationBloc navigationBloc = NavigationBloc();
@@ -14,6 +15,9 @@ class RouteGenerator {
                   value: navigationBloc,
                   child: const Navigation(),
                 ));
+
+      case '/home_page':
+        return MaterialPageRoute(builder: (_) => const HomeView());
 
       default:
         return _errorRoute();
