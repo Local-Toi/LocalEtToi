@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:user_repository/src/entities/entities.dart';
+
+import '../entities/entities.dart';
 
 class MyUser extends Equatable {
   const MyUser({required this.id, this.email, this.firstName, this.lastName});
