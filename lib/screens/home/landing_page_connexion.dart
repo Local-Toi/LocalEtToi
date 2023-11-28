@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/screens/home/sign_in.dart';
-import 'package:local_et_toi/screens/sign_up_part1.dart';
+import 'package:local_et_toi/screens/authentication/sign_in.dart';
+import 'package:local_et_toi/screens/authentication/sign_up_part1.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 
 class MainView extends StatelessWidget {

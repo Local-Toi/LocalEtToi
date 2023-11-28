@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/Bloc/signup/signUpBloc.dart';
-import 'package:local_et_toi/screens/sign_up_part1.dart';
+import 'package:local_et_toi/screens/authentication/sign_up_part1.dart';
 
-import '../utils/buttons/buttons.dart';
+import '../../utils/buttons/buttons.dart';
 
 class SignUpPage2 extends StatefulWidget {
   const SignUpPage2({

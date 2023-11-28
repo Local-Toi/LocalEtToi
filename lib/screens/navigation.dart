@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/navigation_bloc/navigation_bloc.dart';
+import 'package:local_et_toi/screens/discover/discover_lp.dart';
+import 'package:local_et_toi/screens/favorites/favorites_lp.dart';
+import 'package:local_et_toi/screens/map/map_lp.dart';
+import 'package:local_et_toi/screens/search/search_lp.dart';
+
+import 'profile/profile_lp.dart';
 
 List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
   BottomNavigationBarItem(
@@ -27,11 +33,11 @@ List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
 ];
 
 const List<Widget> bottomNavScreen = <Widget>[
-  Text('Home'),
-  Text('Map'),
-  Text('Favorites'),
-  Text('Search'),
-  Text('Profile'),
+  DiscoverLP(),
+  MapLP(),
+  FavoritesLP(),
+  SearchLP(),
+  ProfileLP(),
 ];
 
 class Navigation extends StatelessWidget {
@@ -39,27 +45,30 @@ class Navigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NavigationBloc, NavigationState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          body: Center(child: bottomNavScreen.elementAt(state.tabIndex)),
-          bottomNavigationBar: BottomNavigationBar(
-            items: bottomNavItems,
-            currentIndex: state.tabIndex,
-            selectedItemColor: Color(0xFF095D40),
-            unselectedItemColor: Colors.black,
-            // do not show the label
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            // keep icons in place when tapped
-            type: BottomNavigationBarType.fixed,
-            onTap: (index) {
-              BlocProvider.of<NavigationBloc>(context).add(TabChange(tabIndex: index));
-            },
-          ),
-        );
-      },
+    return BlocProvider(
+      create: (context) => NavigationBloc(),
+      child: BlocConsumer<NavigationBloc, NavigationState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            body: Center(child: bottomNavScreen.elementAt(state.tabIndex)),
+            bottomNavigationBar: BottomNavigationBar(
+              items: bottomNavItems,
+              currentIndex: state.tabIndex,
+              selectedItemColor: Color(0xFF095D40),
+              unselectedItemColor: Colors.black,
+              // do not show the label
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              // keep icons in place when tapped
+              type: BottomNavigationBarType.fixed,
+              onTap: (index) {
+                BlocProvider.of<NavigationBloc>(context).add(TabChange(tabIndex: index));
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

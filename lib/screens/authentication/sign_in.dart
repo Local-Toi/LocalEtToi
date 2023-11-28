@@ -11,7 +11,7 @@ import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
 
-import 'home_screen.dart';
+import '../home/home_screen.dart';
 import '../forgot_password.dart';
 
 class SignInPage extends StatefulWidget {
