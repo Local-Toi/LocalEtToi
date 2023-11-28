@@ -42,9 +42,10 @@ dependencies:
   flutter_login: ^4.2.1
   google_fonts: ^6.1.0
 
-  flutter_bloc: ^8.0.0
+  flutter_bloc: ^7.0.0
   firebase_auth: ^4.14.0
   cloud_firestore: ^4.13.1
+  firebase_core: ^2.23.0
 
 dev_dependencies:
   flutter_test:

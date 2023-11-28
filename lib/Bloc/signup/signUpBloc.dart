@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +12,7 @@ class SignUpPressed extends SignUpEvent {
   final String prenom;
   final String email;
   final String password;
+  final bool isProducer;
 
   SignUpPressed({
     required this.identifiant,
@@ -17,6 +20,7 @@ class SignUpPressed extends SignUpEvent {
     required this.prenom,
     required this.email,
     required this.password,
+    required this.isProducer,
   });
 }
 
@@ -52,12 +56,17 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
         var userId = authResult.user!.uid;
 
+        log('User ID: $userId');
+
         await _firestore.collection('users').doc(userId).set({
           'identifiant': event.identifiant,
           'nom': event.nom,
           'prenom': event.prenom,
           'email': event.email,
+          'isProducer': event.isProducer,
         });
+
+        log('User data added to Firestore.');
 
         yield SignUpSuccess();
       } catch (e) {

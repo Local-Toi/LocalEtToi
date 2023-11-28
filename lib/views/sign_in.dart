@@ -10,7 +10,7 @@ import 'package:local_et_toi/views/loading.dart';
 import 'landing_page_connexion.dart';
 import 'forgot_password.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MaterialApp(
     home: Scaffold(
       body: SignInPage(),
