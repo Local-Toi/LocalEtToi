@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/views/sign_up_part2.dart';
+import 'package:email_validator/email_validator.dart';
+
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
 import 'landing_page_connexion.dart';
+
 
 class SignUpPage1 extends StatefulWidget {
 const SignUpPage1({super.key});
@@ -222,6 +225,8 @@ _SignUpPageState1 createState() => _SignUpPageState1();
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Veuillez entrer votre email';
+                                } else if (!EmailValidator.validate(value)) {
+                                  return 'Veuillez entrer une adresse e-mail valide';
                                 }
                                 return null;
                               },
