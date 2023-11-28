@@ -5,7 +5,6 @@ import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/screens/home/sign_in.dart';
 import 'package:local_et_toi/screens/sign_up_part1.dart';
-import 'package:user_repository/user_repository.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

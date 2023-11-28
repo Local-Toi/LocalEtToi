@@ -2,15 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
 import 'package:local_et_toi/model/user.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
-import 'package:user_repository/user_repository.dart';
 
 import 'home_screen.dart';
 import '../forgot_password.dart';
@@ -106,15 +105,6 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                         // get email and password form fields
                         formKey.currentState!.save();
                         context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
-                        //if context.read<SignInBloc>().state is SignInSuccess return LoadingView();
-
-                        if (context.read<SignInBloc>().state is SignInSuccess) {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const LoadingView(),
-                            ),
-                          );
-                        }
                       }
                     },
                     buttonText: 'Se connecter',
