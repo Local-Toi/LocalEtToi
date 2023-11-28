@@ -50,6 +50,7 @@ dependencies:
   flutter_login: ^4.2.1
   google_fonts: ^6.1.0
 
+<<<<<<< HEAD
   flutter_bloc: ^7.0.0
   firebase_auth: ^4.14.0
   cloud_firestore: ^4.13.1
@@ -58,6 +59,13 @@ dependencies:
   email_validator: ^2.1.16
   flutter_pw_validator: ^1.6.0
 
+=======
+  # Firebase
+  firebase_auth: ^4.14.0
+  cloud_firestore: ^4.13.1
+  firebase_app_check: ^0.2.1+5
+  firebase_core: ^2.23.0
+>>>>>>> a2e943e9874958533f5f98f65c70f9295e8150c9
 
 dev_dependencies:
   flutter_test:

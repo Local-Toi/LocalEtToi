@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/screens/sign_up_part1.dart';
+<<<<<<< HEAD
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+=======
+>>>>>>> a2e943e9874958533f5f98f65c70f9295e8150c9
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
@@ -184,5 +187,9 @@ class _SignUpPageState2 extends State<SignUpPage2> {
           ],
         ),
       ),
+<<<<<<< HEAD
+=======
+    );
+>>>>>>> a2e943e9874958533f5f98f65c70f9295e8150c9
   }
 }
