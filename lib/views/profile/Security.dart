@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:local_et_toi/utils/buttons/buttons.dart';
 
 void main()  {
   runApp(const MaterialApp(
@@ -22,7 +23,28 @@ class _SecurityViewState extends State<SecurityView> {
     return Scaffold(
         body: Container(
           clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(color : constants.beige)
+          decoration: const BoxDecoration(color : constants.beige),
+            child: Stack(
+              children: [
+                  Positioned(
+                    top: 82,
+                    child: Image.asset("assets/images/logo1.png")
+        ),
+                  Positioned(
+                      child: GreenRoundedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const SecurityView(),
+                              ),
+                            );
+                          },
+                          buttonText: 'Sécurité'
+          )
+      )
+      ],
+    ),
+
 
         )
     );
