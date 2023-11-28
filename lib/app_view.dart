@@ -15,7 +15,8 @@ class MyAppView extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state.status == AuthenticationStatus.authenticated) {
-            return Text("Authenticated");
+            //return Text("Authenticated");
+            return const HomeScreen(); // TEST
           }
           return const HomeScreen();
         },
