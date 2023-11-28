@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class GreenTextFieldWithGreenerBorder extends StatelessWidget {
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
+  final TextEditingController? controller;
   final TextInputType keyboardType;
 
   const GreenTextFieldWithGreenerBorder({
     super.key,
     this.onSaved,
     this.validator,
+    this.controller,
     required this.keyboardType,
   });
 
@@ -19,6 +21,7 @@ class GreenTextFieldWithGreenerBorder extends StatelessWidget {
       height: 45,
       child: TextFormField(
         onSaved: onSaved,
+        controller: controller,
         validator: validator,
         keyboardType: keyboardType,
         decoration: InputDecoration(

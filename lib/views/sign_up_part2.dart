@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/views/sign_up_part1.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+
 
 import '../bloc/signup/signUpBloc.dart';
 import '../utils/buttons/buttons.dart';
@@ -27,6 +29,26 @@ class _SignUpPageState2 extends State<SignUpPage2> {
   final formKey = GlobalKey<FormState>();
   late String password, confirmedPassword;
   late SignUpBloc signUpBloc;
+  late bool _obscured1 = true;
+  late bool _obscured2 = true;
+  final textFieldFocusNode1 = FocusNode();
+  final textFieldFocusNode2 = FocusNode();
+
+  void _toggleObscured1() {
+    setState(() {
+      _obscured1 = !_obscured1;
+      if (textFieldFocusNode1.hasPrimaryFocus) return;
+      textFieldFocusNode1.canRequestFocus = false;
+    });
+  }
+
+  void _toggleObscured2() {
+    setState(() {
+      _obscured2 = !_obscured2;
+      if (textFieldFocusNode2.hasPrimaryFocus) return;
+      textFieldFocusNode2.canRequestFocus = false;
+    });
+  }
 
   @override
   void initState() {
@@ -163,8 +185,10 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                               SizedBox(
                                 width: 355,
                                 height: 45,
-                                child: GreenTextFieldWithGreenerBorder(
+                                child: TextFormField(
                                   onSaved: (val) => password = val!,
+                                  obscureText: _obscured1,
+                                  focusNode: textFieldFocusNode1,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Veuillez entrer un mot de passe';
@@ -172,6 +196,35 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                                     return null;
                                   },
                                   keyboardType: TextInputType.visiblePassword,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0x2640B65D),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      child: GestureDetector(
+                                        onTap: _toggleObscured1,
+                                        child: Icon(
+                                          _obscured1
+                                              ? Icons.visibility_off_rounded
+                                              : Icons.visibility_rounded, color: const Color(0xFF095D40),
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -195,8 +248,10 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                               SizedBox(
                                 width: 355,
                                 height: 45,
-                                child: GreenTextFieldWithGreenerBorder(
+                                child: TextFormField(
                                   onSaved: (val) => confirmedPassword = val!,
+                                  obscureText: _obscured2,
+                                  focusNode: textFieldFocusNode2,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Veuillez confirmer votre mot de passe';
@@ -206,6 +261,35 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                                     return null;
                                   },
                                   keyboardType: TextInputType.visiblePassword,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0x2640B65D),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                      child: GestureDetector(
+                                        onTap: _toggleObscured2,
+                                        child: Icon(
+                                          _obscured2
+                                              ? Icons.visibility_off_rounded
+                                              : Icons.visibility_rounded, color: const Color(0xFF095D40),
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
                                 ),
                               ),
                             ],

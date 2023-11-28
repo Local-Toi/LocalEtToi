@@ -76,6 +76,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         yield SignUpSuccess();
       } catch (e) {
         yield SignUpError(error: e.toString());
+        log(e.toString());
       }
     }
   }
