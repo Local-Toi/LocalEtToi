@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/views/profile/Security.dart';
+import 'package:local_et_toi/views/profile/about.dart';
+import 'package:local_et_toi/views/profile/assistance.dart';
+import 'package:local_et_toi/views/profile/cgu.dart';
 
 void main()  {
   runApp(const MaterialApp(
@@ -27,11 +30,25 @@ class _SettingsPageState extends State<SettingsPage> {
           decoration: const BoxDecoration(color : constants.beige),
           child: Stack(
             children: [
-              Positioned(
-                  top: 82,
-                  child: Image.asset("assets/images/logo1.png")
+              Container(
+                alignment : const FractionalOffset(0.90, 0.03),
+                child: IconButton(
+                  icon: const Icon(Icons.help, size : 50),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const AssistancePage(),
+                      ),
+                    );
+                  },
+                ),
               ),
-              Positioned(
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.09),
+                      child: Image.asset("assets/images/logo1.png", scale: 1)
+              ),
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.45),
                 child: GreenRoundedButton(
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
@@ -42,6 +59,58 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                     buttonText: 'Sécurité'
                     )
+              ),
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.55),
+                  child: GreenRoundedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const CGUView(),
+                          ),
+                        );
+                      },
+                      buttonText: 'CGU'
+                  )
+              ),
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.65),
+                  child: GreenRoundedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const AboutView(),
+                          ),
+                        );
+                      },
+                      buttonText: 'A propos'
+                  )
+              ),
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.75),
+                  child: GreenRoundedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const SecurityView(),
+                          ),
+                        );
+                      },
+                      buttonText: 'Tu es producteur ?'
+                  )
+              ),
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.75),
+                  child: GreenRoundedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const SecurityView(),
+                          ),
+                        );
+                      },
+                      buttonText: 'Supprimer le compte'
+                  )
               )
             ],
           ),
