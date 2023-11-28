@@ -87,4 +87,14 @@ class FirebaseUserRepository implements UserRepository {
       return user;
     });
   }
+
+  @override
+  Future<void> setUserData(MyUser user) {
+    try {
+      return usersCollection.doc(user.id).set(user.toEntity().toDocument());
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }
