@@ -1,22 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:local_et_toi/components/strings.dart';
 import 'package:local_et_toi/model/user.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
+import 'package:user_repository/user_repository.dart';
 
 import 'home_screen.dart';
 import '../forgot_password.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: SignInPage(),
-    ),
-  ));
-}
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -35,23 +32,8 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   final textFieldFocusNode = FocusNode();
   late LoginResponse loginResponse;
 
-  /*TextEditingController emailController =
-  TextEditingController(text: 'user@example.com');
-  TextEditingController passwordController =
-  TextEditingController(text: 'password123');*/
-
   _SignInPageState() {
     loginResponse = LoginResponse(this);
-  }
-
-  void _submit() {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      setState(() {
-        form.save();
-        loginResponse.doLogin(username, password);
-      });
-    }
   }
 
   void _toggleObscured() {
@@ -120,7 +102,20 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                   height: 40,
                   child: GreenRoundedButton(
                     onPressed: () {
-                      _submit();
+                      if (formKey.currentState!.validate()) {
+                        // get email and password form fields
+                        formKey.currentState!.save();
+                        context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
+                        //if context.read<SignInBloc>().state is SignInSuccess return LoadingView();
+
+                        if (context.read<SignInBloc>().state is SignInSuccess) {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const LoadingView(),
+                            ),
+                          );
+                        }
+                      }
                     },
                     buttonText: 'Se connecter',
                   ),
@@ -187,6 +182,8 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Veuillez entrer une adresse email';
+                                  } else if (!emailRegExp.hasMatch(value)) {
+                                    return 'Veuillez entrer une adresse email valide';
                                   }
                                   return null;
                                 },
@@ -222,6 +219,8 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Veuillez entrer un mot de passe';
+                                  } else if (!passwordRegExp.hasMatch(value)) {
+                                    return 'Veuillez entrer un mot de passe valide';
                                   }
                                   return null;
                                 },
