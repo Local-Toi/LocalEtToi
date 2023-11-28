@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:local_et_toi/screens/home/landing_page_connexion.dart';
 import 'package:local_et_toi/screens/sign_up_part2.dart';
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
-import 'home/home_screen.dart';
 
 class SignUpPage1 extends StatefulWidget {
   const SignUpPage1({super.key});
@@ -40,7 +41,7 @@ class _SignUpPageState1 extends State<SignUpPage1> {
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
+                      builder: (context) => const MainView(),
                     ),
                   );
                 },
