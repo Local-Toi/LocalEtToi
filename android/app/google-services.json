@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "24247266424",
+    "project_id": "local-et-toi",
+    "storage_bucket": "local-et-toi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24247266424:android:52571e12aaa01788c3918d",
+        "android_client_info": {
+          "package_name": "com.example.local_et_toi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24247266424-0q6plcrjk9886t0egfkf3ak82dhjki21.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgXb91w0fWcihfGcPoCzqnoU-XsO8eKv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24247266424-0q6plcrjk9886t0egfkf3ak82dhjki21.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "24247266424-ku3lsqkfhjl5guihkt839ng7e1e68rv5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.localEtToi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

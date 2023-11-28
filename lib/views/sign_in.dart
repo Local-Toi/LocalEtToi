@@ -10,7 +10,7 @@ import 'package:local_et_toi/views/loading.dart';
 import 'landing_page_connexion.dart';
 import 'forgot_password.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MaterialApp(
     home: Scaffold(
       body: SignInPage(),
@@ -216,7 +216,6 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                             height: 45,
                             child: TextFormField(
                               onSaved: (val) => password = val!,
-                              //controller: passwordController,
                               obscureText: _obscured,
                               focusNode: textFieldFocusNode,
                               validator: (value) {
