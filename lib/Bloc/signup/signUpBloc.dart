@@ -46,14 +46,19 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
+    log("state initial");
     if (event is SignUpPressed) {
       yield SignUpLoading();
+      log("state loading");
       try {
+        log("simple auth");
+        log(event.email);
+        log(event.password);
         var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
           email: event.email,
           password: event.password,
         );
-
+        log("post simple auth");
         var userId = authResult.user!.uid;
 
         log('User ID: $userId');

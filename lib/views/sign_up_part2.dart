@@ -25,7 +25,7 @@ class SignUpPage2 extends StatefulWidget {
 
 class _SignUpPageState2 extends State<SignUpPage2> {
   final formKey = GlobalKey<FormState>();
-  late String password = '', confirmedPassword = '';
+  late String password, confirmedPassword;
   late SignUpBloc signUpBloc;
 
   @override
@@ -89,6 +89,7 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                           onPressed: () {
                             log(widget.identifiant);
                             if (state is SignUpInitial) {
+                              formKey.currentState!.save();
                               log("if");
                               context.read<SignUpBloc>().add(
                                 SignUpPressed(
