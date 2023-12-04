@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@main
       - uses: subosito/flutter-action@v2
         with:
-          java-version: '19.x'
+          flutter-version: '3.13.4'
       - run: flutter pub get
       - run: flutter build apk
