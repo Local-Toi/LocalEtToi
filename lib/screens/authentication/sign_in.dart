@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/app_view.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
 import 'package:local_et_toi/model/user.dart';
@@ -93,13 +94,11 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                         formKey.currentState!.save();
                         context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
 
-                        if (context.read<SignInBloc>().state is SignInSuccess) {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const Navigation(),
-                            ),
-                          );
-                        }
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const MyAppView(),
+                          ),
+                        );
                       }
                     },
                     buttonText: 'Se connecter',
