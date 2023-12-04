@@ -6,6 +6,7 @@ import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import 'home_screen.dart';
 import '../forgot_password.dart';
@@ -22,10 +23,10 @@ class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  SignInPageState createState() => SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> implements LoginCallBack {
+class SignInPageState extends State<SignInPage> implements LoginCallBack {
   late BuildContext _context;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -40,7 +41,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   TextEditingController passwordController =
   TextEditingController(text: 'password123');*/
 
-  _SignInPageState() {
+  SignInPageState() {
     loginResponse = LoginResponse(this);
   }
 
@@ -66,15 +67,13 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        //width: 390,
-        //height: 844,
         clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
+        decoration: const BoxDecoration(color: constants.beige),
         child: Stack(
           children: [
             Positioned(
-              top: 16,
-              left: 16,
+              /**top: 16,
+              left: 16,*/
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
@@ -98,13 +97,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                   children: [
                     Text(
                       'Connexion',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                      ),
+                      style: constants.titre,
                     ),
                   ],
                 ),
