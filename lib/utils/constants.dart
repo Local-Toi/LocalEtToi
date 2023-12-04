@@ -42,7 +42,7 @@ const TextStyle titreBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 24, c
 
 const TextStyle textBigBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 20, color : beige);
 
-const TextStyle textBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 18, color : beige);
+const TextStyle textBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 18, color : beige, fontWeight: FontWeight.w600);
 
 const TextStyle textMediumBeige  = TextStyle(fontFamily: 'Montserrat', fontSize: 14, color : beige);
 
