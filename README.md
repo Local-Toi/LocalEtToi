@@ -1,5 +1,10 @@
 # local_et_toi
 
+```
+firebase login
+dart pub global activate flutterfire_cli
+flutterfire configure
+```
 A new Flutter project.
 
 ## Getting Started

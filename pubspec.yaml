@@ -28,9 +28,17 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  #authentication_repository:
+  #  path: packages/authentication_repository
+  bloc: ^8.1.0
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
   sqflite: ^2.3.0
+  flutter_bloc: ^8.1.1
+  formz: ^0.6.0
+  user_repository:
+    path: packages/user_repository
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -42,9 +50,13 @@ dependencies:
   flutter_login: ^4.2.1
   google_fonts: ^6.1.0
 
-  flutter_bloc: ^8.0.0
   firebase_auth: ^4.14.0
   cloud_firestore: ^4.13.1
+  firebase_core: ^2.23.0
+
+  email_validator: ^2.1.16
+  flutter_pw_validator: ^1.6.0
+
 
 dev_dependencies:
   flutter_test:
