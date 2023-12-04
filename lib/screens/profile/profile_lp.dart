@@ -11,7 +11,7 @@ class ProfileLP extends StatelessWidget {
     // return logout button
     return ElevatedButton(
       onPressed: () {
-        print("logout");
+        print("logout TODO");
       },
       child: const Text('Logout'),
     );
