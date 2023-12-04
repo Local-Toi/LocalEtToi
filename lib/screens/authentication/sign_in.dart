@@ -78,47 +78,24 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                   },
                 ),
               ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 655,
-              child: Center(
-                child: SizedBox(
-                  width: 300,
-                  height: 40,
-                  child: GreenRoundedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        // get email and password form fields
-                        formKey.currentState!.save();
-                        context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
-
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const MyAppView(),
-                          ),
-                        );
-                      }
-                    },
-                    buttonText: 'Se connecter',
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 720,
-              child: Center(
-                child: SizedBox(
-                  width: 300,
-                  height: 40,
-                  child: TransparentRoundedButtonWithBorder(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => ForgotPasswordPage(),
+              const Positioned(
+                left: 0,
+                right: 0,
+                top: 39,
+                child: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Connexion',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
                         ),
                       ),
                     ],
