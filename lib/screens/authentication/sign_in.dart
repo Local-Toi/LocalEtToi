@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/app_view.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
 import 'package:local_et_toi/model/user.dart';
 import 'package:local_et_toi/screens/navigation.dart';
