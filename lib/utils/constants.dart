@@ -26,7 +26,7 @@ const Color taupe = Color(0xFF7D7171);
 
 const TextStyle logo = TextStyle(fontFamily: 'CinzelDecorative', fontSize: 50);
 
-const TextStyle titre = TextStyle(fontFamily: 'Montserrat', fontSize: 24);
+const TextStyle titre = TextStyle(fontFamily: 'Montserrat', fontSize: 24, fontWeight: FontWeight.w600);
 
 const TextStyle textBig = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
 
@@ -59,4 +59,5 @@ const TextStyle textDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 18
 const TextStyle textMediumDarkGreen  = TextStyle(fontFamily: 'Montserrat', fontSize: 14, color : darkGreen);
 
 const TextStyle textSmallDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 8, color : darkGreen);
+
 
