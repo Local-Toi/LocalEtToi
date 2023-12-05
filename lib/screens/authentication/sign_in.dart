@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/app_view.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
 import 'package:local_et_toi/model/user.dart';
@@ -11,18 +10,16 @@ import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
-
-import '../home/home_screen.dart';
 import '../forgot_password.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  SignInPageState createState() => SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> implements LoginCallBack {
+class SignInPageState extends State<SignInPage> implements LoginCallBack {
   late BuildContext _context;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -32,7 +29,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   final textFieldFocusNode = FocusNode();
   late LoginResponse loginResponse;
 
-  _SignInPageState() {
+  SignInPageState() {
     loginResponse = LoginResponse(this);
   }
 
