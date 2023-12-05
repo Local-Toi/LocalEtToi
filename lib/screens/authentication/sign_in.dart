@@ -8,7 +8,7 @@ import 'package:local_et_toi/model/user.dart';
 import 'package:local_et_toi/screens/navigation.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
-import 'package:local_et_toi/utils/textfields/textdields.dart';
+import 'package:local_et_toi/utils/textfields/textfields.dart';
 import 'package:local_et_toi/screens/loading.dart';
 import '../forgot_password.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
@@ -73,7 +73,11 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
           decoration: const BoxDecoration(color: constants.beige),
           child: Stack(
             children: [
+
+              //arrow back
               arrow_back.ArrowBack(onPressed: onPressed),
+
+              //Title
               const Positioned(
                 left: 0,
                 right: 0,
@@ -92,51 +96,8 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                   ),
                 ),
               ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 655,
-                child: Center(
-                  child: SizedBox(
-                    child: GreenRoundedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          // get email and password form fields
-                          formKey.currentState!.save();
-                          context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
-                          if (context.read<SignInBloc>().state is SignInSuccess) {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const LoadingView(),
-                              ),
-                            );
-                          }
-                        }
-                      },
-                      buttonText: 'Se connecter',
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 720,
-                child: Center(
-                  child: SizedBox(
-                    child: TransparentRoundedButtonWithBorder(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(),
-                          ),
-                        );
-                      },
-                      buttonText: 'Mot de passe oublié',
-                    ),
-                  ),
-                ),
-              ),
+
+              //input email address and password
               Stack(
                 children: [
                   Positioned(
@@ -145,12 +106,14 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                     top: 133,
                     child: Center(
                       child: SizedBox(
-                        width: 390,
+                        width: MediaQuery.of(context).size.width / 1.1,
                         height: 300,
                         child: Form(
                           key: formKey,
                           child: Column(
                             children: [
+
+                              //input email address
                               const Padding(
                                 padding: EdgeInsets.only(left: 17, bottom: 10),
                                 child: Row(
@@ -162,6 +125,8 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                                   ],
                                 ),
                               ),
+
+                              // error message input email address
                               SizedBox(
                                 child: GreenTextFieldWithGreenerBorder(
                                   onSaved: (val) => username = val!,
@@ -173,10 +138,14 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                                     }
                                     return null;
                                   },
-                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardType: TextInputType.emailAddress, obscureText: false, focusNode: null,
                                 ),
                               ),
+
+                              // input separator
                               const SizedBox(height: 16),
+
+                              // input password
                               const Padding(
                                 padding: EdgeInsets.only(left: 17, bottom: 10),
                                 child: Row(
@@ -188,10 +157,10 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                                   ],
                                 ),
                               ),
+
+                              // error message input password + icon
                               SizedBox(
-                                width: 355,
-                                height: 45,
-                                child: TextFormField(
+                                child: GreenTextFieldWithGreenerBorder(
                                   onSaved: (val) => password = val!,
                                   obscureText: _obscured,
                                   focusNode: textFieldFocusNode,
@@ -203,6 +172,7 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                                     }
                                     return null;
                                   },
+
                                   keyboardType: TextInputType.visiblePassword,
                                   decoration: InputDecoration(
                                     filled: true,
@@ -240,6 +210,55 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                     ),
                   ),
                 ],
+              ),
+
+              // connection button
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 655,
+                child: Center(
+                  child: SizedBox(
+                    child: GreenRoundedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          // get email and password form fields
+                          formKey.currentState!.save();
+                          context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
+                          if (context.read<SignInBloc>().state is SignInSuccess) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const LoadingView(),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      buttonText: 'Se connecter',
+                    ),
+                  ),
+                ),
+              ),
+
+              // forgotten password button
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 720,
+                child: Center(
+                  child: SizedBox(
+                    child: TransparentRoundedButtonWithBorder(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage(),
+                          ),
+                        );
+                      },
+                      buttonText: 'Mot de passe oublié',
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

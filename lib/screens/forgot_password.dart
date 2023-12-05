@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_et_toi/screens/authentication/sign_in.dart';
 
 import '../utils/buttons/buttons.dart';
-import '../utils/textfields/textdields.dart';
+import '../utils/textfields/textfields.dart';
 import 'home/home_screen.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
