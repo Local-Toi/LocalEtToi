@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:local_et_toi/cubits/forget_password_cubit/forget_password_cubit.dart';
 import 'package:local_et_toi/screens/authentication/sign_in.dart';
 
 import '../../utils/buttons/buttons.dart';
@@ -131,7 +134,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   width: 300,
                   height: 40,
                   child: GreenRoundedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<ForgetPasswordCubit>().sendPasswordResetEmail(email);
+                    },
                     buttonText: 'Envoyer le lien',
                   ),
                 )))
