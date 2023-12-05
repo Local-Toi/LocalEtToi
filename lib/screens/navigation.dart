@@ -34,7 +34,7 @@ List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
 
 const List<Widget> bottomNavScreen = <Widget>[
   DiscoverLP(),
-  MapLP(),
+  MapLPState(),
   FavoritesLP(),
   SearchLP(),
   ProfileLP(),

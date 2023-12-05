@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_et_toi/utils/constants.dart';
 
 class GreenRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -106,5 +107,61 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
       ),
     );
   }
+}
+
+class TagButton extends StatelessWidget {
+
+  final VoidCallback onPressed;
+  final String buttonText;
+
+  const TagButton({
+    required this.onPressed,
+    required this.buttonText,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Container(
+      width: buttonText.length.toDouble()+100,
+      height: 400,
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 2,
+          color: darkGreen50,
+        ),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        child: SizedBox(
+          width: buttonText.length as double,
+          child: Center(
+            child: Text(
+              buttonText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color(0xFF095D40),
+                fontSize: 14,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
 }
 
