@@ -35,3 +35,28 @@ const TextStyle text = TextStyle(fontFamily: 'Montserrat', fontSize: 18, fontWei
 const TextStyle textMedium  = TextStyle(fontFamily: 'Montserrat', fontSize: 14, fontWeight: FontWeight.w600);
 
 const TextStyle textSmall = TextStyle(fontFamily: 'Montserrat', fontSize: 8);
+
+const TextStyle logoBeige = TextStyle(fontFamily: 'CinzelDecorative', fontSize: 50, color : beige);
+
+const TextStyle titreBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 24, color : beige);
+
+const TextStyle textBigBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 20, color : beige);
+
+const TextStyle textBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 18, color : beige);
+
+const TextStyle textMediumBeige  = TextStyle(fontFamily: 'Montserrat', fontSize: 14, color : beige);
+
+const TextStyle textSmallBeige = TextStyle(fontFamily: 'Montserrat', fontSize: 8, color : beige);
+
+const TextStyle logoDarkGreen = TextStyle(fontFamily: 'CinzelDecorative', fontSize: 50, color : darkGreen);
+
+const TextStyle titreDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 24, color : darkGreen);
+
+const TextStyle textBigDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 20, color : darkGreen);
+
+const TextStyle textDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 18, color : darkGreen);
+
+const TextStyle textMediumDarkGreen  = TextStyle(fontFamily: 'Montserrat', fontSize: 14, color : darkGreen);
+
+const TextStyle textSmallDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 8, color : darkGreen);
+
