@@ -30,8 +30,8 @@ const TextStyle titre = TextStyle(fontFamily: 'Montserrat', fontSize: 24);
 
 const TextStyle textBig = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
 
-const TextStyle text = TextStyle(fontFamily: 'Montserrat', fontSize: 18);
+const TextStyle text = TextStyle(fontFamily: 'Montserrat', fontSize: 18, fontWeight: FontWeight.w600);
 
-const TextStyle textMedium  = TextStyle(fontFamily: 'Montserrat', fontSize: 14);
+const TextStyle textMedium  = TextStyle(fontFamily: 'Montserrat', fontSize: 14, fontWeight: FontWeight.w600);
 
 const TextStyle textSmall = TextStyle(fontFamily: 'Montserrat', fontSize: 8);
