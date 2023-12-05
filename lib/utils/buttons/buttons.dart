@@ -57,6 +57,58 @@ class GreenRoundedButton extends StatelessWidget {
   }
 }
 
+class RedRoundedButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String buttonText;
+
+  const RedRoundedButton({
+    required this.onPressed,
+    required this.buttonText,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 40,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: beige,
+          side: const BorderSide(
+            color: red,
+            width: 1,
+          ),
+          padding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: SizedBox(
+          width: 300,
+          child: Center(
+            child: Text(
+              buttonText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+                height: 0,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class TransparentRoundedButtonWithBorder extends StatelessWidget {
   final VoidCallback onPressed;
   final String buttonText;
