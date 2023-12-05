@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
+import 'package:local_et_toi/screens/forgot_password.dart';
 import 'package:local_et_toi/screens/navigation.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
@@ -9,7 +10,6 @@ import 'package:local_et_toi/utils/textfields/textdields.dart';
 import 'package:local_et_toi/screens/loading.dart';
 
 import '../home/home_screen.dart';
-import '../forgot_password.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -103,14 +103,6 @@ class _SignInPageState extends State<SignInPage> {
                           // get email and password form fields
                           formKey.currentState!.save();
                           context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
-                          print(context);
-                          if (context.read<SignInBloc>().state is SignInSuccess) {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const LoadingView(),
-                              ),
-                            );
-                          }
                         }
                       },
                       buttonText: 'Se connecter',
