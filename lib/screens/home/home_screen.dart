@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
-import 'package:local_et_toi/screens/home/sign_in.dart';
-import 'package:local_et_toi/screens/sign_up_part1.dart';
+import 'package:local_et_toi/screens/authentication/sign_in.dart';
+import 'package:local_et_toi/screens/authentication/sign_up_part1.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,11 +40,24 @@ class HomeScreen extends StatelessWidget {
                 height: 40,
                 child: GreenRoundedButton(
                   onPressed: () {
+                    // BlocProvider.of<SignInBloc>(context).add(SignInEvent());
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider<SignInBloc>(
+                          create: (context) => SignInBloc(
+                            myUserRepository: context.read<AuthenticationBloc>().userRepository,
+                          ),
+                          child: const SignInPage(),
+                        ),
+                      ),
+                    );
+                    /*
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const SignInPage(),
                       ),
                     );
+                    */
                   },
                   buttonText: 'Se connecter',
                 ),

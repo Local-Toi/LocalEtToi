@@ -7,16 +7,16 @@ sealed class SignInEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class signInRequired extends SignInEvent {
+class SignInRequired extends SignInEvent {
   final String email;
   final String password;
 
-  const signInRequired({
+  const SignInRequired({
     required this.email,
     required this.password,
   });
 }
 
-class signOutRequired extends SignInEvent {
-  const signOutRequired();
+class SignOutRequired extends SignInEvent {
+  const SignOutRequired();
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class GreenRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
