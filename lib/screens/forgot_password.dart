@@ -29,11 +29,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const SignInPage(),
-                    ),
-                  );
+                  Navigator.of(context).maybePop();
                 },
               ),
             ),

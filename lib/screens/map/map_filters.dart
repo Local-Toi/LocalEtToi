@@ -26,7 +26,7 @@ class MapFilters extends State<MapFiltersState> {
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.maybePop(context);
                   },
                 ),
                 const Text(
