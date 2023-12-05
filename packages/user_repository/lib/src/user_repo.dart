@@ -5,12 +5,15 @@ abstract class UserRepository {
   Stream<User?> get user;
 
   Future<void> signIn(String email, String password);
-  Future<MyUser> signUp(MyUser user, String password);
+  Future<MyUser> signUp(
+    String email,
+    String password,
+  );
   Future<void> signOut();
   Future<void> resetPassword(String email);
 
   Future<MyUser> getUser(String userId);
-  Future<void> setUserData(MyUser user);
+  Future<void> setUserData(String userId, userData);
 }
 
 /*
