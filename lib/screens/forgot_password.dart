@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/screens/home/sign_in.dart';
+import 'package:local_et_toi/screens/authentication/sign_in.dart';
 
 import '../utils/buttons/buttons.dart';
 import '../utils/textfields/textdields.dart';
@@ -29,11 +29,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const SignInPage(),
-                    ),
-                  );
+                  Navigator.of(context).maybePop();
                 },
               ),
             ),
