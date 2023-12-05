@@ -39,11 +39,7 @@ class _SignUpPageState1 extends State<SignUpPage1> {
               child: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const MainView(),
-                    ),
-                  );
+                  Navigator.of(context).maybePop();
                 },
               ),
             ),
