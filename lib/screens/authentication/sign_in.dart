@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/app_view.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
-import 'package:local_et_toi/model/user.dart';
 import 'package:local_et_toi/screens/navigation.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
@@ -22,8 +18,7 @@ class SignInPage extends StatefulWidget {
   _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> implements LoginCallBack {
-  late BuildContext _context;
+class _SignInPageState extends State<SignInPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -31,10 +26,6 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   late bool _obscured = true;
   final textFieldFocusNode = FocusNode();
   late LoginResponse loginResponse;
-
-  _SignInPageState() {
-    loginResponse = LoginResponse(this);
-  }
 
   void _toggleObscured() {
     setState(() {
@@ -112,6 +103,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                           // get email and password form fields
                           formKey.currentState!.save();
                           context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
+                          print(context);
                           if (context.read<SignInBloc>().state is SignInSuccess) {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
@@ -271,23 +263,5 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
         ),
       ),
     );
-  }
-
-  @override
-  String onLoginError(String error) {
-    log("Authentication error: $error");
-    return error;
-  }
-
-  @override
-  void onLoginSuccess(User? user) {
-    log("Authentication success");
-    if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const LoadingView(),
-        ),
-      );
-    }
   }
 }
