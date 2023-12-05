@@ -110,7 +110,6 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
 }
 
 class TagButton extends StatelessWidget {
-
   final VoidCallback onPressed;
   final String buttonText;
 
@@ -122,10 +121,9 @@ class TagButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-      width: buttonText.length.toDouble()+100,
-      height: 400,
+      width: buttonText.length.toDouble() * 15.0,
+      height: 40,
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
@@ -142,26 +140,20 @@ class TagButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        child: SizedBox(
-          width: buttonText.length as double,
-          child: Center(
-            child: Text(
-              buttonText,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFF095D40),
-                fontSize: 14,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
+        child: Center(
+          child: Text(
+            buttonText,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF095D40),
+              fontSize: 14,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w600,
+              height: 0,
             ),
           ),
         ),
       ),
     );
   }
-
-
 }
-
