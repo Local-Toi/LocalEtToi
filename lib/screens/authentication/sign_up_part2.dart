@@ -71,11 +71,7 @@ class _SignUpPageState2 extends State<SignUpPage2> {
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpPage1(),
-                          ),
-                        );
+                        Navigator.of(context).pop();
                       },
                     ),
                   ),

@@ -70,11 +70,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
+                    Navigator.of(context).pop();
                   },
                 ),
               ),

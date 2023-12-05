@@ -105,6 +105,9 @@ class MapFilters extends State<MapFiltersState> {
               }, buttonText: "objets"),
             ],
           ),
+          const Divider(
+            color: Color(0xFFCBC6C6),
+          ),
         ],
       ),
     );
