@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
+import 'package:local_et_toi/cubits/forget_password_cubit/forget_password_cubit.dart';
 import 'package:local_et_toi/screens/authentication/forgot_password.dart';
 import 'package:local_et_toi/screens/navigation.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
@@ -122,7 +123,10 @@ class _SignInPageState extends State<SignInPage> {
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(),
+                            builder: (context) => BlocProvider(
+                              create: (context) => ForgetPasswordCubit(myUserRepository: context.read()),
+                              child: ForgotPasswordPage(),
+                            ),
                           ),
                         );
                       },

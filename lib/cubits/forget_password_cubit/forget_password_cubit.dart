@@ -5,17 +5,17 @@ import 'package:user_repository/user_repository.dart';
 part 'forget_password_state.dart';
 
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
-  final UserRepository userRepository;
+  final UserRepository _userRepository;
 
   ForgetPasswordCubit({
     required UserRepository myUserRepository,
-  })  : userRepository = myUserRepository,
+  })  : _userRepository = myUserRepository,
         super(ForgetPasswordInitial());
 
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       emit(ForgetPasswordLoading());
-      await userRepository.resetPassword(email);
+      await _userRepository.resetPassword(email);
       emit(ForgetPasswordSuccess());
     } catch (e) {
       emit(ForgetPasswordFailure(error: 'Erreur dans l\'envoi du mail de réinitialisation'));
