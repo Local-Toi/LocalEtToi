@@ -5,6 +5,7 @@ import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/screens/authentication/sign_in.dart';
 import 'package:local_et_toi/screens/authentication/sign_up_part1.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,10 +14,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      //width: 390,
-      //height: 844,
       clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(color: Color(0xFFFFFBE2)),
+      decoration: const BoxDecoration(color: constants.beige),
       child: Stack(
         children: [
           Positioned(
@@ -36,8 +35,6 @@ class HomeScreen extends StatelessWidget {
             top: 516,
             child: Center(
               child: SizedBox(
-                width: 300,
-                height: 40,
                 child: GreenRoundedButton(
                   onPressed: () {
                     // BlocProvider.of<SignInBloc>(context).add(SignInEvent());
@@ -51,13 +48,6 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     );
-                    /*
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const SignInPage(),
-                      ),
-                    );
-                    */
                   },
                   buttonText: 'Se connecter',
                 ),
@@ -70,9 +60,9 @@ class HomeScreen extends StatelessWidget {
             top: 592,
             child: Center(
               child: SizedBox(
-                width: 274,
+                width: 350,
                 child: Divider(
-                  color: Color(0xFF095D40),
+                  color: constants.darkGreen,
                   thickness: 1,
                 ),
               ),
@@ -84,8 +74,6 @@ class HomeScreen extends StatelessWidget {
             top: 626,
             child: Center(
               child: SizedBox(
-                width: 300,
-                height: 40,
                 child: GreenRoundedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
@@ -105,8 +93,6 @@ class HomeScreen extends StatelessWidget {
               top: 701,
               child: Center(
                 child: SizedBox(
-                    width: 300,
-                    height: 40,
                     child: TransparentRoundedButtonWithBorder(
                       onPressed: () {},
                       buttonText: 'Continuer en tant qu\'invité',
