@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
-import 'package:local_et_toi/views/profile/Security.dart';
-import 'package:local_et_toi/views/profile/about.dart';
-import 'package:local_et_toi/views/profile/assistance.dart';
-import 'package:local_et_toi/views/profile/cgu.dart';
+import 'package:local_et_toi/screens/profile/Security.dart';
+import 'package:local_et_toi/screens/profile/about.dart';
+import 'package:local_et_toi/screens/profile/assistance.dart';
+import 'package:local_et_toi/screens/profile/cgu.dart';
 
 void main()  {
   runApp(const MaterialApp(
