@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
+import 'map_filters.dart';
+
 
 class MapLPState extends StatefulWidget {
   const MapLPState({
@@ -59,6 +61,17 @@ class MapLP extends State<MapLPState> {
                           ),
                         ),
                       ),
+                      IconButton(
+                        icon: const Icon(
+                            Icons.tune
+                        ), onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const MapFiltersState(),
+                            ),
+                          );
+                      },
+                      )
                     ],
                   ),
                 ),
