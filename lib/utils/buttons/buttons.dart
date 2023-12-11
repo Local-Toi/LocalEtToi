@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 
+import '../constants.dart';
+
 class GreenRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String buttonText;
@@ -29,13 +31,6 @@ class GreenRoundedButton extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
               style: constants.textBeige,
             ),
           ),
@@ -87,12 +82,13 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w600,
                 height: 0,
-              style: constants.textDarkGreen,
               ),
             ),
           ),
         ),
+      ),
     );
+
   }
 }
 
@@ -182,7 +178,7 @@ class _ImageSelectionButtonState extends State<ImageSelectionButton> {
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-        color: isPressed ? Color(0xFF095D40) : Colors.transparent,
+        color: isPressed ? const Color(0xFF095D40) : Colors.transparent,
         border: Border.all(
           width: 2,
           color: darkGreen50,
