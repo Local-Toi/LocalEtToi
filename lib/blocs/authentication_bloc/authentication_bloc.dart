@@ -38,4 +38,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       return super.close();
     }
   }
+
+  get myUserRepository => null;
 }
