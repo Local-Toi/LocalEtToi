@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/constants.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
+
+import '../constants.dart';
 
 class GreenRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -19,7 +21,7 @@ class GreenRoundedButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          backgroundColor: darkGreen,
+          backgroundColor: constants.darkGreen,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -121,7 +123,9 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
             ),
           ),
         ),
+      ),
     );
+
   }
 }
 
@@ -211,7 +215,7 @@ class _ImageSelectionButtonState extends State<ImageSelectionButton> {
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-        color: isPressed ? Color(0xFF095D40) : Colors.transparent,
+        color: isPressed ? const Color(0xFF095D40) : Colors.transparent,
         border: Border.all(
           width: 2,
           color: darkGreen50,
