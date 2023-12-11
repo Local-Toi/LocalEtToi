@@ -138,7 +138,7 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                                     }
                                     return null;
                                   },
-                                  keyboardType: TextInputType.emailAddress, obscureText: false, focusNode: null,
+                                  keyboardType: TextInputType.emailAddress,
                                 ),
                               ),
 
@@ -160,10 +160,8 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
 
                               // error message input password + icon
                               SizedBox(
-                                child: GreenTextFieldWithGreenerBorder(
+                                child: TextFormField(
                                   onSaved: (val) => password = val!,
-                                  obscureText: _obscured,
-                                  focusNode: textFieldFocusNode,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Veuillez entrer un mot de passe';
