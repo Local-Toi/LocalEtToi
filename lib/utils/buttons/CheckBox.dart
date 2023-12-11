@@ -20,13 +20,13 @@ class _CheckboxGreenState extends State<CheckboxGreen> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return beige;
+        return darkGreen;
       }
-      return beige;
+      return darkGreen;
     }
 
     return Checkbox(
-      checkColor: darkGreen,
+      checkColor: beige,
       fillColor: MaterialStateProperty.resolveWith(getColor),
       value: isChecked,
       onChanged: (bool? value) {
