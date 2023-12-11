@@ -51,18 +51,15 @@ class RedRoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 40,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      width: MediaQuery.of(context).size.width / 1.3,
+      height: MediaQuery.of(context).size.height /20.6,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: beige,
           side: const BorderSide(
             color: red,
-            width: 1,
+            width: 2,
           ),
           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
@@ -70,23 +67,16 @@ class RedRoundedButton extends StatelessWidget {
           ),
         ),
         child: SizedBox(
-          width: 300,
           child: Center(
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w400,
-                height: 0,
+              style: textRed,
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 

@@ -61,3 +61,12 @@ const TextStyle textMediumDarkGreen  = TextStyle(fontFamily: 'Montserrat', fontS
 const TextStyle textSmallDarkGreen = TextStyle(fontFamily: 'Montserrat', fontSize: 8, color : darkGreen);
 
 const TextStyle textDarkGrey = TextStyle(fontFamily: 'Montserrat', fontSize: 18, color : grey85, fontWeight: FontWeight.w600);
+
+const TextStyle textRed = TextStyle(fontFamily: 'Montserrat', fontSize: 18, color : red, fontWeight: FontWeight.w600);
+
+const TextStyle textMediumRed = TextStyle(fontFamily: 'Montserrat', fontSize: 14, color : red, fontWeight: FontWeight.w600);
+
+const TextStyle textSmallRed = TextStyle(fontFamily: 'Montserrat', fontSize: 8, color : red, fontWeight: FontWeight.w600);
+
+
+
