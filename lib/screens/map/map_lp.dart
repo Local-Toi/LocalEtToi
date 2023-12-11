@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:local_et_toi/model/shops.dart';
+import 'package:local_et_toi/utils/constants.dart';
 
 import 'map_filters.dart';
 
@@ -132,6 +133,15 @@ class MapLP extends State<MapLPState> {
               child: OSMFlutter(
                 controller: controller,
                 osmOption: OSMOption(
+                  markerOption: MarkerOption(
+                defaultMarker: const MarkerIcon(
+                icon: Icon(
+                  Icons.person_pin_circle,
+                  color: darkGreen50,
+                  size: 56,
+                ),
+              )
+            ),
                   userTrackingOption: const UserTrackingOption(
                     enableTracking: true,
                     unFollowUser: true,
