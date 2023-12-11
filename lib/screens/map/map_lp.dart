@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:local_et_toi/model/shops.dart';
 
 import 'map_filters.dart';
 
@@ -22,6 +24,45 @@ class MapLP extends State<MapLPState> {
   );
 
   TextEditingController searchController = TextEditingController();
+
+  /*Future<void> _fetchShopsFromFirebase() async {
+    final CollectionReference shops =
+    FirebaseFirestore.instance.collection('shops');
+
+    try {
+      QuerySnapshot<Object?> querySnapshot =
+      await shops.get();
+
+      List<Shop> markers = [];
+
+      querySnapshot.docs.forEach((DocumentSnapshot<Map<String, dynamic>> doc) {
+        if (doc.exists) {
+          final shop = doc.data();
+          final double latitude = shop?['latitude'];
+          final double longitude = shop?['longitude'];
+
+          markers.add(
+            Shop(
+              producerId: shop?["0"],
+              markerId: MarkerId(doc.id),
+              position: LatLng(latitude, longitude),
+              icon: Icon(Icons.pin_drop, color: Colors.blue),
+              onTap: () {
+                // Gérer l'événement de clic sur le marqueur si nécessaire
+              }, id: null,
+            ),
+          );
+        }
+      } as void Function(QueryDocumentSnapshot<Object?> element));
+
+      // Mettez à jour la carte avec les nouveaux marqueurs
+      controller.addMarkers(markers);
+
+    } catch (e) {
+      print('Erreur lors de la récupération des magasins : $e');
+    }
+  }
+}*/
 
   @override
   Widget build(BuildContext context) {

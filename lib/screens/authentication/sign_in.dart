@@ -1,16 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
+import 'package:local_et_toi/cubits/forget_password_cubit/forget_password_cubit.dart';
 import 'package:local_et_toi/model/user.dart';
+import 'package:local_et_toi/screens/authentication/forgot_password.dart';
 import 'package:local_et_toi/screens/navigation.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/signin/signin_response.dart';
 import 'package:local_et_toi/utils/textfields/textfields.dart';
-import 'package:local_et_toi/screens/loading.dart';
-import '../forgot_password.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 
@@ -20,10 +18,10 @@ class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
-  SignInPageState createState() => SignInPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class SignInPageState extends State<SignInPage> implements LoginCallBack {
+class _SignInPageState extends State<SignInPage> implements LoginCallBack {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -40,12 +38,12 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
    * This function is used to navigate to the home screen
    */
   get onPressed => () {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      ),
-    );
-  };
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+      };
 
   void _toggleObscured() {
     setState(() {
@@ -73,7 +71,6 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
           decoration: const BoxDecoration(color: constants.beige),
           child: Stack(
             children: [
-
               //arrow back
               arrow_back.ArrowBack(onPressed: onPressed),
 
@@ -112,7 +109,6 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                           key: formKey,
                           child: Column(
                             children: [
-
                               //input email address
                               const Padding(
                                 padding: EdgeInsets.only(left: 17, bottom: 10),
@@ -170,17 +166,22 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                                     }
                                     return null;
                                   },
-
                                   keyboardType: TextInputType.visiblePassword,
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: constants.lightGreen,
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(width: 1, color: constants.darkGreen,),
+                                      borderSide: const BorderSide(
+                                        width: 1,
+                                        color: constants.darkGreen,
+                                      ),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(width: 2, color: constants.darkGreen,),
+                                      borderSide: const BorderSide(
+                                        width: 2,
+                                        color: constants.darkGreen,
+                                      ),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
@@ -223,13 +224,6 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                           // get email and password form fields
                           formKey.currentState!.save();
                           context.read<SignInBloc>().add(SignInRequired(email: username, password: password));
-                          if (context.read<SignInBloc>().state is SignInSuccess) {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const LoadingView(),
-                              ),
-                            );
-                          }
                         }
                       },
                       buttonText: 'Se connecter',
@@ -249,7 +243,10 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(),
+                            builder: (context) => BlocProvider(
+                              create: (context) => ForgetPasswordCubit(myUserRepository: context.read()),
+                              child: ForgotPasswordPage(),
+                            ),
                           ),
                         );
                       },
@@ -266,20 +263,12 @@ class SignInPageState extends State<SignInPage> implements LoginCallBack {
   }
 
   @override
-  String onLoginError(String error) {
-    log("Authentication error: $error");
-    return error;
+  void onLoginError(String error) {
+    // TODO: implement onLoginError
   }
 
   @override
   void onLoginSuccess(User? user) {
-    log("Authentication success");
-    if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const LoadingView(),
-        ),
-      );
-    }
+    // TODO: implement onLoginSuccess
   }
 }
