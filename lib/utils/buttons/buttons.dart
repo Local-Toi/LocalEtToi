@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/constants.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class GreenRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -14,41 +14,22 @@ class GreenRoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 40,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-            spreadRadius: 0,
-          ),
-        ],
-      ),
+      width: MediaQuery.of(context).size.width / 1.3,
+      height: MediaQuery.of(context).size.height /20.6,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          backgroundColor: const Color(0xFF095D40),
-          padding: EdgeInsets.zero,
+          backgroundColor: constants.darkGreen,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(50),
           ),
         ),
         child: SizedBox(
-          width: 300,
           child: Center(
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w400,
-                height: 0,
-              ),
+              style: constants.textBeige,
             ),
           ),
         ),
@@ -70,14 +51,14 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 40,
+      width: MediaQuery.of(context).size.width / 1.3,
+      height: MediaQuery.of(context).size.height /20.6,
       decoration: BoxDecoration(
         border: Border.all(
           width: 3,
-          color: const Color(0xFF095D40),
+          color: constants.darkGreen,
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(50),
       ),
       child: TextButton(
         onPressed: onPressed,
@@ -85,26 +66,19 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
           padding: EdgeInsets.zero,
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(50),
           ),
         ),
         child: SizedBox(
-          width: 300,
           child: Center(
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFF095D40),
-                fontSize: 18,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w400,
-                height: 0,
+              style: constants.textDarkGreen,
               ),
             ),
           ),
         ),
-      ),
     );
   }
 }
@@ -127,7 +101,7 @@ class TagButton extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
-          color: darkGreen50,
+          color: constants.darkGreen50,
         ),
         borderRadius: BorderRadius.circular(30),
       ),
