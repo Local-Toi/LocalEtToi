@@ -13,12 +13,14 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  late String email;
+  late String email = '';
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ForgetPasswordCubit(myUserRepository: context.read<AuthenticationBloc>().myUserRepository),
+      create: (context) => ForgetPasswordCubit(
+        myUserRepository: context.read<AuthenticationBloc>().userRepository,
+      ),
       child: Scaffold(
         body: Container(
           //width: 390,
@@ -104,15 +106,26 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             SizedBox(
                               width: 355,
                               height: 45,
-                              child: GreenTextFieldWithGreenerBorder(
-                                onSaved: (val) => email = val!,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Veuillez entrer une adresse email';
-                                  }
-                                  return null;
+                              child: TextField(
+                                controller: TextEditingController()..text = email,
+                                onChanged: (text) {
+                                  email = text;
                                 },
                                 keyboardType: TextInputType.emailAddress,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: const Color(0x2640B65D),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                           ],
@@ -131,8 +144,23 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     width: 300,
                     height: 40,
                     child: GreenRoundedButton(
-                      onPressed: () {
-                        context.read<ForgetPasswordCubit>().sendPasswordResetEmail(email);
+                      onPressed: () async {
+                        print('email: $email');
+                        await context.read<ForgetPasswordCubit>().sendPasswordResetEmail(email);
+
+                        if (context.read<ForgetPasswordCubit>().state is ForgetPasswordSuccess) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Un email de réinitialisation a été envoyé'),
+                            ),
+                          );
+                        } else if (context.read<ForgetPasswordCubit>().state is ForgetPasswordFailure) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Une erreur est survenue'),
+                            ),
+                          );
+                        }
                       },
                       buttonText: 'Envoyer le lien',
                     ),
