@@ -99,19 +99,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       buttonText: 'Tu es producteur ?'
                   )
               ),
-              Container(
-                  alignment : const FractionalOffset(0.5, 0.75),
-                  child: GreenRoundedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const SecurityView(),
-                          ),
-                        );
-                      },
-                      buttonText: 'Supprimer le compte'
-                  )
-              )
             ],
           ),
           

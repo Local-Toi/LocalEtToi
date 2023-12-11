@@ -31,12 +31,54 @@ class GreenRoundedButton extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: constants.textBeige,
+              style: textBeige,
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class RedRoundedButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String buttonText;
+
+  const RedRoundedButton({
+    required this.onPressed,
+    required this.buttonText,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width / 1.3,
+      height: MediaQuery.of(context).size.height /20.6,
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: beige,
+          side: const BorderSide(
+            color: red,
+            width: 2,
+          ),
+          padding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+        child: SizedBox(
+          child: Center(
+            child: Text(
+              buttonText,
+              textAlign: TextAlign.center,
+              style: textRed,
+              ),
+            ),
+          ),
+        ),
+      );
   }
 }
 
@@ -58,7 +100,7 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 3,
-          color: constants.darkGreen,
+          color: darkGreen,
         ),
         borderRadius: BorderRadius.circular(50),
       ),
@@ -76,17 +118,11 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFF095D40),
-                fontSize: 18,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w600,
-                height: 0,
+              style: textDarkGreen,
               ),
             ),
           ),
         ),
-      ),
     );
 
   }
@@ -119,7 +155,7 @@ class _TagButtonState extends State<TagButton> {
         color: isPressed ? Color(0xFF095D40) : Colors.transparent,
         border: Border.all(
           width: 2,
-          color: constants.darkGreen50,
+          color: darkGreen50,
         ),
         borderRadius: BorderRadius.circular(30),
       ),
