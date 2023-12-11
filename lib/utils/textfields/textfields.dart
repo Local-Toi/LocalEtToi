@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 class GreenTextFieldWithGreenerBorderObscured extends GreenTextFieldWithGreenerBorder {
   final bool obscureText;
   final FocusNode focusNode;
-  const GreenTextFieldWithGreenerBorderObscured({
-    super.key, required this.obscureText, required this.focusNode, required super.keyboardType,
-    required super.onSaved, required super.validator, super.controller
-  });
+  const GreenTextFieldWithGreenerBorderObscured(
+      {super.key,
+      required this.obscureText,
+      required this.focusNode,
+      required super.keyboardType,
+      required super.onSaved,
+      required super.validator,
+      super.controller});
 }
-
 
 class GreenTextFieldWithGreenerBorder extends StatelessWidget {
   final void Function(String?)? onSaved;
