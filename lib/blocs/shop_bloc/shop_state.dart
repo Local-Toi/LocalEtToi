@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:shop_repository/shop_repository.dart';
 
 abstract class ShopState extends Equatable {
   const ShopState();

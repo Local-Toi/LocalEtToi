@@ -39,6 +39,8 @@ dependencies:
   formz: ^0.6.0
   user_repository:
     path: packages/user_repository
+  shop_repository:
+    path: packages/shop_repository
 
 
   # The following adds the Cupertino Icons font to your application.

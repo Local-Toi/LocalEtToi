@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:shop_repository/shop_repository.dart';
+
 import 'shop_event.dart';
 import 'shop_state.dart';
-
 
 class ShopBloc extends Bloc<ShopEvent, ShopState> {
   final ShopRepository shopRepository;
@@ -11,8 +12,8 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
 
   @override
   Stream<ShopState> mapEventToState(
-      ShopEvent event,
-      ) async* {
+    ShopEvent event,
+  ) async* {
     if (event is GetShop) {
       yield* _mapGetShopToState(event.shopId);
     } else if (event is SetShopData) {
