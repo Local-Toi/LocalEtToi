@@ -40,6 +40,6 @@ class MyShopEntity extends Equatable {
 
   @override
   String toString() {
-    return 'UserEntity { id: $id, longitude: $longitude, latitude: $latitude, name: $name, description: $description }';
+    return 'ShopEntity { id: $id, longitude: $longitude, latitude: $latitude, name: $name, description: $description }';
   }
 }

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import '../shop_repository.dart';
 
 abstract class ShopRepository {
