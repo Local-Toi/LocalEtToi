@@ -172,3 +172,57 @@ class _TagButtonState extends State<TagButton> {
   }
 }
 
+class ImageSelectionButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final String imagePath;
+
+  const ImageSelectionButton({
+    required this.onPressed,
+    required this.imagePath,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _ImageSelectionButtonState createState() => _ImageSelectionButtonState();
+}
+
+class _ImageSelectionButtonState extends State<ImageSelectionButton> {
+  bool isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        color: isPressed ? Color(0xFF095D40) : Colors.transparent,
+        border: Border.all(
+          width: 2,
+          color: darkGreen50,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            isPressed = !isPressed;
+          });
+          widget.onPressed();
+        },
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Image.asset(
+          widget.imagePath,
+          width: 50,
+          height: 50,
+        ),
+      ),
+    );
+  }
+}
+

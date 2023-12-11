@@ -26,218 +26,266 @@ class MapFilters extends State<MapFiltersState> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: beige,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Row(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.maybePop(context);
+                    },
+                  ),
+                  const Text(
+                    "Filtrer les résultats",
+                    style: text,
+                  ),
+                ],
+              ),
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.close),
+                const Text("Recherche autour de moi : ", style: textMedium),
+                SizedBox(
+                  width: 55.0,
+                  height: 55.0,
+                  child: TextField(
+                    onChanged: (value) {
+                      textValue = value;
+                    },
+                    maxLength: 3,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                          BorderSide(color: Colors.black, width: 1.0),
+                        )),
+                  ),
+                ),
+                const Text(" km", style: textMedium),
+              ],
+            ),
+            const Divider(
+              color: Color(0xFFCBC6C6),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 17.0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Catégories", style: textMedium)),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TagButton(
                   onPressed: () {
-                    Navigator.maybePop(context);
+                    updateTagValues("fruits");
                   },
+                  buttonText: "fruits",
                 ),
-                const Text(
-                  "Filtrer les résultats",
-                  style: text,
+                const Padding(padding: EdgeInsets.only(right: 8.0)),
+                TagButton(
+                  onPressed: () {
+                    updateTagValues("légumes");
+                  },
+                  buttonText: "légumes",
                 ),
               ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Recherche autour de moi : ", style: textMedium),
-              SizedBox(
-                width: 55.0,
-                height: 55.0,
-                child: TextField(
-                  onChanged: (value) {
-                    textValue = value;
+            const Padding(padding: EdgeInsets.only(top: 20.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TagButton(
+                  onPressed: () {
+                    updateTagValues("boissons alcoolisées");
                   },
-                  maxLength: 3,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(color: Colors.black, width: 1.0),
-                      )),
+                  buttonText: "boissons alcoolisées",
                 ),
-              ),
-              const Text(" km", style: textMedium),
-            ],
-          ),
-          const Divider(
-            color: Color(0xFFCBC6C6),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 17.0),
-            child: Align(
+                const Padding(padding: EdgeInsets.only(right: 8.0)),
+                TagButton(
+                  onPressed: () {
+                    updateTagValues("viande");
+                  },
+                  buttonText: "viande",
+                ),
+              ],
+            ),
+            const Padding(padding: EdgeInsets.only(top: 20.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TagButton(
+                  onPressed: () {
+                    updateTagValues("vêtements");
+                  },
+                  buttonText: "vêtements",
+                ),
+                const Padding(padding: EdgeInsets.only(right: 8.0)),
+                TagButton(
+                  onPressed: () {
+                    updateTagValues("objets");
+                  },
+                  buttonText: "objets",
+                ),
+              ],
+            ),
+            const Divider(
+              color: Color(0xFFCBC6C6),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 17.0),
+              child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Catégories", style: textMedium)),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TagButton(
-                onPressed: () {
-                  updateTagValues("fruits");
-                },
-                buttonText: "fruits",
+                child: Text("Labels", style: textMedium),
               ),
-              const Padding(padding: EdgeInsets.only(right: 8.0)),
-              TagButton(
-                onPressed: () {
-                  updateTagValues("légumes");
-                },
-                buttonText: "légumes",
-              ),
-            ],
-          ),
-          const Padding(padding: EdgeInsets.only(top: 20.0)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TagButton(
-                onPressed: () {
-                  updateTagValues("boissons alcoolisées");
-                },
-                buttonText: "boissons alcoolisées",
-              ),
-              const Padding(padding: EdgeInsets.only(right: 8.0)),
-              TagButton(
-                onPressed: () {
-                  updateTagValues("viande");
-                },
-                buttonText: "viande",
-              ),
-            ],
-          ),
-          const Padding(padding: EdgeInsets.only(top: 20.0)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TagButton(
-                onPressed: () {
-                  updateTagValues("vêtements");
-                },
-                buttonText: "vêtements",
-              ),
-              const Padding(padding: EdgeInsets.only(right: 8.0)),
-              TagButton(
-                onPressed: () {
-                  updateTagValues("objets");
-                },
-                buttonText: "objets",
-              ),
-            ],
-          ),
-          const Divider(
-            color: Color(0xFFCBC6C6),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 17.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Labels", style: textMedium),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Row(
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("aop");
+                      },
+                      imagePath: "images/aop.png",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("igp");
+                      },
+                      imagePath: "images/igp.png",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("vdf");
+                      },
+                      imagePath: "images/vdf.jpeg",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("bleu_blanc_coeur");
+                      },
+                      imagePath: "images/logo-bleu-blanc-coeur.png",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("ofg");
+                      },
+                      imagePath: "images/logo-origine-france-garantie-OFG.png",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("aoc");
+                      },
+                      imagePath: "images/aoc.png",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: ImageSelectionButton(
+                      onPressed: () {
+                        updateTagValues("label_rouge");
+                      },
+                      imagePath: "images/label_rouge.png",
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/aop.png", width: 50, height: 50),
+                  child: ImageSelectionButton(
+                    onPressed: () {
+                      updateTagValues("bio");
+                    },
+                    imagePath: "images/bio.png",
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/igp.png", width: 50, height: 50),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/vdf.jpeg", width: 50, height: 50),
+                  child: ImageSelectionButton(
+                    onPressed: () {
+                      updateTagValues("stg");
+                    },
+                    imagePath: "images/stg.png",
+                  ),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/logo-bleu-blanc-coeur.png", width: 50, height: 50),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/logo-origine-france-garantie-OFG.png", width: 50, height: 50),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/aoc.png", width: 50, height: 50),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset("images/label_rouge.png", width: 50, height: 50),
-                ),
-              ],
+            const Divider(
+              color: Color(0xFFCBC6C6),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Image.asset("images/bio.png", width: 50, height: 50),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Image.asset("images/stg.png", width: 50, height: 50),
-              ),
-            ],
-          ),
-          const Divider(
-            color: Color(0xFFCBC6C6),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 17.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Trier par", style: textMedium),
-            ),
-          ),
-          DropdownMenu<String>(
-            dropdownMenuEntries: menuItems.map<DropdownMenuEntry<String>>((String value) {
-              return DropdownMenuEntry<String>(value: value, label: value);
-            }).toList(),
-            onSelected: (String? newValue) {
-              setState(() {
-                selectedValue = newValue!;
-              });
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 70.0),
-            child: SizedBox(
-              width: 400,
-              height: 40,
-              child: GreenRoundedButton(
-                onPressed: () {
-                  print('Tags sélectionnés: $tagValues');
-                  Navigator.maybePop(context, [textValue, selectedValue]);
-                },
-                buttonText: 'Filtrer',
+            const Padding(
+              padding: EdgeInsets.only(left: 17.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Trier par", style: textMedium),
               ),
             ),
-          )
-        ],
+            DropdownMenu<String>(
+              dropdownMenuEntries: menuItems.map<DropdownMenuEntry<String>>((String value) {
+                return DropdownMenuEntry<String>(value: value, label: value);
+              }).toList(),
+              onSelected: (String? newValue) {
+                setState(() {
+                  selectedValue = newValue!;
+                });
+              },
+            ),
+            
+            Padding(
+              padding: const EdgeInsets.only(top: 70.0),
+              child: SizedBox(
+                width: 400,
+                height: 40,
+                child: GreenRoundedButton(
+                  onPressed: () {
+                    print('Tags sélectionnés: $tagValues');
+                    Navigator.maybePop(context, [textValue, selectedValue]);
+                  },
+                  buttonText: 'Filtrer',
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
