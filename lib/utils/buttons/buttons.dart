@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:local_et_toi/utils/constants.dart';
 
 class GreenRoundedButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -19,7 +19,7 @@ class GreenRoundedButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          backgroundColor: constants.darkGreen,
+          backgroundColor: darkGreen,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
@@ -29,7 +29,7 @@ class GreenRoundedButton extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: constants.textBeige,
+              style: textBeige,
             ),
           ),
         ),
@@ -108,7 +108,7 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 3,
-          color: constants.darkGreen,
+          color: darkGreen,
         ),
         borderRadius: BorderRadius.circular(50),
       ),
@@ -126,7 +126,7 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
-              style: constants.textDarkGreen,
+              style: textDarkGreen,
               ),
             ),
           ),
@@ -153,7 +153,7 @@ class TagButton extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 2,
-          color: constants.darkGreen50,
+          color: darkGreen50,
         ),
         borderRadius: BorderRadius.circular(30),
       ),
