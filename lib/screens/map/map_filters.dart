@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/constants.dart';
+
+import '../../utils/buttons/buttons.dart';
 
 class MapFiltersState extends StatefulWidget {
   const MapFiltersState({Key? key}) : super(key: key);
