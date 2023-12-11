@@ -41,12 +41,26 @@ class _SecurityViewState extends State<SecurityView> {
                           },
                           buttonText: 'Sécurité'
           )
-      )
+      ),
+                Container(
+                    alignment : const FractionalOffset(0.5, 0.75),
+                    child: RedRoundedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const SecurityView(),
+                            ),
+                          );
+                        },
+                        buttonText: 'Supprimer le compte'
+                    )
+                )
       ],
     ),
 
 
         )
+
     );
   }
 
