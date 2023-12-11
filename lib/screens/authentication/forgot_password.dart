@@ -125,6 +125,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                                   border: InputBorder.none,
+                                  labelText: 'Adresse email',
                                 ),
                               ),
                             ),
