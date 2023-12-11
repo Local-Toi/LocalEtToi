@@ -26,7 +26,7 @@ class MapFilters extends State<MapFiltersState> {
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.maybePop(context);
                   },
                 ),
                 const Text(
@@ -72,8 +72,41 @@ class MapFilters extends State<MapFiltersState> {
              children: [
               TagButton(onPressed: () {
                 Navigator.pop(context);
-              }, buttonText: "fruits")
+              }, buttonText: "fruits"),
+               const Padding(padding: EdgeInsets.only(right: 8.0)),
+               TagButton(onPressed: () {
+                 Navigator.pop(context);
+               }, buttonText: "légumes"),
             ],
+          ),
+          const Padding(padding: EdgeInsets.only(top: 20.0)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TagButton(onPressed: () {
+                Navigator.pop(context);
+              }, buttonText: "boissons alcoolisées"),
+              const Padding(padding: EdgeInsets.only(right: 8.0)),
+              TagButton(onPressed: () {
+                Navigator.pop(context);
+              }, buttonText: "viande"),
+            ],
+          ),
+          const Padding(padding: EdgeInsets.only(top: 20.0)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TagButton(onPressed: () {
+                Navigator.pop(context);
+              }, buttonText: "vêtements"),
+              const Padding(padding: EdgeInsets.only(right: 8.0)),
+              TagButton(onPressed: () {
+                Navigator.pop(context);
+              }, buttonText: "objets"),
+            ],
+          ),
+          const Divider(
+            color: Color(0xFFCBC6C6),
           ),
         ],
       ),
