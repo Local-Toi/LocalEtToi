@@ -29,6 +29,13 @@ class GreenRoundedButton extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                height: 0,
+              ),
               style: constants.textBeige,
             ),
           ),
@@ -74,6 +81,12 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
             child: Text(
               buttonText,
               textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color(0xFF095D40),
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                height: 0,
               style: constants.textDarkGreen,
               ),
             ),
@@ -83,22 +96,31 @@ class TransparentRoundedButtonWithBorder extends StatelessWidget {
   }
 }
 
-class TagButton extends StatelessWidget {
+
+class TagButton extends StatefulWidget {
   final VoidCallback onPressed;
   final String buttonText;
 
   const TagButton({
     required this.onPressed,
     required this.buttonText,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _TagButtonState createState() => _TagButtonState();
+}
+
+class _TagButtonState extends State<TagButton> {
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: buttonText.length.toDouble() * 15.0,
+      width: widget.buttonText.length.toDouble() * 15.0,
       height: 40,
       decoration: BoxDecoration(
+        color: isPressed ? Color(0xFF095D40) : Colors.transparent,
         border: Border.all(
           width: 2,
           color: constants.darkGreen50,
@@ -106,7 +128,12 @@ class TagButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextButton(
-        onPressed: onPressed,
+        onPressed: () {
+          setState(() {
+            isPressed = !isPressed;
+          });
+          widget.onPressed();
+        },
         style: TextButton.styleFrom(
           padding: EdgeInsets.zero,
           backgroundColor: Colors.transparent,
@@ -116,10 +143,10 @@ class TagButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            buttonText,
+            widget.buttonText,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF095D40),
+            style: TextStyle(
+              color: isPressed ? Colors.white : Color(0xFF095D40),
               fontSize: 14,
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
@@ -131,3 +158,59 @@ class TagButton extends StatelessWidget {
     );
   }
 }
+
+class ImageSelectionButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final String imagePath;
+
+  const ImageSelectionButton({
+    required this.onPressed,
+    required this.imagePath,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _ImageSelectionButtonState createState() => _ImageSelectionButtonState();
+}
+
+class _ImageSelectionButtonState extends State<ImageSelectionButton> {
+  bool isPressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        color: isPressed ? Color(0xFF095D40) : Colors.transparent,
+        border: Border.all(
+          width: 2,
+          color: darkGreen50,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            isPressed = !isPressed;
+          });
+          widget.onPressed();
+        },
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Image.asset(
+          widget.imagePath,
+          width: 50,
+          height: 50,
+        ),
+      ),
+    );
+  }
+}
+
+
