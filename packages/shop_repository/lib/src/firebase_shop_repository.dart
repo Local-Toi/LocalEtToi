@@ -40,12 +40,10 @@ class FirebaseShopRepository implements ShopRepository {
   @override
   Future<List<MyShop>> getAllShops() async {
     try {
-      final QuerySnapshot<
-          Map<String, dynamic>> querySnapshot = await shopsCollection.get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await shopsCollection.get();
 
-      final List<MyShop> shops = querySnapshot.docs.map((
-          DocumentSnapshot<Map<String, dynamic>> doc) {
-        return MyShop.fromEntity(MyShopEntity.fromDocument(doc.data()!));
+      final List<MyShop> shops = querySnapshot.docs.map<MyShop>((doc) {
+        return MyShop.fromEntity(MyShopEntity.fromDocument(doc.data()));
       }).toList();
 
       return shops;
@@ -54,4 +52,5 @@ class FirebaseShopRepository implements ShopRepository {
       rethrow;
     }
   }
+
 }
