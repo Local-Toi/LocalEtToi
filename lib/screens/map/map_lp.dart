@@ -3,9 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:local_et_toi/model/shops.dart';
 import 'package:local_et_toi/utils/constants.dart';
+import 'package:shop_repository/shop_repository.dart';
 
 import 'map_filters.dart';
 
+class MyCustomMarker {
+  final double latitude;
+  final double longitude;
+  final String markerId;
+
+  MyCustomMarker({
+    required this.latitude,
+    required this.longitude,
+    required this.markerId,
+  });
+}
 
 class MapLPState extends StatefulWidget {
   const MapLPState({
@@ -26,44 +38,48 @@ class MapLP extends State<MapLPState> {
 
   TextEditingController searchController = TextEditingController();
 
-  /*Future<void> _fetchShopsFromFirebase() async {
-    final CollectionReference shops =
-    FirebaseFirestore.instance.collection('shops');
+  FirebaseShopRepository _shopRepository = FirebaseShopRepository();
 
+  List<MyCustomMarker> customMarkers = [];
+
+  Future<void> _fetchShopsFromFirebase() async {
     try {
-      QuerySnapshot<Object?> querySnapshot =
-      await shops.get();
+      List<MyShop> shops = await _shopRepository.getAllShops();
 
-      List<Shop> markers = [];
-
-      querySnapshot.docs.forEach((DocumentSnapshot<Map<String, dynamic>> doc) {
-        if (doc.exists) {
-          final shop = doc.data();
-          final double latitude = shop?['latitude'];
-          final double longitude = shop?['longitude'];
-
-          markers.add(
-            Shop(
-              producerId: shop?["0"],
-              markerId: MarkerId(doc.id),
-              position: LatLng(latitude, longitude),
-              icon: Icon(Icons.pin_drop, color: Colors.blue),
-              onTap: () {
-                // Gérer l'événement de clic sur le marqueur si nécessaire
-              }, id: null,
+      customMarkers = shops.map((shop) {
+        return MyCustomMarker(
+          markerId: shop.id,
+          latitude: shop.latitude as double,
+          longitude: shop.longitude as double,
+        );
+      }).toList();
+      controller.addMarker( )
+      /*controller.addMarkers(customMarkers.map((customMarker) {
+        return Marker(
+          producerId: customMarker.markerId,
+          markerId: MarkerId(customMarker.markerId),
+          position: customMarker.position,
+          icon: const MarkerIcon(
+            icon: Icon(
+              Icons.pin_drop,
+              color: Colors.blue,
             ),
-          );
-        }
-      } as void Function(QueryDocumentSnapshot<Object?> element));
-
-      // Mettez à jour la carte avec les nouveaux marqueurs
-      controller.addMarkers(markers);
-
+          ),
+          onTap: () {
+            // afficher la liste par le bas
+          },
+        );
+      }*/).toList());
     } catch (e) {
-      print('Erreur lors de la récupération des magasins : $e');
+      print('Error fetching shops: $e');
     }
   }
-}*/
+  @override
+  void initState() {
+    super.initState();
+    _fetchShopsFromFirebase();
+  }
+
 
   @override
   Widget build(BuildContext context) {
