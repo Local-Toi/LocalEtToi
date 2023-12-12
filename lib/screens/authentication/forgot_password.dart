@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/cubits/forget_password_cubit/forget_password_cubit.dart';
-import 'package:local_et_toi/utils/constants.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import '../../utils/buttons/buttons.dart';
 import '../../utils/textfields/textfields.dart';
@@ -26,7 +26,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           //width: 390,
           //height: 844,
           clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(color: beige),
+          decoration: const BoxDecoration(color: constants.beige),
           child: Stack(
             children: [
               Positioned(
@@ -46,13 +46,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 child: Center(
                   child: Text(
                     'Mot de passe oublié',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
+                    style: constants.titre,
                   ),
                 ),
               ),
@@ -64,13 +58,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: Text(
                     'Saisis ton adresse email pour obtenir un lien de récupération',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
-                    ),
+                    style: constants.text,
                   ),
                 ),
               ),
@@ -93,7 +81,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   Text(
                                     'Adresse email',
                                     style: TextStyle(
-                                      color: beige,
+                                      color: constants.beige,
                                       fontSize: 18,
                                       fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -116,11 +104,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   filled: true,
                                   fillColor: const Color(0x2640B65D),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+                                    borderSide: const BorderSide(width: 1, color: constants.darkGreen),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+                                    borderSide: const BorderSide(width: 2, color: constants.darkGreen),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
