@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/screens/profile/settings/Security.dart';
-import 'package:local_et_toi/screens/profile/settings/assistance.dart';
 import 'package:local_et_toi/screens/profile/settings/cgu.dart';
-import 'package:local_et_toi/utils/constants.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import '../../utils/buttons/CheckBox.dart';
 import '../../utils/buttons/buttons.dart';
@@ -28,7 +27,7 @@ class _ProfilPageState extends State<ProfilPage> {
     return Scaffold(
         body: Container(
           clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(color : beige),
+          decoration: const BoxDecoration(color : constants.beige),
           child: Stack(
             children: [
               Container(
@@ -88,12 +87,12 @@ class _ProfilPageState extends State<ProfilPage> {
                   )
               ),
               Container(
-                  alignment : const FractionalOffset(0.2, 0.86),
+                  alignment : const FractionalOffset(0.14, 0.81),
                   child: const CheckboxGreen(),
               ),
               Container(
-                  alignment : const FractionalOffset(0.5, 0.85),
-                  child: const Text("Recevoir les newsletters"),
+                  alignment : const FractionalOffset(0.57, 0.805),
+                  child: const Text("Recevoir les newsletters", style: constants.textDarkGreen,),
               ),
             ],
           ),

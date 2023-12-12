@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:local_et_toi/utils/constants.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class CheckboxGreen extends StatefulWidget {
   const CheckboxGreen({super.key});
@@ -20,14 +20,15 @@ class _CheckboxGreenState extends State<CheckboxGreen> {
         MaterialState.focused,
       };
       if (states.any(interactiveStates.contains)) {
-        return darkGreen;
+        return constants.darkGreen;
       }
-      return darkGreen;
+      return constants.beige;
     }
 
     return Checkbox(
-      checkColor: beige,
+      checkColor: constants.darkGreen,
       fillColor: MaterialStateProperty.resolveWith(getColor),
+      side: MaterialStateBorderSide.resolveWith((states) => const BorderSide(width: 1.0, color: constants.darkGreen)),
       value: isChecked,
       onChanged: (bool? value) {
         setState(() {
