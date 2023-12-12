@@ -6,19 +6,18 @@ class FavortiesProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const items = 4;
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
             child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: constraints.maxHeight),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ItemWidget(text: 'Item 1'),
-                  ItemWidget(text: 'Item 2'),
-                  ItemWidget(text: 'Item 3'),
-                ],
+              constraints: const BoxConstraints(minHeight: 0),
+              child: Column(
+                children: List.generate(
+                  items,
+                  (index) => FavoriteWidget(),
+                ),
               ),
             ),
           );
@@ -28,21 +27,45 @@ class FavortiesProducts extends StatelessWidget {
   }
 }
 
-class ItemWidget extends StatelessWidget {
-  const ItemWidget({
-    super.key,
-    required this.text,
-  });
-
-  final String text;
+class FavoriteWidget extends StatelessWidget {
+  const FavoriteWidget();
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        height: 100,
-        child: Center(child: Text(text)),
-      ),
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Column(
+                children: [
+                  Placeholder(
+                    fallbackHeight: 100,
+                    fallbackWidth: 100,
+                  ),
+                ],
+              ),
+              const Column(
+                children: [
+                  Text('Nom du produit'),
+                  Text('Prix XX.XX€'),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: IconButton(
+                      icon: const Icon(Icons.favorite),
+                      color: constants.red,
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          )),
     );
   }
 }
