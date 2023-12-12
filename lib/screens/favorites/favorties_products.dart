@@ -59,7 +59,10 @@ class FavoriteWidget extends StatelessWidget {
                     child: IconButton(
                       icon: const Icon(Icons.favorite),
                       color: constants.red,
-                      onPressed: () {},
+                      onPressed: () {
+                        // TODO: Remove from favorites
+                        print('Remove favorite');
+                      },
                     ),
                   ),
                 ],
