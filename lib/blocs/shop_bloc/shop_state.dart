@@ -1,29 +1,37 @@
-import 'package:equatable/equatable.dart';
-import 'package:shop_repository/shop_repository.dart';
+part of 'shop_bloc.dart';
 
 abstract class ShopState extends Equatable {
   const ShopState();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
-class ShopLoading extends ShopState {}
+class ShopInitial extends ShopState {}
 
 class ShopLoaded extends ShopState {
   final MyShop shop;
 
-  const ShopLoaded(this.shop);
+  const ShopLoaded({required this.shop});
 
   @override
-  List<Object?> get props => [shop];
+  List<Object> get props => [shop];
+}
+
+class ShopsLoaded extends ShopState {
+  final List<MyShop> shops;
+
+  const ShopsLoaded({required this.shops});
+
+  @override
+  List<Object> get props => [shops];
 }
 
 class ShopError extends ShopState {
   final String message;
 
-  const ShopError(this.message);
+  const ShopError({required this.message});
 
   @override
-  List<Object?> get props => [message];
+  List<Object> get props => [message];
 }

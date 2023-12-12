@@ -1,27 +1,19 @@
-import 'package:equatable/equatable.dart';
+part of 'shop_bloc.dart';
 
 abstract class ShopEvent extends Equatable {
   const ShopEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
-class GetShop extends ShopEvent {
+class FetchShop extends ShopEvent {
   final String shopId;
 
-  const GetShop(this.shopId);
+  const FetchShop({required this.shopId});
 
   @override
-  List<Object?> get props => [shopId];
+  List<Object> get props => [shopId];
 }
 
-class SetShopData extends ShopEvent {
-  final String shopId;
-  final dynamic shopData;
-
-  const SetShopData(this.shopId, this.shopData);
-
-  @override
-  List<Object?> get props => [shopId, shopData];
-}
+class FetchAllShops extends ShopEvent {}
