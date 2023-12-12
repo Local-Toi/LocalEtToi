@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import 'favorite_widget.dart';
 
