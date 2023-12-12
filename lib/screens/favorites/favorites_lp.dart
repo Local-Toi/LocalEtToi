@@ -5,6 +5,25 @@ class FavoritesLP extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Favorites");
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: "Produits",
+              ),
+              Tab(
+                text: "Points de vente",
+              ),
+              Tab(
+                text: "Producteurs",
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
