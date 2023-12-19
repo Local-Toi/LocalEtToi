@@ -8,6 +8,15 @@ import 'package:user_repository/user_repository.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
+/// The [AuthenticationBloc] is responsible for managing the authentication state of the user.
+/// It extends the [Bloc] class and handles [AuthenticationEvent]s to produce [AuthenticationState]s.
+///
+/// The [userRepository] is used to interact with the user data.
+/// The [_userSubscription] is a stream subscription that listens to changes in the user data.
+///
+/// The [AuthenticationBloc] constructor takes a [UserRepository] as a required parameter.
+///
+/// The [close] method cancels the [_userSubscription] and closes the bloc.
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   final UserRepository userRepository;
   late final StreamSubscription<User?> _userSubscription;
