@@ -18,7 +18,6 @@ class FavoriteWidget extends StatelessWidget {
                 Placeholder(
                   fallbackHeight: 100,
                   fallbackWidth: 100,
-                  color: Colors.blue, // Couleur du Placeholder (à adapter)
                 ),
                 Icon(
                   Icons.favorite,
@@ -28,7 +27,7 @@ class FavoriteWidget extends StatelessWidget {
             ),
             Column(
               children: [
-                Text('Nom du produit', style: TextStyle(fontSize: 20)),
+                Text('Nom du produit', style: constants.titre),
                 Text('Prix XX.XX€'),
               ],
             ),
