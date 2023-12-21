@@ -6,43 +6,35 @@ class FavoriteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return const Card(
       child: SizedBox(
-          height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Column(
-                children: [
-                  Placeholder(
-                    fallbackHeight: 100,
-                    fallbackWidth: 100,
-                  ),
-                ],
-              ),
-              const Column(
-                children: [
-                  Text('Nom du produit'),
-                  Text('Prix XX.XX€'),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: IconButton(
-                      icon: const Icon(Icons.favorite),
-                      color: constants.red,
-                      onPressed: () {
-                        // TODO: Remove from favorites
-                        print('Remove favorite');
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )),
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Placeholder(
+                  fallbackHeight: 100,
+                  fallbackWidth: 100,
+                  color: Colors.blue, // Couleur du Placeholder (à adapter)
+                ),
+                Icon(
+                  Icons.favorite,
+                  color: Colors.red, // Couleur du cœur (à adapter)
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text('Nom du produit', style: TextStyle(fontSize: 20)),
+                Text('Prix XX.XX€'),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
