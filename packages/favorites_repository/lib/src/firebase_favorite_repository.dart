@@ -9,7 +9,7 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   final FirebaseAuth _firebaseAuth;
-  final favoritesCollection = FirebaseFirestore.instance.collectionGroup('favorites');
+  final usersCollection = FirebaseFirestore.instance.collection('users');
 
   @override
   Future<void> addFavorite(String id) async {
@@ -30,10 +30,10 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
     try {
       final user = _firebaseAuth.currentUser;
       if (user != null) {
-        return favoritesCollection
-            .where('Document ID', arrayContains: user.uid)
-            .get()
-            .then((value) => value.docs.map((e) => e.id).toList());
+        /// /users/{userId}/favorites
+        return usersCollection.doc(user.uid).collection('favorites').get().then((snapshot) {
+          return snapshot.docs.map((doc) => doc.id).toList();
+        });
       } else {
         throw Exception('User not found or not logged in');
       }
