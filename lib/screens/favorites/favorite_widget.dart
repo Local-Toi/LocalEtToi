@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class FavoriteWidget extends StatelessWidget {
-  const FavoriteWidget();
+  const FavoriteWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,23 @@ class FavoriteWidget extends StatelessWidget {
             ),
             Column(
               children: [
-                Text('Nom du produit', style: constants.titre),
-                Text('Prix XX.XX€'),
+                Row(
+                  children: [
+                    Text('Nom du produit', style: constants.titre),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.location_on, color: constants.grey85), // Couleur de la localisation (à adapter)
+                    Text('Adresse du shop'),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.euro, color: constants.grey85), // Couleur du prix (à adapter
+                    Text('Prix XX.XX'),
+                  ],
+                ),
               ],
             ),
           ],
