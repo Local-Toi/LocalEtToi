@@ -12,9 +12,17 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
   final favoritesCollection = FirebaseFirestore.instance.collectionGroup('favorites');
 
   @override
-  Future<void> addFavorite(String id) {
-    // TODO: implement addFavorite
-    throw UnimplementedError();
+  Future<void> addFavorite(String id) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        // pass
+      } else {
+        throw Exception('User not found or not logged in');
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -27,7 +35,7 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
             .get()
             .then((value) => value.docs.map((e) => e.id).toList());
       } else {
-        throw Exception('User not found');
+        throw Exception('User not found or not logged in');
       }
     } catch (e) {
       rethrow;
