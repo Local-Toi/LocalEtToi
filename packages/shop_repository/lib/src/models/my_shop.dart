@@ -3,26 +3,32 @@ import 'package:equatable/equatable.dart';
 import '../entities/entities.dart';
 
 class MyShop extends Equatable {
-  const MyShop({required this.id, required this.longitude, required this.latitude, this.name, this.description});
+  const MyShop({
+    required this.id,
+    required this.longitude,
+    required this.latitude,
+    this.name,
+    this.description,
+  });
 
   final String id;
-  final String longitude;
-  final String latitude;
+  final double longitude;
+  final double latitude;
   final String? name;
   final String? description;
 
   static const empty = MyShop(
     id: '',
-    longitude: '',
-    latitude: '',
+    longitude: 0.0,
+    latitude: 0.0,
     name: '',
     description: '',
   );
 
   MyShop copyWith({
-    String? id = '',
-    String? longitude,
-    String? latitude,
+    String? id,
+    double? longitude,
+    double? latitude,
     String? name,
     String? description,
   }) {
@@ -48,8 +54,16 @@ class MyShop extends Equatable {
     );
   }
 
+  static MyShop fromEntity(MyShopEntity entity) {
+    return MyShop(
+      id: entity.id,
+      longitude: entity.longitude,
+      latitude: entity.latitude,
+      name: entity.name,
+      description: entity.description,
+    );
+  }
+
   @override
   List<Object> get props => [longitude, latitude, name ?? '', description ?? ''];
-
-  static fromEntity(fromDocument) {}
 }

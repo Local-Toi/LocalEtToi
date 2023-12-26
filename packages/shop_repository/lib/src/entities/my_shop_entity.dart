@@ -2,15 +2,15 @@ import 'package:equatable/equatable.dart';
 
 class MyShopEntity extends Equatable {
   final String id;
-  final String? longitude;
-  final String? latitude;
+  final double longitude;
+  final double latitude;
   final String? name;
   final String? description;
 
   const MyShopEntity({
     required this.id,
-    this.longitude,
-    this.latitude,
+    required this.longitude,
+    required this.latitude,
     this.name,
     this.description,
   });
@@ -28,8 +28,8 @@ class MyShopEntity extends Equatable {
   static MyShopEntity fromDocument(Map<String, Object?> doc) {
     return MyShopEntity(
       id: doc['id'] as String,
-      longitude: doc['longitude'] as String?,
-      latitude: doc['latitude'] as String?,
+      longitude: doc['longitude'] as double,
+      latitude: doc['latitude'] as double,
       name: doc['name'] as String?,
       description: doc['description'] as String?,
     );

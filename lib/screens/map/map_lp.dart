@@ -46,23 +46,25 @@ class MapLP extends State<MapLPState> {
 
   Future<void> _fetchShopsFromFirebase() async {
     try {
+      print("AVANT");
       List<MyShop> shops = await _shopRepository.getAllShops();
+
+      print("LES SHOPS $shops");
 
       customMarkers = shops.map((shop) {
         return MyCustomMarker(
           markerId: shop.id,
-          latitude: shop.latitude as double,
-          longitude: shop.longitude as double,
+          latitude: shop.latitude,
+          longitude: shop.longitude,
           shopName: shop.name ?? "Nom du magasin non disponible",
         );
       }).toList();
 
 
-      // Rafraîchissez la carte avec les nouveaux marqueurs.
       _addMarkersToMap();
 
     } catch (e) {
-      print('Error fetching shops: $e');
+      print('Error fetching shops: $e $customMarkers');
       //for(MyCustomMarker mc in customMarkers)
         //print("OKKKKKé" + mc.shopName);
 
