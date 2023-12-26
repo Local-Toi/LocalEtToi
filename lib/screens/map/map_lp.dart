@@ -7,6 +7,8 @@ import 'package:shop_repository/shop_repository.dart';
 
 import 'map_filters.dart';
 
+/// Custom marker
+
 class MyCustomMarker {
   final double latitude;
   final double longitude;
@@ -23,8 +25,8 @@ class MyCustomMarker {
 
 class MapLPState extends StatefulWidget {
   const MapLPState({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   MapLP createState() => MapLP();
@@ -43,6 +45,8 @@ class MapLP extends State<MapLPState> {
   FirebaseShopRepository _shopRepository = FirebaseShopRepository();
 
   List<MyCustomMarker> customMarkers = [];
+
+/// Fetch shops from Firebase
 
   Future<void> _fetchShopsFromFirebase() async {
     try {
@@ -71,6 +75,8 @@ class MapLP extends State<MapLPState> {
     }
   }
 
+  /// Add markers to the map
+
   void _addMarkersToMap() async {
     for (MyCustomMarker marker in customMarkers) {
       await controller.addMarker(
@@ -85,6 +91,7 @@ class MapLP extends State<MapLPState> {
       );
     }
   }
+
 
   @override
   void initState() {

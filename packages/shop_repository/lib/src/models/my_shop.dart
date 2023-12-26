@@ -25,6 +25,8 @@ class MyShop extends Equatable {
     description: '',
   );
 
+  /// Creates a copy of the current [MyShop] with its properties
+  /// replaced by the values of their respective parameters.
   MyShop copyWith({
     String? id,
     double? longitude,
@@ -44,6 +46,7 @@ class MyShop extends Equatable {
   bool get isEmpty => this == MyShop.empty;
   bool get isNotEmpty => this != MyShop.empty;
 
+  /// Creates an instance of [MyShop] from a [MyShopEntity]
   MyShopEntity toEntity() {
     return MyShopEntity(
       id: id,
@@ -54,6 +57,7 @@ class MyShop extends Equatable {
     );
   }
 
+  /// Creates an instance of [MyShopEntity] from a [MyShop]
   static MyShop fromEntity(MyShopEntity entity) {
     return MyShop(
       id: entity.id,
