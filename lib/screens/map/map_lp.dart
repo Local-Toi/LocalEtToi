@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:local_et_toi/model/shops.dart';
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
 
@@ -11,18 +11,20 @@ class MyCustomMarker {
   final double latitude;
   final double longitude;
   final String markerId;
+  final String shopName;
 
   MyCustomMarker({
     required this.latitude,
     required this.longitude,
     required this.markerId,
+    required this.shopName,
   });
 }
 
 class MapLPState extends StatefulWidget {
   const MapLPState({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   MapLP createState() => MapLP();
@@ -51,35 +53,42 @@ class MapLP extends State<MapLPState> {
           markerId: shop.id,
           latitude: shop.latitude as double,
           longitude: shop.longitude as double,
+          shopName: shop.name ?? "Nom du magasin non disponible",
         );
       }).toList();
-      controller.addMarker( )
-      /*controller.addMarkers(customMarkers.map((customMarker) {
-        return Marker(
-          producerId: customMarker.markerId,
-          markerId: MarkerId(customMarker.markerId),
-          position: customMarker.position,
-          icon: const MarkerIcon(
-            icon: Icon(
-              Icons.pin_drop,
-              color: Colors.blue,
-            ),
-          ),
-          onTap: () {
-            // afficher la liste par le bas
-          },
-        );
-      }*/).toList());
+
+
+      // Rafraîchissez la carte avec les nouveaux marqueurs.
+      _addMarkersToMap();
+
     } catch (e) {
       print('Error fetching shops: $e');
+      //for(MyCustomMarker mc in customMarkers)
+        //print("OKKKKKé" + mc.shopName);
+
     }
   }
+
+  void _addMarkersToMap() async {
+    for (MyCustomMarker marker in customMarkers) {
+      await controller.addMarker(
+        GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
+        markerIcon: const MarkerIcon(
+          icon: Icon(
+            Icons.pin_drop,
+            color: Colors.yellowAccent,
+            size: 72,
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _fetchShopsFromFirebase();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -120,15 +129,14 @@ class MapLP extends State<MapLPState> {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(
-                            Icons.tune
-                        ), onPressed: () {
+                        icon: const Icon(Icons.tune),
+                        onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const MapFiltersState(),
                             ),
                           );
-                      },
+                        },
                       )
                     ],
                   ),
@@ -149,15 +157,7 @@ class MapLP extends State<MapLPState> {
               child: OSMFlutter(
                 controller: controller,
                 osmOption: OSMOption(
-                  markerOption: MarkerOption(
-                defaultMarker: const MarkerIcon(
-                icon: Icon(
-                  Icons.person_pin_circle,
-                  color: darkGreen50,
-                  size: 56,
-                ),
-              )
-            ),
+                  showDefaultInfoWindow: false,
                   userTrackingOption: const UserTrackingOption(
                     enableTracking: true,
                     unFollowUser: true,

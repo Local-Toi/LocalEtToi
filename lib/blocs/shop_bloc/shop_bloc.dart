@@ -11,10 +11,9 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
 
   ShopBloc({required this.shopRepository}) : super(ShopInitial());
 
+  
   @override
-  Stream<ShopState> mapEventToState(
-      ShopEvent event,
-      ) async* {
+  Stream<ShopState> mapEventToState(ShopEvent event,) async* {
     if (event is FetchShop) {
       try {
         final MyShop shop = await shopRepository.getShop(event.shopId);
