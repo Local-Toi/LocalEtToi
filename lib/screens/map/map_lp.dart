@@ -14,12 +14,15 @@ class MyCustomMarker {
   final double longitude;
   final String markerId;
   final String shopName;
+  final VoidCallback onClicked;
+
 
   MyCustomMarker({
     required this.latitude,
     required this.longitude,
     required this.markerId,
     required this.shopName,
+    required this.onClicked,
   });
 }
 
@@ -61,6 +64,9 @@ class MapLP extends State<MapLPState> {
           latitude: shop.latitude,
           longitude: shop.longitude,
           shopName: shop.name ?? "Nom du magasin non disponible",
+          onClicked: () {
+            _onMarkerClicked(shop.id);
+          },
         );
       }).toList();
 
@@ -75,17 +81,28 @@ class MapLP extends State<MapLPState> {
     }
   }
 
+  void _onMarkerClicked(String markerId) {
+    // Faites quelque chose en fonction du clic sur le marqueur avec l'ID donné
+    print("Marker clicked: $markerId");
+    // Vous pouvez ouvrir une fenêtre d'informations, afficher des détails, etc.
+  }
+
   /// Add markers to the map
 
   void _addMarkersToMap() async {
     for (MyCustomMarker marker in customMarkers) {
+
       await controller.addMarker(
         GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
-        markerIcon: const MarkerIcon(
-          icon: Icon(
-            Icons.pin_drop,
-            color: Colors.yellowAccent,
-            size: 72,
+        markerIcon:  MarkerIcon(
+          icon: GestureDetector(
+            onTap: marker.onClicked,
+
+            child: Icon(
+              Icons.pin_drop,
+              color: darkGreen,
+              size: 52,
+            ),
           ),
         ),
       );
