@@ -98,6 +98,7 @@ class MapLP extends State<MapLPState> {
       // Assuming a threshold of 50 meters for a marker tap
       if (distance < 50) {
         print("Marker tapped: ${marker.shopName}");
+        _showMarkerDetails(marker);
       }
     }
   }
@@ -126,6 +127,40 @@ class MapLP extends State<MapLPState> {
     return degree * (pi / 180);
   }
 
+  /// Show a DraggableScrollableSheet with marker information
+  void _showMarkerDetails(MyCustomMarker marker) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.5,
+          minChildSize: 0.25,
+          maxChildSize: 0.9,
+          expand: true,
+          builder: (context, controller) {
+            return Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Marker Details",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text("Shop Name: ${marker.shopName}"),
+                  // Add more information as needed
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
