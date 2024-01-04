@@ -1,13 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
 
 import 'map_filters.dart';
-
-/// Custom marker
 
 class MyCustomMarker {
   final double latitude;
@@ -25,8 +23,8 @@ class MyCustomMarker {
 
 class MapLPState extends StatefulWidget {
   const MapLPState({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   MapLP createState() => MapLP();
@@ -46,7 +44,10 @@ class MapLP extends State<MapLPState> {
 
   List<MyCustomMarker> customMarkers = [];
 
-  /// Fetch shops from Firebase
+  PanelController _panelController = PanelController();
+  bool isPanelOpen = false;
+  MyCustomMarker? selectedMarker;
+
   Future<void> _fetchShopsFromFirebase() async {
     try {
       print("AVANT");
@@ -69,7 +70,6 @@ class MapLP extends State<MapLPState> {
     }
   }
 
-  /// Add markers to the map
   void _addMarkersToMap() async {
     for (MyCustomMarker marker in customMarkers) {
       await controller.addMarker(
@@ -85,7 +85,6 @@ class MapLP extends State<MapLPState> {
     }
   }
 
-  /// Check if a tap is close enough to a marker
   void _checkMarkerTap(GeoPoint tapLocation) {
     for (MyCustomMarker marker in customMarkers) {
       double distance = calculateDistance(
@@ -95,22 +94,19 @@ class MapLP extends State<MapLPState> {
         marker.longitude,
       );
 
-      // Assuming a threshold of 50 meters for a marker tap
       if (distance < 50) {
         print("Marker tapped: ${marker.shopName}");
-        _showMarkerDetails(marker);
+        setState(() {
+          selectedMarker = marker;
+          isPanelOpen = true;
+        });
+        _panelController.open();
       }
     }
   }
 
-  /// Calculate distance between two coordinates
-  double calculateDistance(
-      double lat1,
-      double lon1,
-      double lat2,
-      double lon2,
-      ) {
-    const double radius = 6371; // Earth radius in kilometers
+  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const double radius = 6371;
 
     double dLat = _toRadians(lat2 - lat1);
     double dLon = _toRadians(lon2 - lon1);
@@ -127,39 +123,12 @@ class MapLP extends State<MapLPState> {
     return degree * (pi / 180);
   }
 
-  /// Show a DraggableScrollableSheet with marker information
   void _showMarkerDetails(MyCustomMarker marker) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return DraggableScrollableSheet(
-          initialChildSize: 0.5,
-          minChildSize: 0.25,
-          maxChildSize: 0.9,
-          expand: true,
-          builder: (context, controller) {
-            return Container(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Marker Details",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  Text("Shop Name: ${marker.shopName}"),
-                  // Add more information as needed
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
+    setState(() {
+      selectedMarker = marker;
+      isPanelOpen = true;
+    });
+    _panelController.open();
   }
 
   @override
@@ -171,104 +140,132 @@ class MapLP extends State<MapLPState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: PreferredSize(
-              preferredSize: const Size.fromHeight(50),
-              child: AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-                title: Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.search,
-                        color: Colors.black54,
-                      ),
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                        child: TextField(
-                          controller: searchController,
-                          decoration: const InputDecoration(
-                            hintText: 'Rechercher...',
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(color: Colors.black54),
+      body: SlidingUpPanel(
+        controller: _panelController,
+        minHeight: isPanelOpen ? 50 : 0,
+        maxHeight: MediaQuery.of(context).size.height * 0.9,
+        panelBuilder: (sc) => _panel(sc),
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: PreferredSize(
+                preferredSize: const Size.fromHeight(50),
+                child: AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.search,
+                          color: Colors.black54,
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: TextField(
+                            controller: searchController,
+                            decoration: const InputDecoration(
+                              hintText: 'Rechercher...',
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(color: Colors.black54),
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.tune),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const MapFiltersState(),
-                            ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 50, // Hauteur de la barre de recherche
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFFBE2),
-              ),
-              child: OSMFlutter(
-                controller: controller,
-                onGeoPointClicked:
-                    (geoPoint) {
-                      _checkMarkerTap(geoPoint);
-                    },
-                osmOption: OSMOption(
-                  showDefaultInfoWindow: false,
-                  userTrackingOption: const UserTrackingOption(
-                    enableTracking: true,
-                    unFollowUser: true,
-                  ),
-                  zoomOption: const ZoomOption(
-                    initZoom: 15,
-                    minZoomLevel: 3,
-                    maxZoomLevel: 19,
-                    stepZoom: 1.0,
-                  ),
-                  userLocationMarker: UserLocationMaker(
-                    personMarker: const MarkerIcon(
-                      icon: Icon(
-                        Icons.location_history_rounded,
-                        color: Colors.red,
-                        size: 48,
-                      ),
-                    ),
-                    directionArrowMarker: const MarkerIcon(
-                      icon: Icon(
-                        Icons.double_arrow,
-                        size: 48,
-                      ),
+                        IconButton(
+                          icon: const Icon(Icons.tune),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const MapFiltersState(),
+                              ),
+                            );
+                          },
+                        )
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+            Positioned(
+              top: 50,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFFBE2),
+                ),
+                child: OSMFlutter(
+                  controller: controller,
+                  onGeoPointClicked: (geoPoint) {
+                    _checkMarkerTap(geoPoint);
+                  },
+                  osmOption: OSMOption(
+                    showDefaultInfoWindow: false,
+                    userTrackingOption: const UserTrackingOption(
+                      enableTracking: true,
+                      unFollowUser: true,
+                    ),
+                    zoomOption: const ZoomOption(
+                      initZoom: 15,
+                      minZoomLevel: 3,
+                      maxZoomLevel: 19,
+                      stepZoom: 1.0,
+                    ),
+                    userLocationMarker: UserLocationMaker(
+                      personMarker: const MarkerIcon(
+                        icon: Icon(
+                          Icons.location_history_rounded,
+                          color: Colors.red,
+                          size: 48,
+                        ),
+                      ),
+                      directionArrowMarker: const MarkerIcon(
+                        icon: Icon(
+                          Icons.double_arrow,
+                          size: 48,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _panel(ScrollController sc) {
+    return Container(
+      color: beige,
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (selectedMarker != null)
+            const Text(
+              "Marker Details",
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          const SizedBox(height: 16.0),
+          if (selectedMarker != null)
+            Text("Shop Name: ${selectedMarker!.shopName}"),
         ],
       ),
     );
