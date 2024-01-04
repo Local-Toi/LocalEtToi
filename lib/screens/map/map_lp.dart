@@ -14,15 +14,12 @@ class MyCustomMarker {
   final double longitude;
   final String markerId;
   final String shopName;
-  final VoidCallback onClicked;
-
 
   MyCustomMarker({
     required this.latitude,
     required this.longitude,
     required this.markerId,
     required this.shopName,
-    required this.onClicked,
   });
 }
 
@@ -49,8 +46,7 @@ class MapLP extends State<MapLPState> {
 
   List<MyCustomMarker> customMarkers = [];
 
-/// Fetch shops from Firebase
-
+  /// Fetch shops from Firebase
   Future<void> _fetchShopsFromFirebase() async {
     try {
       print("AVANT");
@@ -64,49 +60,70 @@ class MapLP extends State<MapLPState> {
           latitude: shop.latitude,
           longitude: shop.longitude,
           shopName: shop.name ?? "Nom du magasin non disponible",
-          onClicked: () {
-            _onMarkerClicked(shop.id);
-          },
         );
       }).toList();
 
-
       _addMarkersToMap();
-
     } catch (e) {
       print('Error fetching shops: $e $customMarkers');
-      //for(MyCustomMarker mc in customMarkers)
-        //print("OKKKKKé" + mc.shopName);
-
     }
   }
 
-  void _onMarkerClicked(String markerId) {
-    // Faites quelque chose en fonction du clic sur le marqueur avec l'ID donné
-    print("Marker clicked: $markerId");
-    // Vous pouvez ouvrir une fenêtre d'informations, afficher des détails, etc.
-  }
-
   /// Add markers to the map
-
   void _addMarkersToMap() async {
     for (MyCustomMarker marker in customMarkers) {
-
       await controller.addMarker(
         GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
-        markerIcon:  MarkerIcon(
-          icon: GestureDetector(
-            onTap: marker.onClicked,
-
-            child: Icon(
-              Icons.pin_drop,
-              color: darkGreen,
-              size: 52,
-            ),
+        markerIcon: const MarkerIcon(
+          icon: Icon(
+            Icons.pin_drop,
+            color: darkGreen,
+            size: 52,
           ),
         ),
       );
     }
+  }
+
+  /// Check if a tap is close enough to a marker
+  void _checkMarkerTap(GeoPoint tapLocation) {
+    for (MyCustomMarker marker in customMarkers) {
+      double distance = calculateDistance(
+        tapLocation.latitude,
+        tapLocation.longitude,
+        marker.latitude,
+        marker.longitude,
+      );
+
+      // Assuming a threshold of 50 meters for a marker tap
+      if (distance < 50) {
+        print("Marker tapped: ${marker.shopName}");
+      }
+    }
+  }
+
+  /// Calculate distance between two coordinates
+  double calculateDistance(
+      double lat1,
+      double lon1,
+      double lat2,
+      double lon2,
+      ) {
+    const double radius = 6371; // Earth radius in kilometers
+
+    double dLat = _toRadians(lat2 - lat1);
+    double dLon = _toRadians(lon2 - lon1);
+
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(_toRadians(lat1)) * cos(_toRadians(lat2)) * sin(dLon / 2) * sin(dLon / 2);
+
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    return radius * c;
+  }
+
+  double _toRadians(double degree) {
+    return degree * (pi / 180);
   }
 
 
@@ -182,6 +199,10 @@ class MapLP extends State<MapLPState> {
               ),
               child: OSMFlutter(
                 controller: controller,
+                onGeoPointClicked:
+                    (geoPoint) {
+                      _checkMarkerTap(geoPoint);
+                    },
                 osmOption: OSMOption(
                   showDefaultInfoWindow: false,
                   userTrackingOption: const UserTrackingOption(
