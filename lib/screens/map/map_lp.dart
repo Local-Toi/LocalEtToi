@@ -1,10 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:local_et_toi/model/shops.dart';
+import 'package:local_et_toi/utils/constants.dart';
+import 'package:shop_repository/shop_repository.dart';
 
 import 'map_filters.dart';
 
+/// Custom marker
+
+class MyCustomMarker {
+  final double latitude;
+  final double longitude;
+  final String markerId;
+  final String shopName;
+
+  MyCustomMarker({
+    required this.latitude,
+    required this.longitude,
+    required this.markerId,
+    required this.shopName,
+  });
+}
 
 class MapLPState extends StatefulWidget {
   const MapLPState({
@@ -25,44 +42,62 @@ class MapLP extends State<MapLPState> {
 
   TextEditingController searchController = TextEditingController();
 
-  /*Future<void> _fetchShopsFromFirebase() async {
-    final CollectionReference shops =
-    FirebaseFirestore.instance.collection('shops');
+  FirebaseShopRepository _shopRepository = FirebaseShopRepository();
 
+  List<MyCustomMarker> customMarkers = [];
+
+/// Fetch shops from Firebase
+
+  Future<void> _fetchShopsFromFirebase() async {
     try {
-      QuerySnapshot<Object?> querySnapshot =
-      await shops.get();
+      print("AVANT");
+      List<MyShop> shops = await _shopRepository.getAllShops();
 
-      List<Shop> markers = [];
+      print("LES SHOPS $shops");
 
-      querySnapshot.docs.forEach((DocumentSnapshot<Map<String, dynamic>> doc) {
-        if (doc.exists) {
-          final shop = doc.data();
-          final double latitude = shop?['latitude'];
-          final double longitude = shop?['longitude'];
+      customMarkers = shops.map((shop) {
+        return MyCustomMarker(
+          markerId: shop.id,
+          latitude: shop.latitude,
+          longitude: shop.longitude,
+          shopName: shop.name ?? "Nom du magasin non disponible",
+        );
+      }).toList();
 
-          markers.add(
-            Shop(
-              producerId: shop?["0"],
-              markerId: MarkerId(doc.id),
-              position: LatLng(latitude, longitude),
-              icon: Icon(Icons.pin_drop, color: Colors.blue),
-              onTap: () {
-                // Gérer l'événement de clic sur le marqueur si nécessaire
-              }, id: null,
-            ),
-          );
-        }
-      } as void Function(QueryDocumentSnapshot<Object?> element));
 
-      // Mettez à jour la carte avec les nouveaux marqueurs
-      controller.addMarkers(markers);
+      _addMarkersToMap();
 
     } catch (e) {
-      print('Erreur lors de la récupération des magasins : $e');
+      print('Error fetching shops: $e $customMarkers');
+      //for(MyCustomMarker mc in customMarkers)
+        //print("OKKKKKé" + mc.shopName);
+
     }
   }
-}*/
+
+  /// Add markers to the map
+
+  void _addMarkersToMap() async {
+    for (MyCustomMarker marker in customMarkers) {
+      await controller.addMarker(
+        GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
+        markerIcon: const MarkerIcon(
+          icon: Icon(
+            Icons.pin_drop,
+            color: Colors.yellowAccent,
+            size: 72,
+          ),
+        ),
+      );
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchShopsFromFirebase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,15 +138,14 @@ class MapLP extends State<MapLPState> {
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(
-                            Icons.tune
-                        ), onPressed: () {
+                        icon: const Icon(Icons.tune),
+                        onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => const MapFiltersState(),
                             ),
                           );
-                      },
+                        },
                       )
                     ],
                   ),
@@ -132,6 +166,7 @@ class MapLP extends State<MapLPState> {
               child: OSMFlutter(
                 controller: controller,
                 osmOption: OSMOption(
+                  showDefaultInfoWindow: false,
                   userTrackingOption: const UserTrackingOption(
                     enableTracking: true,
                     unFollowUser: true,
