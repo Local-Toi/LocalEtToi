@@ -62,6 +62,8 @@ dependencies:
   flutter_osm_plugin: ^0.70.3
   geopoint: ^1.0.0
 
+  sliding_up_panel: ^2.0.0+1
+
 
 dev_dependencies:
   flutter_test:
