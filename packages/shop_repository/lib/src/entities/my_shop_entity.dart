@@ -9,7 +9,7 @@ class MyShopEntity extends Equatable {
   final String? phonenumber;
   final String adresse;
   final double? note;
-  final List<String>? horaires;
+  final List<dynamic>? horaires;
 
   const MyShopEntity({
     required this.id,
@@ -53,7 +53,7 @@ class MyShopEntity extends Equatable {
       phonenumber: doc['phonenumber'] as String?,
       adresse: doc['adresse'] as String,
       note: doc['note'] as double?,
-      horaires: doc['horaires'] as List<String>?,
+      horaires: doc['horaires'] as List<dynamic>?,
     );
   }
 
