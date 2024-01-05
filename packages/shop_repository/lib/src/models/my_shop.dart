@@ -9,6 +9,10 @@ class MyShop extends Equatable {
     required this.latitude,
     this.name,
     this.description,
+    this.phonenumber,
+    required this.adresse,
+    this.note,
+    this.horaires,
   });
 
   final String id;
@@ -16,6 +20,10 @@ class MyShop extends Equatable {
   final double latitude;
   final String? name;
   final String? description;
+  final String? phonenumber;
+  final String adresse;
+  final double? note;
+  final List<String>? horaires;
 
   static const empty = MyShop(
     id: '',
@@ -23,6 +31,10 @@ class MyShop extends Equatable {
     latitude: 0.0,
     name: '',
     description: '',
+    phonenumber: '',
+    adresse: '',
+    note: 0.0,
+    horaires: [],
   );
 
   /// Creates a copy of the current [MyShop] with its properties
@@ -33,6 +45,10 @@ class MyShop extends Equatable {
     double? latitude,
     String? name,
     String? description,
+    String? phonenumber,
+    String? adresse,
+    double? note,
+    List<String>? horaires,
   }) {
     return MyShop(
       id: id ?? this.id,
@@ -40,6 +56,10 @@ class MyShop extends Equatable {
       latitude: latitude ?? this.latitude,
       name: name ?? this.name,
       description: description ?? this.description,
+      phonenumber: phonenumber ?? this.phonenumber,
+      adresse: adresse ?? this.adresse,
+      note: note ?? this.note,
+      horaires: horaires ?? this.horaires,
     );
   }
 
@@ -54,6 +74,10 @@ class MyShop extends Equatable {
       latitude: latitude,
       name: name,
       description: description,
+      phonenumber: phonenumber,
+      adresse: adresse,
+      note: note,
+      horaires: horaires,
     );
   }
 
@@ -65,9 +89,13 @@ class MyShop extends Equatable {
       latitude: entity.latitude,
       name: entity.name,
       description: entity.description,
+      phonenumber: entity.phonenumber,
+      adresse: entity.adresse,
+      note: entity.note,
+      horaires: entity.horaires,
     );
   }
 
   @override
-  List<Object> get props => [longitude, latitude, name ?? '', description ?? ''];
+  List<Object> get props => [longitude, latitude, name ?? '', description ?? '', phonenumber ?? '', adresse, note ?? 0.0, horaires ?? []];
 }

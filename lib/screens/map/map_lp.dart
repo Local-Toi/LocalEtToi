@@ -12,12 +12,22 @@ class MyCustomMarker {
   final double longitude;
   final String markerId;
   final String shopName;
+  final String phoneNumber;
+  final String description;
+  final String address;
+  final double mark;
+  final List<String> schedule;
 
   MyCustomMarker({
     required this.latitude,
     required this.longitude,
     required this.markerId,
     required this.shopName,
+    required this.phoneNumber,
+    required this.description,
+    required this.address,
+    required this.mark,
+    required this.schedule,
   });
 }
 
@@ -61,6 +71,11 @@ class MapLP extends State<MapLPState> {
           latitude: shop.latitude,
           longitude: shop.longitude,
           shopName: shop.name ?? "Nom du magasin non disponible",
+          phoneNumber: shop.phonenumber ?? "N° de téléphone non disponible",
+          description: shop.description ?? "Description non disponible",
+          address: shop.adresse ?? "Adresse non disponible",
+          mark: shop.note ?? 0.0,
+          schedule: (shop.horaires as List<dynamic>?)?.cast<String>() ?? ["Horaires non disponibles"],
         );
       }).toList();
 
@@ -265,7 +280,8 @@ class MapLP extends State<MapLPState> {
             ),
           const SizedBox(height: 16.0),
           if (selectedMarker != null)
-            Text("Shop Name: ${selectedMarker!.shopName}"),
+            Text(selectedMarker!.shopName),
+            //Text(selectedMarker!.description),
         ],
       ),
     );
