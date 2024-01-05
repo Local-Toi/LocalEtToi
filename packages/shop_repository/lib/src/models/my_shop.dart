@@ -23,7 +23,7 @@ class MyShop extends Equatable {
   final String? phonenumber;
   final String adresse;
   final double? note;
-  final List<String>? horaires;
+  final List<dynamic>? horaires;
 
   static const empty = MyShop(
     id: '',
@@ -48,7 +48,7 @@ class MyShop extends Equatable {
     String? phonenumber,
     String? adresse,
     double? note,
-    List<String>? horaires,
+    List<dynamic>? horaires,
   }) {
     return MyShop(
       id: id ?? this.id,

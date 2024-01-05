@@ -16,7 +16,7 @@ class MyCustomMarker {
   final String description;
   final String address;
   final double mark;
-  final List<String> schedule;
+  final List<dynamic> schedule;
 
   MyCustomMarker({
     required this.latitude,
@@ -73,9 +73,9 @@ class MapLP extends State<MapLPState> {
           shopName: shop.name ?? "Nom du magasin non disponible",
           phoneNumber: shop.phonenumber ?? "N° de téléphone non disponible",
           description: shop.description ?? "Description non disponible",
-          address: shop.adresse ?? "Adresse non disponible",
+          address: shop.adresse,
           mark: shop.note ?? 0.0,
-          schedule: (shop.horaires as List<dynamic>?)?.cast<String>() ?? ["Horaires non disponibles"],
+          schedule: shop.horaires ?? ["Horaires non disponibles"],
         );
       }).toList();
 
