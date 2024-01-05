@@ -271,16 +271,16 @@ class MapLP extends State<MapLPState> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (selectedMarker != null)
-            const Text(
-              "Marker Details",
-              style: TextStyle(
+             Text(
+              selectedMarker!.shopName,
+              style: const TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           const SizedBox(height: 16.0),
           if (selectedMarker != null)
-            Text(selectedMarker!.shopName),
+            Text("Description : ${selectedMarker!.description}"),
             //Text(selectedMarker!.description),
         ],
       ),
