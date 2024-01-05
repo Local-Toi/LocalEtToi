@@ -271,17 +271,64 @@ class MapLP extends State<MapLPState> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (selectedMarker != null)
-             Text(
-              selectedMarker!.shopName,
-              style: const TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+             Row(
+               children: [
+                 Text(
+                  selectedMarker!.shopName,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                             ),
+                 const Icon(Icons.favorite_border_outlined,
+                 color: red,
+                 )
+               ],
+             ),
           const SizedBox(height: 16.0),
           if (selectedMarker != null)
             Text("Description : ${selectedMarker!.description}"),
-            //Text(selectedMarker!.description),
+             const Row(
+               children: [
+                 Text("Ouvert ou fermé WIP")
+               ],
+             ),
+             Row(
+              children: [
+                const Icon(
+                  Icons.pin_drop,
+                  color: darkGreen,
+                ),
+                if (selectedMarker != null)
+                  Text(selectedMarker!.address,),
+              ],
+            ),
+          Row(
+            children: [
+              const Icon(
+                Icons.schedule,
+                color: darkGreen,
+              ),
+              Column(
+                children: [
+                  if (selectedMarker != null)
+                    Text("Lun : ${selectedMarker!.schedule[0]}"),
+                  if (selectedMarker != null)
+                    Text("Mar : ${selectedMarker!.schedule[1]}"),
+                  if (selectedMarker != null)
+                    Text("Mer : ${selectedMarker!.schedule[2]}"),
+                  if (selectedMarker != null)
+                    Text("Jeu : ${selectedMarker!.schedule[3]}"),
+                  if (selectedMarker != null)
+                    Text("Ven : ${selectedMarker!.schedule[4]}"),
+                  if (selectedMarker != null)
+                    Text("Sam : ${selectedMarker!.schedule[5]}"),
+                  if (selectedMarker != null)
+                    Text("Dim : ${selectedMarker!.schedule[6]}"),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
