@@ -6,22 +6,14 @@ import 'package:local_et_toi/utils/constants.dart' as constants;
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../utils/buttons/buttons.dart';
 
-void main()  {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: ProfilPage(),
-    ),
-  ));
-}
-
-class ProfilPage extends StatefulWidget {
-  const ProfilPage({super.key});
+class FuturUpdate extends StatefulWidget {
+  const FuturUpdate({super.key});
 
   @override
-  _ProfilPageState createState() => _ProfilPageState();
+  _FuturUpdateState createState() => _FuturUpdateState();
 }
 
-class _ProfilPageState extends State<ProfilPage> {
+class _FuturUpdateState extends State<FuturUpdate> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -38,6 +30,12 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                   Container(
                       alignment : const FractionalOffset(0.5, 0.45),
+                      padding: const EdgeInsets.only(
+                        top: 0,
+                        left: 70,
+                        right: 70,
+                        bottom: 70,
+                      ),
                       child: const Text(
                         "Cette page n'est pas encore disponible, elle arrivera surement dans la prochaine mise à jour, nous sommes ravis dde voir qu'elle vous intéresse.",
                         style: constants.textDarkGrey,
@@ -47,7 +45,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       alignment : const FractionalOffset(0.5, 0.90),
                       child: TransparentRoundedButtonWithBorder(
                           onPressed: () {
-                              Navigator.pop(context);
+                            Navigator.pop(context);
                           },
                           buttonText: 'Retourner en arrière'
                       )
