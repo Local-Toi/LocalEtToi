@@ -158,6 +158,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                               // error message input password + icon
                               SizedBox(
                                 child: TextFormField(
+                                  obscureText: _obscured,
                                   onSaved: (val) => password = val!,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {

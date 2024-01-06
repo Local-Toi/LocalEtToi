@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/screens/authentication/sign_in.dart';
 import 'package:local_et_toi/screens/authentication/sign_up_part1.dart';
+import 'package:local_et_toi/screens/futurUpdate.dart';
+import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class HomeScreen extends StatelessWidget {
@@ -94,7 +95,13 @@ class HomeScreen extends StatelessWidget {
               child: Center(
                 child: SizedBox(
                     child: TransparentRoundedButtonWithBorder(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                            builder: (context) => const FuturUpdate(),
+                            ),
+                        );
+                      },
                       buttonText: 'Continuer en tant qu\'invité',
                     )),
               ))
@@ -103,3 +110,4 @@ class HomeScreen extends StatelessWidget {
     ));
   }
 }
+
