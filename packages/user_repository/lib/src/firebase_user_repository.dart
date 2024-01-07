@@ -53,6 +53,7 @@ class FirebaseUserRepository implements UserRepository {
         email: email,
         firstName: '',
         lastName: '',
+        isProducer: false,
       );
 
       myUser = myUser.copyWith(
@@ -61,6 +62,7 @@ class FirebaseUserRepository implements UserRepository {
         email: email,
         firstName: '',
         lastName: '',
+        isProducer: false,
       );
 
       return myUser;

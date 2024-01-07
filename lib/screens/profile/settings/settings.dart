@@ -88,16 +88,24 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Container(
                   alignment : const FractionalOffset(0.5, 0.75),
-                  child: GreenRoundedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const SecurityView(),
-                          ),
-                        );
-                      },
-                      buttonText: 'Tu es producteur ?'
-                  )
+                  child: Builder(
+                      builder: (context) {
+                        if (true) {
+                          GreenRoundedButton(
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (
+                                        context) => const pointOfSalePage(),
+                                  ),
+                                );
+                              },
+                              buttonText: 'Mes points de vente'
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      }
+
               ),
             ],
           ),
