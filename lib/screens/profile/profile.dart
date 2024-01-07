@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/screens/home/home_screen.dart';
-import 'package:local_et_toi/screens/profile/comments/comments.dart';
+import 'package:local_et_toi/screens/futurUpdate.dart';
 import 'package:local_et_toi/screens/profile/pointOfSale/pointOfSale.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/screens/profile/settings/settings.dart';
@@ -74,7 +74,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => const CommentsPage(),
+                                builder: (context) => const futurUpdate(),
                               ),
                             );
                           },
@@ -83,15 +83,23 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                   Container(
                       alignment : const FractionalOffset(0.5, 0.65),
-                      child: GreenRoundedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const pointOfSalePage(),
-                              ),
+                      child: Builder(
+                        builder: (context) {
+                          if (true) {
+                            GreenRoundedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (
+                                          context) => const pointOfSalePage(),
+                                    ),
+                                  );
+                                },
+                                buttonText: 'Mes points de vente'
                             );
-                          },
-                          buttonText: 'Mes points de vente'
+                          }
+                          return const SizedBox.shrink();
+                        }
                       )
                   ),
                   Container(
