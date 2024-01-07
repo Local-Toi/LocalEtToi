@@ -6,6 +6,10 @@ class MyShopEntity extends Equatable {
   final double latitude;
   final String? name;
   final String? description;
+  final String? phonenumber;
+  final String adresse;
+  final double? note;
+  final List<dynamic>? horaires;
 
   const MyShopEntity({
     required this.id,
@@ -13,6 +17,10 @@ class MyShopEntity extends Equatable {
     required this.latitude,
     this.name,
     this.description,
+    this.phonenumber,
+    required this.adresse,
+    this.note,
+    this.horaires,
   });
 
   Map<String, Object?> toDocument() {
@@ -22,24 +30,38 @@ class MyShopEntity extends Equatable {
       'latitude': latitude,
       'name': name,
       'description': description,
+      'phonenumber': phonenumber,
+      'adresse': adresse,
+      'note': note,
+      'horaires': horaires
     };
   }
 
   static MyShopEntity fromDocument(Map<String, Object?> doc) {
+
+    print('Data from Firebase: $doc');
+
+    final horaires = doc['horaires'];
+    print('Type of horaires: ${horaires?.runtimeType}');
+
     return MyShopEntity(
       id: doc['id'] as String,
       longitude: doc['longitude'] as double,
       latitude: doc['latitude'] as double,
       name: doc['name'] as String?,
       description: doc['description'] as String?,
+      phonenumber: doc['phonenumber'] as String?,
+      adresse: doc['adresse'] as String,
+      note: doc['note'] as double?,
+      horaires: doc['horaires'] as List<dynamic>?,
     );
   }
 
   @override
-  List<Object?> get props => [id, longitude, latitude, name, description];
+  List<Object?> get props => [id, longitude, latitude, name, description, phonenumber, adresse, note, horaires];
 
   @override
   String toString() {
-    return 'ShopEntity { id: $id, longitude: $longitude, latitude: $latitude, name: $name, description: $description }';
+    return 'ShopEntity { id: $id, longitude: $longitude, latitude: $latitude, name: $name, description: $description, phonenumber: $phonenumber, adresse: $adresse, note: $note, horaires: $horaires }';
   }
 }
