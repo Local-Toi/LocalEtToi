@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
 import 'package:local_et_toi/cubits/forget_password_cubit/forget_password_cubit.dart';
@@ -157,6 +158,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                               // error message input password + icon
                               SizedBox(
                                 child: TextFormField(
+                                  obscureText: _obscured,
                                   onSaved: (val) => password = val!,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -241,14 +243,9 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
                   child: SizedBox(
                     child: TransparentRoundedButtonWithBorder(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => ForgetPasswordCubit(myUserRepository: context.read()),
-                              child: ForgotPasswordPage(),
-                            ),
-                          ),
-                        );
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPage(),
+                        ));
                       },
                       buttonText: 'Mot de passe oublié',
                     ),

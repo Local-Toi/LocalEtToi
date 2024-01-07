@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 class GreenTextFieldWithGreenerBorderObscured extends GreenTextFieldWithGreenerBorder {
   final bool obscureText;
   final FocusNode focusNode;
-  const GreenTextFieldWithGreenerBorderObscured({
-    super.key, required this.obscureText, required this.focusNode, required super.keyboardType,
-    required super.onSaved, required super.validator, super.controller
-  });
-}
+  const GreenTextFieldWithGreenerBorderObscured(
+      {super.key,
+      required this.obscureText,
+      required this.focusNode,
+      required super.keyboardType,
+      required super.onSaved,
+      required super.validator,
+      super.controller});
 
+}
 
 class GreenTextFieldWithGreenerBorder extends StatelessWidget {
   final void Function(String?)? onSaved;
@@ -27,8 +32,6 @@ class GreenTextFieldWithGreenerBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 355,
-      height: 45,
       child: TextFormField(
         onSaved: onSaved,
         controller: controller,
@@ -36,17 +39,25 @@ class GreenTextFieldWithGreenerBorder extends StatelessWidget {
         keyboardType: keyboardType,
         decoration: InputDecoration(
           filled: true,
-          fillColor: const Color(0x2640B65D),
+          fillColor: constants.lightGreen,
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Color(0xFF095D40)),
+            borderSide: const BorderSide(
+              width: 1,
+              color: constants.darkGreen,
+            ),
             borderRadius: BorderRadius.circular(5.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 2, color: Color(0xFF095D40)),
+            borderSide: const BorderSide(
+              width: 2,
+              color: constants.darkGreen,
+            ),
             borderRadius: BorderRadius.circular(5.0),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
           border: InputBorder.none,
+          //floatingLabelBehavior: FloatingLabelBehavior.never,
+          isDense: true,
         ),
       ),
     );
