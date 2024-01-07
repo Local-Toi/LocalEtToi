@@ -5,12 +5,14 @@ class MyUserEntity extends Equatable {
   final String? email;
   final String? firstName;
   final String? lastName;
+  final bool isProducer;
 
   const MyUserEntity({
     required this.id,
     this.email,
     this.firstName,
     this.lastName,
+    required this.isProducer,
   });
 
   Map<String, Object?> toDocument() {
@@ -19,6 +21,7 @@ class MyUserEntity extends Equatable {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
+      'isProducer': isProducer,
     };
   }
 
@@ -28,14 +31,15 @@ class MyUserEntity extends Equatable {
       email: doc['email'] as String?,
       firstName: doc['firstName'] as String?,
       lastName: doc['lastName'] as String?,
+      isProducer: doc['isProducer'] as bool,
     );
   }
 
   @override
-  List<Object?> get props => [id, email, firstName, lastName];
+  List<Object?> get props => [id, email, firstName, lastName, isProducer];
 
   @override
   String toString() {
-    return 'UserEntity { id: $id, email: $email, firstName: $firstName, lastName: $lastName }';
+    return 'UserEntity { id: $id, email: $email, firstName: $firstName, lastName: $lastName , isProducer: $isProducer}';
   }
 }
