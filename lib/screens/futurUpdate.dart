@@ -37,7 +37,7 @@ class _FuturUpdateState extends State<FuturUpdate> {
                         bottom: 70,
                       ),
                       child: const Text(
-                        "Cette page n'est pas encore disponible, elle arrivera surement dans la prochaine mise à jour, nous sommes ravis dde voir qu'elle vous intéresse.",
+                        "Cette page n'est pas encore disponible, elle arrivera surement dans la prochaine mise ï¿½ jour, nous sommes ravis dde voir qu'elle vous intï¿½resse.",
                         style: constants.textDarkGrey,
                       )
                   ),
@@ -47,7 +47,7 @@ class _FuturUpdateState extends State<FuturUpdate> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          buttonText: 'Retourner en arrière'
+                          buttonText: 'Retourner en arriï¿½re'
                       )
                   ),
                 ],
