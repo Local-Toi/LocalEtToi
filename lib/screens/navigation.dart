@@ -7,7 +7,6 @@ import 'package:local_et_toi/screens/map/map_lp.dart';
 import 'package:local_et_toi/screens/profile/profile.dart';
 import 'package:local_et_toi/screens/search/search_lp.dart';
 
-
 List<BottomNavigationBarItem> bottomNavItems = const <BottomNavigationBarItem>[
   BottomNavigationBarItem(
     icon: Icon(Icons.home),

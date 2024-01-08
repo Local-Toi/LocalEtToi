@@ -1,9 +1,9 @@
-part of 'favorite_bloc_bloc.dart';
+part of 'favorite_bloc.dart';
 
-sealed class FavoriteBlocEvent extends Equatable {
+sealed class FavoriteEvent extends Equatable {
   final String favorite;
 
-  const FavoriteBlocEvent({
+  const FavoriteEvent({
     required this.favorite,
   });
 
@@ -11,7 +11,7 @@ sealed class FavoriteBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FavoritesRequested extends FavoriteBlocEvent {
+class FavoritesRequested extends FavoriteEvent {
   const FavoritesRequested(
     String favorite,
   ) : super(favorite: favorite);

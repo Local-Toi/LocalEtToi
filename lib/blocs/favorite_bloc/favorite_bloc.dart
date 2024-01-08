@@ -2,17 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:favorites_repository/favorite_repository.dart';
 
-part 'favorite_bloc_event.dart';
-part 'favorite_bloc_state.dart';
+part 'favorite_event.dart';
+part 'favorite_state.dart';
 
-class FavoriteBlocBloc extends Bloc<FavoriteBlocEvent, FavoriteBlocState> {
+class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   final FavoriteRepository _favoriteRepository;
 
-  FavoriteBlocBloc({
+  FavoriteBloc({
     required FavoriteRepository favoriteRepository,
   })  : _favoriteRepository = favoriteRepository,
         super(FavoriteBlocInitial()) {
-    on<FavoriteBlocEvent>((event, emit) async {
+    on<FavoriteEvent>((event, emit) async {
       if (event is FavoriteAdded) {
         await _favoriteRepository.addFavorite(event.favorite);
       } else if (event is FavoriteRemoved) {
