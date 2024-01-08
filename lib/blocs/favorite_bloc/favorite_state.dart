@@ -1,4 +1,4 @@
-part of 'favorite_bloc_bloc.dart';
+part of 'favorite_bloc.dart';
 
 sealed class FavoriteBlocState extends Equatable {
   const FavoriteBlocState();
@@ -6,7 +6,7 @@ sealed class FavoriteBlocState extends Equatable {
   List<Object> get props => [];
 }
 
-final class FavoriteBlocInitial extends FavoriteBlocState {}
+final class FavoriteBlocInitial extends FavoriteState {}
 
 class FavoriteAdded {
   final String favorite;
@@ -20,7 +20,7 @@ class FavoriteRemoved {
   const FavoriteRemoved(this.favorite);
 }
 
-class FavoritesLoadSuccess extends FavoriteBlocState {
+class FavoritesLoadSuccess extends FavoriteState {
   final List<String> favorites;
 
   const FavoritesLoadSuccess(
@@ -31,7 +31,7 @@ class FavoritesLoadSuccess extends FavoriteBlocState {
   List<Object> get props => [favorites];
 }
 
-class FavoritesLoadFailure extends FavoriteBlocState {
+class FavoritesLoadFailure extends FavoriteState {
   final String? message;
 
   const FavoritesLoadFailure({this.message});
