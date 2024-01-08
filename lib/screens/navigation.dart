@@ -36,7 +36,7 @@ const List<Widget> bottomNavScreen = <Widget>[
   DiscoverLP(),
   MapLPState(),
   FavoritesLP(),
-  SearchLP(),
+  SearchPage(),
   ProfilPage(),
 ];
 
