@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
+import 'package:local_et_toi/screens/profile/pointOfSale/pointOfSale.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'Security.dart';
@@ -90,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment : const FractionalOffset(0.5, 0.75),
                   child: Builder(
                       builder: (context) {
-                        if (true) {
+                        if (context.read<UserBloc>().state.user!.isProducer) {
                           GreenRoundedButton(
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
@@ -106,6 +109,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         return const SizedBox.shrink();
                       }
 
+              ),
               ),
             ],
           ),
