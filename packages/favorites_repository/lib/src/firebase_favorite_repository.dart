@@ -10,6 +10,7 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
 
   final FirebaseAuth _firebaseAuth;
   final usersCollection = FirebaseFirestore.instance.collection('users');
+  final shopCollection = FirebaseFirestore.instance.collection('shops');
 
   @override
   Future<void> addFavorite(String id) async {
@@ -17,24 +18,6 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
       final user = _firebaseAuth.currentUser;
       if (user != null) {
         // pass
-      } else {
-        throw Exception('User not found or not logged in');
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<List<String>> getFavorites() {
-    try {
-      final user = _firebaseAuth.currentUser;
-      if (user != null) {
-        /// /users/{userId}/favorites
-        return usersCollection.doc(user.uid).collection('favorites').get().then((snapshot) {
-          //print(snapshot.docs.map((doc) => doc.data()).toList());
-          return snapshot.docs.map((doc) => doc.id).toList();
-        });
       } else {
         throw Exception('User not found or not logged in');
       }
@@ -73,6 +56,23 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
     return favoritesData;
   }
 
+  // get favorites data from firestore and return a list of favorites
+  Future<MyFavoriteShop> getFavoriteShop(String shopId) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        return shopCollection
+            .doc(shopId)
+            .get()
+            .then((value) => MyFavoriteShop.fromEntity(MyFavoriteShopEntity.fromDocument(value.data()!)));
+      } else {
+        throw Exception('User not found or not logged in');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   @override
   Future<bool> isFavorite(String id) {
     // TODO: implement isFavorite
@@ -82,6 +82,12 @@ class FirebaseFavoriteRepository implements FavoriteRepository {
   @override
   Future<void> removeFavorite(String id) {
     // TODO: implement removeFavorite
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<String>> getFavorites() {
+    // TODO: implement getFavorites
     throw UnimplementedError();
   }
 }
