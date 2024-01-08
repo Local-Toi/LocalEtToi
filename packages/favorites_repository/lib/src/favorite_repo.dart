@@ -6,4 +6,5 @@ abstract class FavoriteRepository {
   Future<void> removeFavorite(String id);
   Future<List<String>> getFavorites();
   Future<bool> isFavorite(String id);
+  Future<MyFavoriteShop> getFavoriteShop(String shopId);
 }
