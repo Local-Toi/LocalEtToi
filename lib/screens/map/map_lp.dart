@@ -219,40 +219,43 @@ class MapLP extends State<MapLPState> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFFFBE2),
-                ),
-                child: OSMFlutter(
-                  controller: controller,
-                  onGeoPointClicked: (geoPoint) {
-                    _checkMarkerTap(geoPoint);
-                  },
-                  osmOption: OSMOption(
-                    showDefaultInfoWindow: false,
-                    userTrackingOption: const UserTrackingOption(
-                      enableTracking: true,
-                      unFollowUser: true,
-                    ),
-                    zoomOption: const ZoomOption(
-                      initZoom: 15,
-                      minZoomLevel: 3,
-                      maxZoomLevel: 19,
-                      stepZoom: 1.0,
-                    ),
-                    userLocationMarker: UserLocationMaker(
-                      personMarker: const MarkerIcon(
-                        icon: Icon(
-                          Icons.location_history_rounded,
-                          color: Colors.red,
-                          size: 48,
-                        ),
+              child: IgnorePointer(
+                ignoring: isPanelOpen,
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFFBE2),
+                  ),
+                  child: OSMFlutter(
+                    controller: controller,
+                    onGeoPointClicked: (geoPoint) {
+                      _checkMarkerTap(geoPoint);
+                    },
+                    osmOption: OSMOption(
+                      showDefaultInfoWindow: false,
+                      userTrackingOption: const UserTrackingOption(
+                        enableTracking: true,
+                        unFollowUser: true,
                       ),
-                      directionArrowMarker: const MarkerIcon(
-                        icon: Icon(
-                          Icons.double_arrow,
-                          size: 48,
+                      zoomOption: const ZoomOption(
+                        initZoom: 15,
+                        minZoomLevel: 3,
+                        maxZoomLevel: 19,
+                        stepZoom: 1.0,
+                      ),
+                      userLocationMarker: UserLocationMaker(
+                        personMarker: const MarkerIcon(
+                          icon: Icon(
+                            Icons.location_history_rounded,
+                            color: Colors.red,
+                            size: 48,
+                          ),
+                        ),
+                        directionArrowMarker: const MarkerIcon(
+                          icon: Icon(
+                            Icons.double_arrow,
+                            size: 48,
+                          ),
                         ),
                       ),
                     ),
@@ -275,110 +278,102 @@ class MapLP extends State<MapLPState> {
           : 'Ouvert : $schedule';
     }
 
-    return AbsorbPointer(
-      absorbing: isPanelOpen,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-        },
-        child: Container(
-          color: beige,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Container(
+      color: beige,
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      _panelController.close();
-                    },
-                  ),
-                ],
-              ),
-              if (selectedMarker != null)
-                Row(
-                  children: [
-                    Text(
-                      selectedMarker!.shopName,
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.favorite_border_outlined,
-                      color: red,
-                    )
-                  ],
-                ),
-              const SizedBox(height: 8.0),
-              if (selectedMarker != null)
-                Text("Description : ${selectedMarker!.description}"),
-              const SizedBox(height: 8.0),
-              if (selectedMarker != null)
-                Text(getStatusText(selectedMarker!.schedule[currentDayOfWeek - 1])),
-              const SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.pin_drop,
-                    color: darkGreen,
-                  ),
-                  const SizedBox(width: 8.0),
-                  if (selectedMarker != null)
-                    Text(selectedMarker!.address,),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.schedule,
-                    color: darkGreen,
-                  ),
-                  const SizedBox(width: 8.0),
-                  Column(
-                    children: [
-                      if (selectedMarker != null)
-                        Text("Lun : ${selectedMarker!.schedule[0]}"),
-                      if (selectedMarker != null)
-                        Text("Mar : ${selectedMarker!.schedule[1]}"),
-                      if (selectedMarker != null)
-                        Text("Mer : ${selectedMarker!.schedule[2]}"),
-                      if (selectedMarker != null)
-                        Text("Jeu : ${selectedMarker!.schedule[3]}"),
-                      if (selectedMarker != null)
-                        Text("Ven : ${selectedMarker!.schedule[4]}"),
-                      if (selectedMarker != null)
-                        Text("Sam : ${selectedMarker!.schedule[5]}"),
-                      if (selectedMarker != null)
-                        Text("Dim : ${selectedMarker!.schedule[6]}"),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: darkGreen,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    selectedMarker?.phoneNumber ?? "Numéro non disponible",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  _panelController.close();
+                },
               ),
             ],
           ),
-        ),
+          if (selectedMarker != null)
+            Row(
+              children: [
+                Text(
+                  selectedMarker!.shopName,
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Icon(
+                  Icons.favorite_border_outlined,
+                  color: red,
+                )
+              ],
+            ),
+          const SizedBox(height: 8.0),
+          if (selectedMarker != null)
+            Text("Description : ${selectedMarker!.description}"),
+          const SizedBox(height: 8.0),
+          if (selectedMarker != null)
+            Text(getStatusText(selectedMarker!.schedule[currentDayOfWeek - 1])),
+          const SizedBox(height: 8.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.pin_drop,
+                color: darkGreen,
+              ),
+              const SizedBox(width: 8.0),
+              if (selectedMarker != null)
+                Text(selectedMarker!.address,),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.schedule,
+                color: darkGreen,
+              ),
+              const SizedBox(width: 8.0),
+              Column(
+                children: [
+                  if (selectedMarker != null)
+                    Text("Lun : ${selectedMarker!.schedule[0]}"),
+                  if (selectedMarker != null)
+                    Text("Mar : ${selectedMarker!.schedule[1]}"),
+                  if (selectedMarker != null)
+                    Text("Mer : ${selectedMarker!.schedule[2]}"),
+                  if (selectedMarker != null)
+                    Text("Jeu : ${selectedMarker!.schedule[3]}"),
+                  if (selectedMarker != null)
+                    Text("Ven : ${selectedMarker!.schedule[4]}"),
+                  if (selectedMarker != null)
+                    Text("Sam : ${selectedMarker!.schedule[5]}"),
+                  if (selectedMarker != null)
+                    Text("Dim : ${selectedMarker!.schedule[6]}"),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: darkGreen,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Text(
+                selectedMarker?.phoneNumber ?? "Numéro non disponible",
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
