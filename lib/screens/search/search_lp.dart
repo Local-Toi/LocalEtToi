@@ -1,6 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../utils/constants.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      home: SearchPage(),
+    );
+  }
+}
+
+class MyShop {
+  final String name;
+  final String description;
+
+  MyShop({
+    required this.name,
+    required this.description,
+  });
+}
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -11,6 +39,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
+  List<MyShop> searchResults = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +68,11 @@ class _SearchPageState extends State<SearchPage> {
                 Expanded(
                   child: TextField(
                     controller: searchController,
+                    onChanged: (query) {
+                      searchFirebase(query);
+                    },
                     decoration: const InputDecoration(
                       hintText: 'Rechercher...',
-                      border: InputBorder.none,
                       hintStyle: TextStyle(color: Colors.black54),
                     ),
                   ),
@@ -57,20 +88,41 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: const [
-            SearchCard(
-              title: 'Test 1',
-              description: 'Description du test 1',
-            ),
-            SearchCard(
-              title: 'Test 2',
-              description: 'Description du test 2',
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: searchResults.length,
+                itemBuilder: (context, index) {
+                  final shop = searchResults[index];
+                  return SearchCard(
+                    title: shop.name,
+                    description: shop.description,
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void searchFirebase(String query) {
+    FirebaseFirestore.instance
+        .collection('shops')
+        .where('name', isGreaterThanOrEqualTo: query)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      setState(() {
+        searchResults = querySnapshot.docs.map((doc) {
+          return MyShop(
+            name: doc['name'],
+            description: doc['description'],
+          );
+        }).toList();
+      });
+    });
   }
 }
 
