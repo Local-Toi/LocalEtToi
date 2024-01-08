@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -101,6 +102,7 @@ class MapLP extends State<MapLPState> {
   }
 
   void _checkMarkerTap(GeoPoint tapLocation) {
+    debugPrintGestureArenaDiagnostics = true;
     for (MyCustomMarker marker in customMarkers) {
       double distance = calculateDistance(
         tapLocation.latitude,
@@ -265,12 +267,19 @@ class MapLP extends State<MapLPState> {
   }
 
   Widget _panel(ScrollController sc) {
+    int currentDayOfWeek = DateTime.now().weekday;
+
+    String getStatusText(String schedule) {
+      return schedule == 'Fermé'
+          ? 'Fermé'
+          : 'Ouvert : $schedule';
+    }
+
     return AbsorbPointer(
       absorbing: isPanelOpen,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          // Ce code est exécuté lorsqu'on clique sur le panneau
         },
         child: Container(
           color: beige,
@@ -309,7 +318,8 @@ class MapLP extends State<MapLPState> {
               if (selectedMarker != null)
                 Text("Description : ${selectedMarker!.description}"),
               const SizedBox(height: 8.0),
-              const Text("Ouvert ou fermé WIP"),
+              if (selectedMarker != null)
+                Text(getStatusText(selectedMarker!.schedule[currentDayOfWeek - 1])),
               const SizedBox(height: 8.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -372,9 +382,5 @@ class MapLP extends State<MapLPState> {
       ),
     );
   }
-
-
-
-
 
 }
