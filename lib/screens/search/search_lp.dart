@@ -4,21 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../utils/constants.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'My App',
       home: SearchPage(),
     );
   }
 }
+
+/// MyShop class with less fields than the one from the repo
 
 class MyShop {
   final String name;
@@ -31,7 +27,7 @@ class MyShop {
 }
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -108,6 +104,8 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  /// Search data from Firebase
+
   void searchFirebase(String query) {
     FirebaseFirestore.instance
         .collection('shops')
@@ -125,6 +123,8 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 }
+
+/// Card for each search result
 
 class SearchCard extends StatelessWidget {
   final String title;
