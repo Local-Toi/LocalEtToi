@@ -31,7 +31,7 @@ class MapFilters extends State<MapFiltersState> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 50.0),
+              padding: const EdgeInsets.only(top: 30.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -272,7 +272,7 @@ class MapFilters extends State<MapFiltersState> {
             ),
             
             Padding(
-              padding: const EdgeInsets.only(top: 70.0),
+              padding: const EdgeInsets.only(top: 40.0),
               child: SizedBox(
                 width: 400,
                 height: 40,

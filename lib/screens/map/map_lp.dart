@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
+import 'package:sliding_up_panel2/sliding_up_panel2.dart';
 
 import 'map_filters.dart';
 
@@ -169,7 +169,7 @@ class MapLP extends State<MapLPState> {
         controller: _panelController,
         minHeight: isPanelOpen ? 50 : 0,
         maxHeight: MediaQuery.of(context).size.height * 0.9,
-        panelBuilder: (sc) => _panel(sc),
+        panelBuilder: () => _panel(),
         isDraggable: true,
         body: Stack(
           children: [
@@ -274,7 +274,7 @@ class MapLP extends State<MapLPState> {
     );
   }
 
-  Widget _panel(ScrollController sc) {
+  Widget _panel() {
     int currentDayOfWeek = DateTime.now().weekday;
 
     String getStatusText(String schedule) {
