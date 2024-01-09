@@ -103,8 +103,10 @@ class _SearchPageState extends State<SearchPage> {
                   final shop = searchResults[index];
                   return SearchCard(
                     title: shop.name,
-                    description: shop.address,
+                    address: shop.address,
+                    description: shop.description,
                     schedule: shop.schedule,
+                    phoneNumber: shop.phoneNumber,
                   );
                 },
               ),
@@ -150,13 +152,17 @@ class _SearchPageState extends State<SearchPage> {
 
 class SearchCard extends StatefulWidget {
   final String title;
+  final String address;
   final String description;
   final List<dynamic> schedule;
+  final String phoneNumber;
 
   const SearchCard({
     required this.title,
+    required this.address,
     required this.description,
     required this.schedule,
+    required this.phoneNumber,
     super.key,
   });
 
@@ -179,8 +185,10 @@ class _SearchCardState extends State<SearchCard> {
             MaterialPageRoute(
               builder: (context) => ShopDetailsPage(
                 shopName: widget.title,
-                description: widget.description,
+                address: widget.address,
                 schedule: widget.schedule,
+                description: widget.description,
+                phoneNumber: widget.phoneNumber,
               ),
             ),
           );
@@ -194,7 +202,7 @@ class _SearchCardState extends State<SearchCard> {
                 color: darkGreen,
               ),
               const SizedBox(width: 8.0),
-              Text(widget.description, style: textMedium),
+              Text(widget.address, style: textMedium),
             ],
           ),
           trailing: IconButton(
@@ -218,14 +226,18 @@ class _SearchCardState extends State<SearchCard> {
 
 class ShopDetailsPage extends StatelessWidget {
   final String shopName;
+  final String address;
   final String description;
   final List<dynamic> schedule;
+  final String phoneNumber;
 
   const ShopDetailsPage({
     super.key,
     required this.shopName,
+    required this.address,
     required this.description,
     required this.schedule,
+    required this.phoneNumber,
   });
 
   @override
@@ -266,9 +278,39 @@ class ShopDetailsPage extends StatelessWidget {
               ),
               const SizedBox(height: 16.0),
               Text(
-                'Horaires d\'ouverture : $schedule',
+                'Adresse : $address',
                 style: text,
               ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Horaires d\'ouverture : ',
+                style: text,
+              ),
+              Text("Lun : ${schedule[0]}", style: text,),
+              Text("Mar : ${schedule[1]}", style: text,),
+              Text("Mer : ${schedule[2]}", style: text,),
+              Text("Jeu : ${schedule[3]}", style: text,),
+              Text("Ven : ${schedule[4]}", style: text,),
+              Text("Sam : ${schedule[5]}", style: text,),
+              Text("Dim : ${schedule[6]}", style: text,),
+
+              const SizedBox(height: 16.0),
+              Row(
+                children: [
+                  const Text(
+                    'Contact : ',
+                    style: text,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: darkGreen,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Text(phoneNumber, style: const TextStyle(color: Colors.white),),),
+                ],
+              ),
+
             ],
           ),
         ),
