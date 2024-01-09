@@ -1,7 +1,13 @@
 part of 'favorite_bloc.dart';
 
+<<<<<<< HEAD
 sealed class FavoriteBlocState extends Equatable {
   const FavoriteBlocState();
+=======
+sealed class FavoriteState extends Equatable {
+  const FavoriteState();
+
+>>>>>>> e5dc33f83021a307862c07f16bbee97ec304ddd2
   @override
   List<Object> get props => [];
 }
