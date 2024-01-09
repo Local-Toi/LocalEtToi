@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
+import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'Security.dart';
@@ -88,20 +91,29 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Container(
                   alignment : const FractionalOffset(0.5, 0.75),
-                  child: GreenRoundedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const SecurityView(),
-                          ),
-                        );
-                      },
-                      buttonText: 'Tu es producteur ?'
-                  )
+                  child: Builder(
+                      builder: (context) {
+                        if (context.read<UserBloc>().state.user!.isProducer) {
+                          GreenRoundedButton(
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (
+                                        context) => const becomeProducer(),
+                                  ),
+                                );
+                              },
+                              buttonText: 'Tu es producteur ?'
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      }
+
+              ),
               ),
             ],
           ),
-          
+
         )
     );
   }

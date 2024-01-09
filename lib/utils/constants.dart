@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const List<String> categoriesList = <String>['Fruits & Légumes', 'Produits Transforfmés', 'Viandes & Poissons', 'Alcool', 'Boissons sans alcool', 'Autres'];
+
 // Colors constant used for the entire app
 
 const Color darkGreen = Color(0xFF095D40);
