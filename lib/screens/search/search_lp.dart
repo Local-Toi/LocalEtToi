@@ -111,7 +111,7 @@ class _SearchPageState extends State<SearchPage> {
         .collection('shops')
         .orderBy('name')
         .startAt([query])
-        .endAt([query + '\uf8ff'])
+        .endAt(['$query\uf8ff'])
         .get()
         .then((QuerySnapshot querySnapshot) {
       setState(() {
@@ -137,18 +137,68 @@ class SearchCard extends StatelessWidget {
   const SearchCard({
     required this.title,
     required this.description,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ListTile(
-        title: Text(title),
-        subtitle: Text(description),
-        onTap: () {},
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ShopDetailsPage(
+                shopName: title,
+                description: description,
+              ),
+            ),
+          );
+        },
+        child: ListTile(
+          title: Text(title),
+          subtitle: Text(description),
+        ),
+      ),
+    );
+  }
+}
+
+class ShopDetailsPage extends StatelessWidget {
+  final String shopName;
+  final String description;
+
+  const ShopDetailsPage({super.key,
+    required this.shopName,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: beige,
+      appBar: AppBar(
+        title: const Text('Détails du Shop'),
+        backgroundColor: beige,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nom du Shop : $shopName',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              'Description : $description',
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
       ),
     );
   }
