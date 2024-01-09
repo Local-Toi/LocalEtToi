@@ -18,10 +18,18 @@ class MyApp extends StatelessWidget {
 class MyShop {
   final String name;
   final String description;
+  final String address;
+  final double mark;
+  final List<dynamic> schedule;
+  final String phoneNumber;
 
   MyShop({
     required this.name,
     required this.description,
+    required this.address,
+    required this.mark,
+    required this.schedule,
+    required this.phoneNumber,
   });
 }
 
@@ -92,7 +100,8 @@ class _SearchPageState extends State<SearchPage> {
                   final shop = searchResults[index];
                   return SearchCard(
                     title: shop.name,
-                    description: shop.description,
+                    description: shop.address,
+                    schedule: shop.schedule,
                   );
                 },
               ),
@@ -119,6 +128,10 @@ class _SearchPageState extends State<SearchPage> {
           return MyShop(
             name: doc['name'],
             description: doc['description'],
+            address: doc['adresse'],
+            mark: doc['note'],
+            schedule: doc['horaires'],
+            phoneNumber: doc['phonenumber'],
           );
         }).toList();
       });
@@ -130,15 +143,24 @@ class _SearchPageState extends State<SearchPage> {
 
 /// Card for each search result
 
-class SearchCard extends StatelessWidget {
+class SearchCard extends StatefulWidget {
   final String title;
   final String description;
+  final List<dynamic> schedule;
 
   const SearchCard({
     required this.title,
     required this.description,
+    required this.schedule,
     super.key,
   });
+
+  @override
+  _SearchCardState createState() => _SearchCardState();
+}
+
+class _SearchCardState extends State<SearchCard> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -151,28 +173,53 @@ class SearchCard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ShopDetailsPage(
-                shopName: title,
-                description: description,
+                shopName: widget.title,
+                description: widget.description,
+                schedule: widget.schedule,
               ),
             ),
           );
         },
         child: ListTile(
-          title: Text(title),
-          subtitle: Text(description),
+          title: Text(widget.title, style: text),
+          subtitle: Row(
+            children: [
+              const Icon(
+                Icons.pin_drop,
+                color: darkGreen,
+              ),
+              const SizedBox(width: 8.0),
+              Text(widget.description, style: textMedium),
+            ],
+          ),
+          trailing: IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? red : null,
+            ),
+            onPressed: () {
+              setState(() {
+                isFavorite = !isFavorite;
+              });
+            },
+          ),
         ),
       ),
     );
   }
 }
 
+
+
 class ShopDetailsPage extends StatelessWidget {
   final String shopName;
   final String description;
+  final List<dynamic> schedule;
 
   const ShopDetailsPage({super.key,
     required this.shopName,
     required this.description,
+    required this.schedule
   });
 
   @override
@@ -180,7 +227,7 @@ class ShopDetailsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: beige,
       appBar: AppBar(
-        title: const Text('Détails du Shop'),
+        title: const Text('Détails du lieu de production', style: boldTitre),
         backgroundColor: beige,
       ),
       body: Padding(
@@ -189,13 +236,18 @@ class ShopDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Nom du Shop : $shopName',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              shopName,
+              style: text,
             ),
             const SizedBox(height: 16.0),
             Text(
               'Description : $description',
-              style: const TextStyle(fontSize: 18),
+              style: text,
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              'Horaires d\'ouverture : $schedule',
+              style: text,
             ),
           ],
         ),

@@ -30,6 +30,8 @@ const TextStyle logo = TextStyle(fontFamily: 'CinzelDecorative', fontSize: 50);
 
 const TextStyle titre = TextStyle(fontFamily: 'Montserrat', fontSize: 24, fontWeight: FontWeight.w600);
 
+const TextStyle boldTitre = TextStyle(fontFamily: 'Montserrat', fontSize: 24, fontWeight: FontWeight.bold);
+
 const TextStyle textBig = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
 
 const TextStyle text = TextStyle(fontFamily: 'Montserrat', fontSize: 18, fontWeight: FontWeight.w600);
