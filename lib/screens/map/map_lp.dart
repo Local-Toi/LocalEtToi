@@ -152,6 +152,14 @@ class MapLP extends State<MapLPState> {
   void initState() {
     super.initState();
     _fetchShopsFromFirebase();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_panelController.isPanelAnimating) {
+        _panelController.close();
+        setState(() {
+          isPanelOpen = false;
+        });
+      }
+    });
   }
 
   @override
@@ -219,43 +227,40 @@ class MapLP extends State<MapLPState> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: IgnorePointer(
-                ignoring: isPanelOpen,
-                child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFFBE2),
-                  ),
-                  child: OSMFlutter(
-                    controller: controller,
-                    onGeoPointClicked: (geoPoint) {
-                      _checkMarkerTap(geoPoint);
-                    },
-                    osmOption: OSMOption(
-                      showDefaultInfoWindow: false,
-                      userTrackingOption: const UserTrackingOption(
-                        enableTracking: true,
-                        unFollowUser: true,
-                      ),
-                      zoomOption: const ZoomOption(
-                        initZoom: 15,
-                        minZoomLevel: 3,
-                        maxZoomLevel: 19,
-                        stepZoom: 1.0,
-                      ),
-                      userLocationMarker: UserLocationMaker(
-                        personMarker: const MarkerIcon(
-                          icon: Icon(
-                            Icons.location_history_rounded,
-                            color: Colors.red,
-                            size: 48,
-                          ),
+              child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFFBE2),
+                ),
+                child: OSMFlutter(
+                  controller: controller,
+                  onGeoPointClicked: (geoPoint) {
+                    _checkMarkerTap(geoPoint);
+                  },
+                  osmOption: OSMOption(
+                    showDefaultInfoWindow: false,
+                    userTrackingOption: const UserTrackingOption(
+                      enableTracking: true,
+                      unFollowUser: true,
+                    ),
+                    zoomOption: const ZoomOption(
+                      initZoom: 15,
+                      minZoomLevel: 3,
+                      maxZoomLevel: 19,
+                      stepZoom: 1.0,
+                    ),
+                    userLocationMarker: UserLocationMaker(
+                      personMarker: const MarkerIcon(
+                        icon: Icon(
+                          Icons.location_history_rounded,
+                          color: Colors.red,
+                          size: 48,
                         ),
-                        directionArrowMarker: const MarkerIcon(
-                          icon: Icon(
-                            Icons.double_arrow,
-                            size: 48,
-                          ),
+                      ),
+                      directionArrowMarker: const MarkerIcon(
+                        icon: Icon(
+                          Icons.double_arrow,
+                          size: 48,
                         ),
                       ),
                     ),
@@ -279,8 +284,20 @@ class MapLP extends State<MapLPState> {
     }
 
     return Container(
-      color: beige,
+      //color: beige,
       padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: beige,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: grey100.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -291,6 +308,9 @@ class MapLP extends State<MapLPState> {
                 icon: const Icon(Icons.close),
                 onPressed: () {
                   _panelController.close();
+                  setState(() {
+                    isPanelOpen = false;
+                  });
                 },
               ),
             ],
@@ -300,10 +320,7 @@ class MapLP extends State<MapLPState> {
               children: [
                 Text(
                   selectedMarker!.shopName,
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: boldTitre,
                 ),
                 const Icon(
                   Icons.favorite_border_outlined,
@@ -313,10 +330,10 @@ class MapLP extends State<MapLPState> {
             ),
           const SizedBox(height: 8.0),
           if (selectedMarker != null)
-            Text("Description : ${selectedMarker!.description}"),
+            Text("Description : ${selectedMarker!.description}", style: text,),
           const SizedBox(height: 8.0),
           if (selectedMarker != null)
-            Text(getStatusText(selectedMarker!.schedule[currentDayOfWeek - 1])),
+            Text(getStatusText(selectedMarker!.schedule[currentDayOfWeek - 1]), style: text,),
           const SizedBox(height: 8.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -327,7 +344,7 @@ class MapLP extends State<MapLPState> {
               ),
               const SizedBox(width: 8.0),
               if (selectedMarker != null)
-                Text(selectedMarker!.address,),
+                Text(selectedMarker!.address, style: text,),
             ],
           ),
           const SizedBox(height: 8.0),
@@ -342,19 +359,19 @@ class MapLP extends State<MapLPState> {
               Column(
                 children: [
                   if (selectedMarker != null)
-                    Text("Lun : ${selectedMarker!.schedule[0]}"),
+                    Text("Lun : ${selectedMarker!.schedule[0]}", style: text,),
                   if (selectedMarker != null)
-                    Text("Mar : ${selectedMarker!.schedule[1]}"),
+                    Text("Mar : ${selectedMarker!.schedule[1]}", style: text,),
                   if (selectedMarker != null)
-                    Text("Mer : ${selectedMarker!.schedule[2]}"),
+                    Text("Mer : ${selectedMarker!.schedule[2]}", style: text,),
                   if (selectedMarker != null)
-                    Text("Jeu : ${selectedMarker!.schedule[3]}"),
+                    Text("Jeu : ${selectedMarker!.schedule[3]}", style: text,),
                   if (selectedMarker != null)
-                    Text("Ven : ${selectedMarker!.schedule[4]}"),
+                    Text("Ven : ${selectedMarker!.schedule[4]}", style: text,),
                   if (selectedMarker != null)
-                    Text("Sam : ${selectedMarker!.schedule[5]}"),
+                    Text("Sam : ${selectedMarker!.schedule[5]}", style: text,),
                   if (selectedMarker != null)
-                    Text("Dim : ${selectedMarker!.schedule[6]}"),
+                    Text("Dim : ${selectedMarker!.schedule[6]}", style: text,),
                 ],
               ),
             ],
@@ -369,7 +386,7 @@ class MapLP extends State<MapLPState> {
               ),
               child: Text(
                 selectedMarker?.phoneNumber ?? "Numéro non disponible",
-                style: const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w900),
               ),
             ),
           ),
