@@ -32,6 +32,8 @@ class ProfilPage extends StatefulWidget {
 class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
+    context.read<UserBloc>().add(GetMyUser(myUserId:context.read<AuthenticationBloc>().state.user!.uid));
+    bool isProducer = context.read<UserBloc>().state.user!.isProducer;
     return BlocProvider(
         create: (context) => SignInBloc(myUserRepository: context.read<AuthenticationBloc>().userRepository),
         child: Scaffold(
@@ -87,7 +89,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       alignment : const FractionalOffset(0.5, 0.65),
                       child: Builder(
                         builder: (context) {
-                          if (context.read<UserBloc>().state.user!.isProducer) {
+                          if (isProducer) {
                             GreenRoundedButton(
                                 onPressed: () {
                                   //MyUser userData = MyUser(id: context.read<UserBloc>().state.user!.id, identifiant: context.read<UserBloc>().state.user!.identifiant, isProducer: true);
