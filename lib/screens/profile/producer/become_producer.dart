@@ -57,7 +57,7 @@ class _becomeProducerState extends State<becomeProducer> {
                   Container(
                     alignment : const FractionalOffset(0.5, 0.05),
                     child: const Text(
-                      "Renseigne l\'adresse email professionnelle qui sera présente sur ton point de vente dans l'application.",
+                      "Renseigne l\'adresse email professionnelle qui sera prï¿½sente sur ton point de vente dans l'application.",
                       style: constants.textDarkGrey,
                     ),
                   ),
@@ -79,7 +79,7 @@ class _becomeProducerState extends State<becomeProducer> {
                   Container(
                     alignment : const FractionalOffset(0.5, 0.05),
                     child: const Text(
-                      'Inscris le lien vers une page web ou un compte de réseau social mentionnant ton entreprise. Cela permettra de vérifier la légitimité de tes points de ventes.',
+                      'Inscris le lien vers une page web ou un compte de rï¿½seau social mentionnant ton entreprise. Cela permettra de vï¿½rifier la lï¿½gitimitï¿½ de tes points de ventes.',
                       style: constants.textDarkGrey,
                     ),
                   ),
@@ -109,7 +109,7 @@ class _becomeProducerState extends State<becomeProducer> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => const create_sellpoint(),
+                                builder: (context) => const SellPoint(),
                               ),
                             );
                           },
