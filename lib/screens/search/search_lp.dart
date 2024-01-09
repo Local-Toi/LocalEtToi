@@ -106,9 +106,12 @@ class _SearchPageState extends State<SearchPage> {
   /// Search data from Firebase
 
   void searchFirebase(String query) {
+
     FirebaseFirestore.instance
         .collection('shops')
-        .where('name', isGreaterThanOrEqualTo: query)
+        .orderBy('name')
+        .startAt([query])
+        .endAt([query + '\uf8ff'])
         .get()
         .then((QuerySnapshot querySnapshot) {
       setState(() {
@@ -121,6 +124,8 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
   }
+
+
 }
 
 /// Card for each search result
