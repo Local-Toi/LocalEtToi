@@ -50,41 +50,44 @@ class _SearchPageState extends State<SearchPage> {
       backgroundColor: beige,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
-        child: AppBar(
-          backgroundColor: beige,
-          elevation: 0,
-          title: Container(
-            width: MediaQuery.of(context).size.width / 1.5,
-            padding: const EdgeInsets.all(8.0),
-            margin: const EdgeInsets.only(top: 16.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.search,
-                  color: Colors.black54,
-                ),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: TextField(
-                    controller: searchController,
-                    onChanged: (query) {
-                      searchFirebase(query);
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Rechercher...',
-                      hintStyle: TextStyle(color: Colors.black54),
+        child: Container(
+          margin: const EdgeInsets.only(top: 8.0),
+          child: AppBar(
+            backgroundColor: beige,
+            elevation: 0,
+            title: Container(
+              width: MediaQuery.of(context).size.width / 1.5,
+              //padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: grey100),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.search,
+                    color: Colors.black54,
+                  ),
+                  const SizedBox(width: 8.0),
+                  Expanded(
+                    child: TextField(
+                      controller: searchController,
+                      onChanged: (query) {
+                        searchFirebase(query);
+                      },
+                      decoration: const InputDecoration(
+                        hintText: 'Rechercher...',
+                        hintStyle: TextStyle(color: Colors.black54),
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.tune),
-                  onPressed: () {},
-                )
-              ],
+                  IconButton(
+                    icon: const Icon(Icons.tune),
+                    onPressed: () {},
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -111,6 +114,8 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
+
+
 
   /// Search data from Firebase
 
@@ -216,10 +221,11 @@ class ShopDetailsPage extends StatelessWidget {
   final String description;
   final List<dynamic> schedule;
 
-  const ShopDetailsPage({super.key,
+  const ShopDetailsPage({
+    super.key,
     required this.shopName,
     required this.description,
-    required this.schedule
+    required this.schedule,
   });
 
   @override
@@ -232,26 +238,42 @@ class ShopDetailsPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              shopName,
-              style: text,
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              'Description : $description',
-              style: text,
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              'Horaires d\'ouverture : $schedule',
-              style: text,
-            ),
-          ],
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: beige,
+            borderRadius: BorderRadius.circular(8.0),
+            boxShadow: [
+              BoxShadow(
+                color: grey100.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                shopName,
+                style: text,
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                'Description : $description',
+                style: text,
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                'Horaires d\'ouverture : $schedule',
+                style: text,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
