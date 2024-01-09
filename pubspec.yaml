@@ -34,6 +34,7 @@ dependencies:
   equatable: ^2.0.3
   flutter:
     sdk: flutter
+  image_picker: ^1.0.6
   sqflite: ^2.3.0
   flutter_bloc: ^8.1.1
   formz: ^0.6.0
@@ -63,6 +64,7 @@ dependencies:
 
   flutter_osm_plugin: ^0.70.3
   geopoint: ^1.0.0
+  image_field: ^0.0.8
 
   sliding_up_panel2: ^3.3.0+1
 
