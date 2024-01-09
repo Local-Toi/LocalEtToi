@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../../utils/buttons/buttons.dart';
 import '../../../utils/textfields/textfields.dart';
@@ -18,14 +19,34 @@ class _AddProductState extends State<AddProduct> {
   File? _image;
   late String name, price, quantity, unit, category;
   late String? description;
+  String? _imageUrl;
+
+  // variables pour stocker les valeurs des champs du formulaire
+  late TextEditingController nameController;
+  late TextEditingController priceController;
+  late TextEditingController quantityController;
+  late TextEditingController descriptionController;
 
   Future<void> _getImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
+      final File imageFile = File(pickedImage.path);
+
+      // Enregistrez l'image dans Firebase Storage
+      final storageRef = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images')
+          .child('product_image.jpg');
+
+      await storageRef.putFile(imageFile);
+
+      // Récupérez l'URL de l'image enregistrée
+      final String imageUrl = await storageRef.getDownloadURL();
+
       setState(() {
-        _image = File(pickedImage.path);
+        _imageUrl = imageUrl;
       });
     }
   }
@@ -35,6 +56,11 @@ class _AddProductState extends State<AddProduct> {
     super.initState();
     unit = 'g';
     category = 'Fruit';
+
+    nameController = TextEditingController();
+    priceController = TextEditingController();
+    quantityController = TextEditingController();
+    descriptionController = TextEditingController();
   }
 
   @override
@@ -46,18 +72,22 @@ class _AddProductState extends State<AddProduct> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-
-              // arrow back
-              arrow_back.ArrowBack(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+              Container(
+                margin: const EdgeInsets.only(top: 0.0),
+                alignment: const FractionalOffset(0.01, 0.03),
+                // arrow back
+                child: arrow_back.ArrowBack(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
 
               // Titre
-              const Padding(
-                padding: EdgeInsets.only(top: 45.0),
-                child: Text(
+              Container(
+                margin: const EdgeInsets.only(top: 0.0),
+                alignment: const FractionalOffset(0.5, 0.5),
+                child: const Text(
                   "Ajout d'un produit",
                   style: constants.titre,
                 ),
@@ -74,15 +104,20 @@ class _AddProductState extends State<AddProduct> {
                     color: constants.taupe,
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: Column(
+                  child: _image != null ? ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: Image.file(_image!, fit: BoxFit.cover),
+                  )
+                  : const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _image != null
-                          ? Image.file(_image!, fit: BoxFit.cover)
-                          : const Icon(
-                          Icons.add_a_photo, size: 50.0, color: Colors.white),
-                      const SizedBox(height: 8.0),
-                      const Text(
+                      Icon(
+                        Icons.add_a_photo,
+                        size: 50.0,
+                        color: Colors.white,
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
                         "Ajouter une photo du produit",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -111,6 +146,7 @@ class _AddProductState extends State<AddProduct> {
                               style: constants.text,
                             ),
                             GreenTextFieldWithGreenerBorder(
+                              controller: nameController,
                               onSaved: (val) => name = val!,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -141,6 +177,7 @@ class _AddProductState extends State<AddProduct> {
                                       style: constants.text,
                                     ),
                                     GreenTextFieldWithGreenerBorder(
+                                      controller: priceController,
                                       onSaved: (val) => price = val!,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
@@ -167,6 +204,7 @@ class _AddProductState extends State<AddProduct> {
                                     style: constants.text,
                                   ),
                                   GreenTextFieldWithGreenerBorder(
+                                    controller: quantityController,
                                     onSaved: (val) => quantity = val!,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -225,6 +263,7 @@ class _AddProductState extends State<AddProduct> {
                               style: constants.text,
                             ),
                             TextField(
+                              controller: descriptionController,
                               maxLines: null,
                               onChanged: (val) => description = val,
                               keyboardType: TextInputType.multiline,
