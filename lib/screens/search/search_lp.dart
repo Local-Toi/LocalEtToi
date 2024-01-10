@@ -176,6 +176,7 @@ class _SearchPageState extends State<SearchPage> {
             labels: productDoc['labels'],
             image: productDoc['image'],
             composition: productDoc['composition'],
+            producerId: productDoc['producerId'],
           );
         }).toList();
       });

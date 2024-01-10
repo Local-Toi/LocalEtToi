@@ -8,6 +8,7 @@ class MyProductEntity extends Equatable {
   final List<dynamic>? labels;
   final String? composition;
   final String? image;
+  final String producerId;
 
   const MyProductEntity({
     required this.name,
@@ -17,6 +18,7 @@ class MyProductEntity extends Equatable {
     required this.labels,
     required this.composition,
     required this.image,
+    required this.producerId,
   });
 
   Map<String, Object?> toDocument() {
@@ -27,6 +29,8 @@ class MyProductEntity extends Equatable {
       'categories': categories,
       'labels': labels,
       'composition': composition,
+      'image': image,
+      'producerId': producerId
     };
   }
 
@@ -39,14 +43,15 @@ class MyProductEntity extends Equatable {
       labels: doc['labels'] as List<dynamic>?,
       composition: doc['composition'] as String?,
       image: doc['image'] as String?,
+      producerId: doc['producerId'] as String,
     );
   }
 
   @override
-  List<Object?> get props => [name, price, description, categories, labels, composition, image];
+  List<Object?> get props => [name, price, description, categories, labels, composition, image, producerId];
 
   @override
   String toString() {
-    return 'UserEntity { name: $name, price: $price, description: $description, categories: $categories, labels: $labels, composition: $composition, image: $image }';
+    return 'UserEntity { name: $name, price: $price, description: $description, categories: $categories, labels: $labels, composition: $composition, image: $image, producerId: $producerId }';
   }
 }

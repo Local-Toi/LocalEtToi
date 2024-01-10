@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../entities/entities.dart';
 
 class MyProduct extends Equatable {
-  const MyProduct({required this.name, required this.price, required this.description, required this.categories, required this.labels, required this.composition, required this.image});
+  const MyProduct({required this.name, required this.price, required this.description, required this.categories, required this.labels, required this.composition, required this.image, required this.producerId});
 
   final String? name;
   final double? price;
@@ -12,6 +12,7 @@ class MyProduct extends Equatable {
   final List<dynamic>? labels;
   final String? composition;
   final String? image;
+  final String producerId;
 
   static const empty = MyProduct(
     name: '',
@@ -21,6 +22,7 @@ class MyProduct extends Equatable {
     labels: [],
     composition: '',
     image: '',
+    producerId: '',
   );
 
   MyProduct copyWith({
@@ -31,6 +33,7 @@ class MyProduct extends Equatable {
     List<dynamic>? labels,
     String? composition,
     String? image,
+    required String producerId,
   }) {
     return MyProduct(
       name: name ?? this.name,
@@ -40,6 +43,7 @@ class MyProduct extends Equatable {
       labels: labels ?? this.labels,
       composition: composition ?? this.composition,
       image: image ?? this.image,
+      producerId: producerId
     );
   }
 
@@ -54,12 +58,13 @@ class MyProduct extends Equatable {
       categories: categories,
       labels: labels,
       composition: composition,
-      image: image
+      image: image,
+      producerId: producerId,
     );
   }
 
   @override
-  List<Object> get props => [ name ?? '', price ?? '', description ?? '', categories ?? '', labels ?? '', composition ?? '', image ?? ''];
+  List<Object> get props => [ name ?? '', price ?? '', description ?? '', categories ?? '', labels ?? '', composition ?? '', image ?? '', producerId];
 
   static fromEntity(fromDocument) {}
 }
