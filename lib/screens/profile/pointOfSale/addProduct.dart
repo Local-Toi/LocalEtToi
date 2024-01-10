@@ -4,7 +4,8 @@ import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../utils/buttons/buttons.dart';
 import '../../../utils/textfields/textfields.dart';
 
@@ -19,6 +20,7 @@ class _AddProductState extends State<AddProduct> {
   File? _image;
   late String name, price, quantity, unit, category;
   late String? description;
+  List<String> labels = [];
   String? _imageUrl;
 
   // variables pour stocker les valeurs des champs du formulaire
@@ -37,17 +39,26 @@ class _AddProductState extends State<AddProduct> {
       // Enregistrez l'image dans Firebase Storage
       final storageRef = firebase_storage.FirebaseStorage.instance
           .ref()
-          .child('images')
+          .child('images_products')
           .child('product_image.jpg');
 
       await storageRef.putFile(imageFile);
 
-      // Récupérez l'URL de l'image enregistrée
+      // Récupérez l'URL de l'image
       final String imageUrl = await storageRef.getDownloadURL();
 
       setState(() {
         _imageUrl = imageUrl;
+        _image = imageFile;
       });
+
+      // Affichez chargement
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Image téléchargée avec succès'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -55,7 +66,7 @@ class _AddProductState extends State<AddProduct> {
   void initState() {
     super.initState();
     unit = 'g';
-    category = 'Fruit';
+    category = 'Pièce';
 
     nameController = TextEditingController();
     priceController = TextEditingController();
@@ -104,11 +115,12 @@ class _AddProductState extends State<AddProduct> {
                     color: constants.taupe,
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: _image != null ? ClipRRect(
+                  child: _image != null
+                      ? ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
                     child: Image.file(_image!, fit: BoxFit.cover),
                   )
-                  : const Column(
+                      : const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
@@ -315,13 +327,87 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
 
+                      // Labels avec menu déroulant à choix multiples
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 20.0),
+                        alignment: const FractionalOffset(0.5, 0.5),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Labels (choix multiples)',
+                              style: constants.text,
+                            ),
+                            DropdownButton<String>(
+                              value: null,
+                              onChanged: (String? newValue) {
+                              },
+                              items: [
+                                'Aucun label',
+                                'Bio',
+                                'Label rouge',
+                                'Élevé en plein air',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                        value: labels.contains(value),
+                                        onChanged: (bool? checked) {
+                                          setState(() {
+                                            if (checked != null) {
+                                              if (checked) {
+                                                labels.add(value);
+                                              } else {
+                                                labels.remove(value);
+                                              }
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Text(value),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+
                       // Bouton Enregistrer
                       GreenRoundedButton(
                         onPressed: () {
-                          // si tous les champs sont remplis on enregistre
+                          // Si tous les champs sont remplis, on enregistre
                           if (Form.of(context)!.validate()) {
-                            // Enregistrer le produit
+                            FirebaseFirestore.instance.collection('products').add({
+                              'name': name,
+                              'price': price,
+                              'quantity': quantity,
+                              'unit': unit,
+                              'category': category,
+                              'description': description,
+                              'labels': labels,
+                            }).then((value) {
+                              // recupération de l'id du produit
+                              String productId = value.id;
+                              // enregistremrnt de l'URL de l'image dans un document
+                              FirebaseFirestore.instance.collection('products').doc(productId).update({
+                                'image': _imageUrl,
+                              });
 
+                              // succès
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Produit enregistré avec succès'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                              // échec
+                            }).catchError((error) {
+                              print('Erreur d\'enregistrement: $error');
+                            });
                           }
                         },
                         buttonText: 'Enregistrer',
@@ -338,8 +424,9 @@ class _AddProductState extends State<AddProduct> {
   }
 }
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MaterialApp(
     home: Scaffold(
       body: AddProduct(),
