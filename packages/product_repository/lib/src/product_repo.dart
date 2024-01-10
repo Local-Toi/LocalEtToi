@@ -6,4 +6,5 @@ abstract class ProductRepository {
   Future<MyProduct> getProduct(String productId);
   Future<void> setProductData(String productId, productData);
   Future<String> getProducer(String productId);
+  Future<void> addProduct(MyProduct product);
 }

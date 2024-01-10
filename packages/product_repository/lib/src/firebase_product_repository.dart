@@ -42,4 +42,18 @@ class FirebaseProductRepository implements ProductRepository {
     // TODO: implement getProducer
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> addProduct(MyProduct product) async {
+    await productsCollection.add({
+      'name': product.name,
+      'price': product.price,
+      'description': product.description,
+      'categories': product.categories,
+      'labels': product.labels,
+      'composition': product.composition,
+      'image': product.image,
+      'producerId': product.producerId,
+    });
+  }
 }
