@@ -10,8 +10,44 @@ import 'package:firebase_storage/firebase_storage.dart';
 class DiscoverLP extends StatelessWidget {
   const DiscoverLP({super.key});
 
+  final String imageUrl = 'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png';
+
+  Future<String> getImageUrl() async {
+    // Récupérer l'URL de l'image depuis Firebase Storage
+    String downloadURL = await FirebaseStorage.instance.ref(imageUrl).getDownloadURL();
+
+    return downloadURL;
+  }
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Afficher une image depuis Firebase Storage'),
+      ),
+      body: FutureBuilder<String>(
+        future: getImageUrl(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Text('Erreur: ${snapshot.error}');
+            }
+
+            // Utiliser le widget Image.network pour afficher l'image
+            return Image.network(
+              snapshot.data!,
+            );
+          }
+
+          return CircularProgressIndicator();
+        },
+      ),
+    );
+  }
+}
+
+
+    /*
     return Scaffold(
       body: Container(
         clipBehavior: Clip.antiAlias,
@@ -150,5 +186,5 @@ class DiscoverLP extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
