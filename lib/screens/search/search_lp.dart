@@ -43,7 +43,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
-  List<MyShop> searchResults = [];
+  List<MyShop> shopResults = [];
+  List<MyProduct> productResults = [];
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                     child: TextField(
                       controller: searchController,
                       onChanged: (query) {
-                        searchProducerFirebase(query);
+                        searchFirebase(query);
                       },
                       decoration: const InputDecoration(
                         hintText: 'Rechercher...',
@@ -99,16 +100,31 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: searchResults.length,
+                itemCount: shopResults.length + productResults.length,
                 itemBuilder: (context, index) {
-                  final shop = searchResults[index];
-                  return SearchProducerCard(
-                    title: shop.name,
-                    address: shop.address,
-                    description: shop.description,
-                    schedule: shop.schedule,
-                    phoneNumber: shop.phoneNumber,
-                  );
+                  if (index < shopResults.length) {
+                    // Display shop card
+                    final shop = shopResults[index];
+                    return SearchProducerCard(
+                      title: shop.name,
+                      address: shop.address,
+                      description: shop.description,
+                      schedule: shop.schedule,
+                      phoneNumber: shop.phoneNumber,
+                    );
+                  } else {
+                    // Display product card
+                    final product = productResults[index - shopResults.length];
+                    return SearchProductCard(
+                      title: product.name ?? 'N/A',
+                      price: product.price ?? 0,
+                      description: product.description ?? 'N/A',
+                      categories: product.categories ?? [],
+                      labels: product.labels ?? [],
+                      composition: product.composition ?? 'N/A',
+                      image: product.image ?? 'N/A',
+                    );
+                  }
                 },
               ),
             ),
@@ -118,59 +134,53 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-
-
   /// Search data from Firebase
-
-  void searchProducerFirebase(String query) {
-
+  void searchFirebase(String query) {
+    // Search shops
     FirebaseFirestore.instance
         .collection('shops')
         .orderBy('name')
         .startAt([query])
         .endAt(['$query\uf8ff'])
         .get()
-        .then((QuerySnapshot querySnapshot) {
+        .then((QuerySnapshot shopQuerySnapshot) {
       setState(() {
-        searchResults = querySnapshot.docs.map((doc) {
+        shopResults = shopQuerySnapshot.docs.map((shopDoc) {
           return MyShop(
-            name: doc['name'],
-            description: doc['description'],
-            address: doc['adresse'],
-            mark: doc['note'],
-            schedule: doc['horaires'],
-            phoneNumber: doc['phonenumber'],
+            name: shopDoc['name'],
+            description: shopDoc['description'],
+            address: shopDoc['adresse'],
+            mark: shopDoc['note'],
+            schedule: shopDoc['horaires'],
+            phoneNumber: shopDoc['phonenumber'],
           );
         }).toList();
       });
     });
-  }
 
-  void searchProductFirebase(String query) {
-
+    // Search products
     FirebaseFirestore.instance
         .collection('products')
         .orderBy('name')
         .startAt([query])
         .endAt(['$query\uf8ff'])
         .get()
-        .then((QuerySnapshot querySnapshot) {
+        .then((QuerySnapshot productQuerySnapshot) {
       setState(() {
-        searchResults = querySnapshot.docs.map((doc) {
+        productResults = productQuerySnapshot.docs.map((productDoc) {
           return MyProduct(
-            name: doc['name'],
-            price: doc['price'],
-            description: doc['description'],
-            categories: doc['categories'],
-            labels: doc['labels'],
-            image: doc['images'],
-            composition: doc['composition'],
+            name: productDoc['name'],
+            price: productDoc['price'],
+            description: productDoc['description'],
+            categories: productDoc['categories'],
+            labels: productDoc['labels'],
+            image: productDoc['image'],
+            composition: productDoc['composition'],
           );
-        }).cast<MyShop>().toList();
+        }).toList();
       });
     });
   }
-
 
 }
 
@@ -193,10 +203,10 @@ class SearchProducerCard extends StatefulWidget {
   });
 
   @override
-  _SearchCardState createState() => _SearchCardState();
+  _SearchProducerCardState createState() => _SearchProducerCardState();
 }
 
-class _SearchCardState extends State<SearchProducerCard> {
+class _SearchProducerCardState extends State<SearchProducerCard> {
   bool isFavorite = false;
 
   @override
@@ -248,7 +258,70 @@ class _SearchCardState extends State<SearchProducerCard> {
   }
 }
 
+class SearchProductCard extends StatefulWidget {
+  final String title;
+  final double price;
+  final String description;
+  final List<dynamic> categories;
+  final List<dynamic> labels;
+  final String composition;
+  final String image;
 
+  const SearchProductCard({
+    required this.title,
+    required this.price,
+    required this.description,
+    required this.categories,
+    required this.labels,
+    required this.composition,
+    required this.image,
+    super.key,
+  });
+
+  @override
+  _SearchProductCardState createState() => _SearchProductCardState();
+}
+
+class _SearchProductCardState extends State<SearchProductCard> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3,
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      child: InkWell(
+        onTap: () {
+        },
+        child: ListTile(
+          title: Text(widget.title, style: text),
+          subtitle: Row(
+            children: [
+              const Icon(
+                Icons.euro_symbol,
+                color: darkGreen,
+              ),
+              const SizedBox(width: 8.0),
+              Text('${widget.price}€', style: textMedium),
+
+            ],
+          ),
+          trailing: IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? red : null,
+            ),
+            onPressed: () {
+              setState(() {
+                isFavorite = !isFavorite;
+              });
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class ShopDetailsPage extends StatelessWidget {
   final String shopName;
