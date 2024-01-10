@@ -123,6 +123,7 @@ class _SearchPageState extends State<SearchPage> {
                       labels: product.labels ?? [],
                       composition: product.composition ?? 'N/A',
                       image: product.image ?? 'N/A',
+                      producerId: product.producerId,
                     );
                   }
                 },
@@ -267,6 +268,7 @@ class SearchProductCard extends StatefulWidget {
   final List<dynamic> labels;
   final String composition;
   final String image;
+  final String producerId;
 
   const SearchProductCard({
     required this.title,
@@ -276,6 +278,7 @@ class SearchProductCard extends StatefulWidget {
     required this.labels,
     required this.composition,
     required this.image,
+    required this.producerId,
     super.key,
   });
 
@@ -285,6 +288,53 @@ class SearchProductCard extends StatefulWidget {
 
 class _SearchProductCardState extends State<SearchProductCard> {
   bool isFavorite = false;
+  MyShop? associatedShop; // Nouvelle variable pour stocker les détails du shop
+
+  // Fonction pour récupérer le shop associé à un produit
+  Future<MyShop?> getShopForProduct(String producerId) async {
+    try {
+      // Effectuer une requête pour obtenir le document du shop
+      DocumentSnapshot shopSnapshot =
+      await FirebaseFirestore.instance.collection('shops').doc(producerId).get();
+
+      // Vérifier si le document existe
+      if (shopSnapshot.exists) {
+        // Mapper les données du document dans un objet MyShop
+        MyShop shop = MyShop(
+          name: shopSnapshot['name'],
+          description: shopSnapshot['description'],
+          address: shopSnapshot['adresse'],
+          mark: shopSnapshot['note'],
+          schedule: shopSnapshot['horaires'],
+          phoneNumber: shopSnapshot['phonenumber'],
+        );
+
+        // Retourner l'objet MyShop
+        return shop;
+      } else {
+        // Aucun document trouvé, retourner null ou gérer en conséquence
+        return null;
+      }
+    } catch (e) {
+      // Gérer les erreurs en conséquence (journalisation, affichage d'un message, etc.)
+      print('Erreur lors de la récupération du shop associé : $e');
+      return null;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Appeler la fonction pour obtenir les détails du shop lors de l'initialisation du widget
+    getShopDetails();
+  }
+
+  void getShopDetails() async {
+    MyShop? shop = await getShopForProduct(widget.producerId);
+    setState(() {
+      associatedShop = shop;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,18 +343,34 @@ class _SearchProductCardState extends State<SearchProductCard> {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         onTap: () {
+          // Naviguer ou effectuer d'autres actions avec les détails du produit et du shop
         },
         child: ListTile(
           title: Text(widget.title, style: text),
-          subtitle: Row(
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
-                Icons.euro_symbol,
-                color: darkGreen,
+              Row(
+                children: [
+                  const Icon(
+                    Icons.euro_symbol,
+                    color: darkGreen,
+                  ),
+                  const SizedBox(width: 8.0),
+                  Text('${widget.price}€', style: textMedium),
+                ],
               ),
-              const SizedBox(width: 8.0),
-              Text('${widget.price}€', style: textMedium),
-
+              if (associatedShop != null)
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.pin_drop,
+                      color: darkGreen,
+                    ),
+                    const SizedBox(width: 8.0),
+                    Text(associatedShop!.address, style: textMedium),
+                  ],
+                ),
             ],
           ),
           trailing: IconButton(
@@ -323,6 +389,7 @@ class _SearchProductCardState extends State<SearchProductCard> {
     );
   }
 }
+
 
 class ShopDetailsPage extends StatelessWidget {
   final String shopName;
