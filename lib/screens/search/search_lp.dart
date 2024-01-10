@@ -477,7 +477,7 @@ class ShopDetailsPage extends StatelessWidget {
   }
 }
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final String name;
   final double price;
   final String description;
@@ -488,8 +488,8 @@ class ProductDetailsPage extends StatelessWidget {
   final String producerId;
   final MyShop? associatedShop;
 
-   ProductDetailsPage({
-    super.key,
+  ProductDetailsPage({
+    Key? key,
     required this.name,
     required this.price,
     required this.description,
@@ -499,7 +499,14 @@ class ProductDetailsPage extends StatelessWidget {
     required this.image,
     required this.producerId,
     this.associatedShop,
-  });
+  }) : super(key: key);
+
+  @override
+  _ProductDetailsPageState createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -516,7 +523,7 @@ class ProductDetailsPage extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.7,
+              height: MediaQuery.of(context).size.height * 0.67,
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: beige,
@@ -534,69 +541,127 @@ class ProductDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    widget.name,
+                    style: boldTitre,
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'Prix : ${widget.price} €',
                     style: text,
                   ),
                   const SizedBox(height: 16.0),
                   Text(
-                    'Prix : $price €',
+                    'Description : ${widget.description}',
                     style: text,
                   ),
                   const SizedBox(height: 16.0),
                   Text(
-                    'Description : $description',
+                    'Composition : ${widget.composition}',
                     style: text,
                   ),
                   const SizedBox(height: 16.0),
-                  Text(
-                    'Composition : $composition',
-                    style: text,
+                  Row(
+                    children: [
+                      const Text("Catégories : ", style: text,),
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: darkGreen,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text(
+                          widget.categories.join(', '), style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16.0),
+                  Row(
+                    children: [
+                      const Text("Labels : ", style: text,),
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: darkGreen,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                          child: Text(
+                            widget.labels.join(','), style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600),
+                          ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 16.0),
-            if (associatedShop != null)
+            if (widget.associatedShop != null)
               Card(
                 elevation: 3,
                 margin: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ListTile(
-                  title: Text(associatedShop!.name ?? 'Nom du magasin', style: text),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.pin_drop,
-                            color: darkGreen,
-                          ),
-                          const SizedBox(width: 8.0),
-                          Text(associatedShop!.adresse, style: textMedium),
-                        ],
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShopDetailsPage(
+                          shopName: widget.associatedShop?.name ?? 'Nom du magasin',
+                          address: widget.associatedShop?.adresse ?? 'Adresse du magasin',
+                          schedule: widget.associatedShop?.horaires ?? [],
+                          description: widget.associatedShop?.description ?? 'Description du magasin',
+                          phoneNumber: widget.associatedShop?.phonenumber ?? 'N° de téléphone',
+                        ),
                       ),
-                      const SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          const Text(
-                            'Contact : ',
-                            style: text,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
+                    );
+                  },
+                  child: ListTile(
+                    title: Text(widget.associatedShop!.name ?? 'Nom du magasin', style: text),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.pin_drop,
                               color: darkGreen,
-                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: Text(
-                              associatedShop!.phonenumber ?? 'Numéro de téléphone',
-                              style: const TextStyle(color: Colors.white),
+                            const SizedBox(width: 8.0),
+                            Text(widget.associatedShop!.adresse, style: textMedium),
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Row(
+                          children: [
+                            const Text(
+                              'Contact : ',
+                              style: text,
                             ),
-                          ),
-                        ],
+                            Container(
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: darkGreen,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Text(
+                                widget.associatedShop!.phonenumber ?? 'Numéro de téléphone',
+                                style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? red : null,
                       ),
-                    ],
+                      onPressed: () {
+                        setState(() {
+                          isFavorite = !isFavorite;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -605,11 +670,4 @@ class ProductDetailsPage extends StatelessWidget {
       ),
     );
   }
-
-  // Helper function to get the day name
-  String getDayName(int dayIndex) {
-    const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-    return days[dayIndex];
-  }
-
 }
