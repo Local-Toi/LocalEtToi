@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,12 +15,20 @@ class FirebaseUserRepository implements UserRepository {
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
   @override
-  Future<void> signIn(String email, String password) async {
+  Future<dynamic> signIn(String email, String password) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      Completer c = new Completer();
+      usersCollection.where('email', isEqualTo: email).get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+
+          c.complete(doc);
+        });
+      });;
+      return c.future;
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -82,14 +91,31 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-  @override
-  Future<MyUser> getUser(String userId) async {
+  Future<dynamic> getUserTest(String email) async {
     try {
-      return usersCollection.doc(userId).get().then(
-            (value) => MyUser.fromEntity(
-              MyUserEntity.fromDocument(value.data()!),
-            ),
-          );
+      Completer c = new Completer();
+      usersCollection.where('email', isEqualTo: email).get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          print(doc["isProducer"]);
+          c.complete(doc);
+        });
+      });;
+      print('WHERE THE FUCK AM I');
+      print(c.future);
+      return c.future;
+    } catch (e) {
+      print('ERROR ????');
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+
+
+  Future<String> getCurrentUserId() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      return user?.uid ?? '';
     } catch (e) {
       log(e.toString());
       rethrow;
