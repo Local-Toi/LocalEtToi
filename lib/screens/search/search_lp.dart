@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:product_repository/product_repository.dart';
 
 import '../../utils/constants.dart';
 
@@ -74,7 +75,7 @@ class _SearchPageState extends State<SearchPage> {
                     child: TextField(
                       controller: searchController,
                       onChanged: (query) {
-                        searchFirebase(query);
+                        searchProducerFirebase(query);
                       },
                       decoration: const InputDecoration(
                         hintText: 'Rechercher...',
@@ -101,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                 itemCount: searchResults.length,
                 itemBuilder: (context, index) {
                   final shop = searchResults[index];
-                  return SearchCard(
+                  return SearchProducerCard(
                     title: shop.name,
                     address: shop.address,
                     description: shop.description,
@@ -121,7 +122,7 @@ class _SearchPageState extends State<SearchPage> {
 
   /// Search data from Firebase
 
-  void searchFirebase(String query) {
+  void searchProducerFirebase(String query) {
 
     FirebaseFirestore.instance
         .collection('shops')
@@ -145,19 +146,44 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  void searchProductFirebase(String query) {
+
+    FirebaseFirestore.instance
+        .collection('products')
+        .orderBy('name')
+        .startAt([query])
+        .endAt(['$query\uf8ff'])
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      setState(() {
+        searchResults = querySnapshot.docs.map((doc) {
+          return MyProduct(
+            name: doc['name'],
+            price: doc['price'],
+            description: doc['description'],
+            categories: doc['categories'],
+            labels: doc['labels'],
+            image: doc['images'],
+            composition: doc['composition'],
+          );
+        }).cast<MyShop>().toList();
+      });
+    });
+  }
+
 
 }
 
 /// Card for each search result
 
-class SearchCard extends StatefulWidget {
+class SearchProducerCard extends StatefulWidget {
   final String title;
   final String address;
   final String description;
   final List<dynamic> schedule;
   final String phoneNumber;
 
-  const SearchCard({
+  const SearchProducerCard({
     required this.title,
     required this.address,
     required this.description,
@@ -170,7 +196,7 @@ class SearchCard extends StatefulWidget {
   _SearchCardState createState() => _SearchCardState();
 }
 
-class _SearchCardState extends State<SearchCard> {
+class _SearchCardState extends State<SearchProducerCard> {
   bool isFavorite = false;
 
   @override

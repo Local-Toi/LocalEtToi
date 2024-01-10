@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
@@ -171,6 +172,7 @@ class MapLP extends State<MapLPState> {
         maxHeight: MediaQuery.of(context).size.height * 0.9,
         panelBuilder: () => _panel(),
         isDraggable: true,
+        backdropEnabled: true,
         body: Stack(
           children: [
             Positioned(
