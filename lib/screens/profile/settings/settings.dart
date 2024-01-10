@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
@@ -93,7 +94,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment : const FractionalOffset(0.5, 0.75),
                   child: Builder(
                       builder: (context) {
-                        if (context.read<UserBloc>().state.user!.isProducer) {
+                        if (true) {
                           GreenRoundedButton(
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(
@@ -109,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         return const SizedBox.shrink();
                       }
 
-              ),
+                ),
               ),
             ],
           ),
