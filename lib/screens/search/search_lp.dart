@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_repository/product_repository.dart';
+import 'package:shop_repository/shop_repository.dart';
 
 import '../../utils/constants.dart';
 
@@ -12,26 +13,6 @@ class MyApp extends StatelessWidget {
       home: SearchPage(),
     );
   }
-}
-
-/// MyShop class with less fields than the one from the repo
-
-class MyShop {
-  final String name;
-  final String description;
-  final String address;
-  final double mark;
-  final List<dynamic> schedule;
-  final String phoneNumber;
-
-  MyShop({
-    required this.name,
-    required this.description,
-    required this.address,
-    required this.mark,
-    required this.schedule,
-    required this.phoneNumber,
-  });
 }
 
 class SearchPage extends StatefulWidget {
@@ -106,11 +87,11 @@ class _SearchPageState extends State<SearchPage> {
                     // Display shop card
                     final shop = shopResults[index];
                     return SearchProducerCard(
-                      title: shop.name,
-                      address: shop.address,
-                      description: shop.description,
-                      schedule: shop.schedule,
-                      phoneNumber: shop.phoneNumber,
+                      title: shop.name ?? 'N/A',
+                      address: shop.adresse ?? 'N/A',
+                      description: shop.description ?? 'N/A',
+                      schedule: shop.horaires ?? [],
+                      phoneNumber: shop.phonenumber ?? 'N/A',
                     );
                   } else {
                     // Display product card
@@ -150,10 +131,12 @@ class _SearchPageState extends State<SearchPage> {
           return MyShop(
             name: shopDoc['name'],
             description: shopDoc['description'],
-            address: shopDoc['adresse'],
-            mark: shopDoc['note'],
-            schedule: shopDoc['horaires'],
-            phoneNumber: shopDoc['phonenumber'],
+            adresse: shopDoc['adresse'],
+            note: shopDoc['note'],
+            horaires: shopDoc['horaires'],
+            phonenumber: shopDoc['phonenumber'],
+            longitude: shopDoc['longitude'],
+            latitude: shopDoc['latitude'],
           );
         }).toList();
       });
@@ -288,35 +271,29 @@ class SearchProductCard extends StatefulWidget {
 
 class _SearchProductCardState extends State<SearchProductCard> {
   bool isFavorite = false;
-  MyShop? associatedShop; // Nouvelle variable pour stocker les détails du shop
+  MyShop? associatedShop;
 
-  // Fonction pour récupérer le shop associé à un produit
   Future<MyShop?> getShopForProduct(String producerId) async {
     try {
-      // Effectuer une requête pour obtenir le document du shop
       DocumentSnapshot shopSnapshot =
       await FirebaseFirestore.instance.collection('shops').doc(producerId).get();
 
-      // Vérifier si le document existe
       if (shopSnapshot.exists) {
-        // Mapper les données du document dans un objet MyShop
         MyShop shop = MyShop(
           name: shopSnapshot['name'],
           description: shopSnapshot['description'],
-          address: shopSnapshot['adresse'],
-          mark: shopSnapshot['note'],
-          schedule: shopSnapshot['horaires'],
-          phoneNumber: shopSnapshot['phonenumber'],
+          adresse: shopSnapshot['adresse'],
+          note: shopSnapshot['note'],
+          horaires: shopSnapshot['horaires'],
+          phonenumber: shopSnapshot['phonenumber'],
+          longitude: shopSnapshot['longitude'],
+          latitude: shopSnapshot['latitude'],
         );
-
-        // Retourner l'objet MyShop
         return shop;
       } else {
-        // Aucun document trouvé, retourner null ou gérer en conséquence
         return null;
       }
     } catch (e) {
-      // Gérer les erreurs en conséquence (journalisation, affichage d'un message, etc.)
       print('Erreur lors de la récupération du shop associé : $e');
       return null;
     }
@@ -325,7 +302,6 @@ class _SearchProductCardState extends State<SearchProductCard> {
   @override
   void initState() {
     super.initState();
-    // Appeler la fonction pour obtenir les détails du shop lors de l'initialisation du widget
     getShopDetails();
   }
 
@@ -343,7 +319,22 @@ class _SearchProductCardState extends State<SearchProductCard> {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         onTap: () {
-          // Naviguer ou effectuer d'autres actions avec les détails du produit et du shop
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailsPage(
+                name: widget.title,
+                price: widget.price,
+                description: widget.description,
+                categories: widget.categories,
+                labels: widget.labels,
+                composition: widget.composition,
+                image: widget.image,
+                producerId: widget.producerId,
+                associatedShop: associatedShop,
+              ),
+            ),
+          );
         },
         child: ListTile(
           title: Text(widget.title, style: text),
@@ -368,7 +359,7 @@ class _SearchProductCardState extends State<SearchProductCard> {
                       color: darkGreen,
                     ),
                     const SizedBox(width: 8.0),
-                    Text(associatedShop!.address, style: textMedium),
+                    Text(associatedShop!.adresse, style: textMedium),
                   ],
                 ),
             ],
@@ -486,3 +477,139 @@ class ShopDetailsPage extends StatelessWidget {
   }
 }
 
+class ProductDetailsPage extends StatelessWidget {
+  final String name;
+  final double price;
+  final String description;
+  final String composition;
+  final List<dynamic> labels;
+  final List<dynamic> categories;
+  final String image;
+  final String producerId;
+  final MyShop? associatedShop;
+
+   ProductDetailsPage({
+    super.key,
+    required this.name,
+    required this.price,
+    required this.description,
+    required this.composition,
+    required this.labels,
+    required this.categories,
+    required this.image,
+    required this.producerId,
+    this.associatedShop,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: beige,
+      appBar: AppBar(
+        title: const Text('Détails du produit', style: boldTitre),
+        backgroundColor: beige,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.7,
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: beige,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: grey100.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: text,
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'Prix : $price €',
+                    style: text,
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'Description : $description',
+                    style: text,
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'Composition : $composition',
+                    style: text,
+                  ),
+                  const SizedBox(height: 16.0),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            if (associatedShop != null)
+              Card(
+                elevation: 3,
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                child: ListTile(
+                  title: Text(associatedShop!.name ?? 'Nom du magasin', style: text),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.pin_drop,
+                            color: darkGreen,
+                          ),
+                          const SizedBox(width: 8.0),
+                          Text(associatedShop!.adresse, style: textMedium),
+                        ],
+                      ),
+                      const SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          const Text(
+                            'Contact : ',
+                            style: text,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: darkGreen,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Text(
+                              associatedShop!.phonenumber ?? 'Numéro de téléphone',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper function to get the day name
+  String getDayName(int dayIndex) {
+    const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    return days[dayIndex];
+  }
+
+}

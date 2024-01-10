@@ -69,7 +69,6 @@ class MapLP extends State<MapLPState> {
 
       customMarkers = shops.map((shop) {
         return MyCustomMarker(
-          markerId: shop.id,
           latitude: shop.latitude,
           longitude: shop.longitude,
           shopName: shop.name ?? "Nom du magasin non disponible",
@@ -78,6 +77,7 @@ class MapLP extends State<MapLPState> {
           address: shop.adresse,
           mark: shop.note ?? 0.0,
           schedule: shop.horaires ?? ["Horaires non disponibles"],
+          markerId: '',
         );
       }).toList();
 

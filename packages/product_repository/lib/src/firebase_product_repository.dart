@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../product_repository.dart';
 
-class FirebaseProductRepository implements UserRepository {
+class FirebaseProductRepository implements ProductRepository {
   FirebaseProductRepository({
     FirebaseAuth? firebaseAuth,
   }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
