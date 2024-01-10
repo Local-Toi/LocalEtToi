@@ -10,6 +10,9 @@ part 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final UserRepository _userRepository;
+  bool? isProducer;
+
+  bool? get currentStatus => isProducer;
 
   SignInBloc({
     required UserRepository myUserRepository,
@@ -17,7 +20,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         super(SignInInitial()) {
     on<SignInRequired>((event, emit) async {
       try {
-        await _userRepository.signIn(event.email, event.password);
+        final user = await _userRepository.signIn(event.email, event.password);
+        isProducer = user['isProducer'];
+        print('********');
+        print(isProducer);
+        print('********');
         emit(SignInSuccess());
       } on FirebaseAuthException catch (e) {
         log(e.toString());
