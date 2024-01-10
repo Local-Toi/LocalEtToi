@@ -1,0 +1,11 @@
+name: product_repository
+description: Dart package which manages the user domain.
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  cloud_firestore: ^4.13.3
+  equatable: ^2.0.0
+  firebase_auth: ^4.15.0
