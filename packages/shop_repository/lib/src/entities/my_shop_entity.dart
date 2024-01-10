@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 class MyShopEntity extends Equatable {
-  final String id;
   final double longitude;
   final double latitude;
   final String? name;
@@ -12,7 +11,6 @@ class MyShopEntity extends Equatable {
   final List<dynamic>? horaires;
 
   const MyShopEntity({
-    required this.id,
     required this.longitude,
     required this.latitude,
     this.name,
@@ -25,7 +23,6 @@ class MyShopEntity extends Equatable {
 
   Map<String, Object?> toDocument() {
     return {
-      'id': id,
       'longitude': longitude,
       'latitude': latitude,
       'name': name,
@@ -45,7 +42,6 @@ class MyShopEntity extends Equatable {
     print('Type of horaires: ${horaires?.runtimeType}');
 
     return MyShopEntity(
-      id: doc['id'] as String,
       longitude: doc['longitude'] as double,
       latitude: doc['latitude'] as double,
       name: doc['name'] as String?,
@@ -58,10 +54,10 @@ class MyShopEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, longitude, latitude, name, description, phonenumber, adresse, note, horaires];
+  List<Object?> get props => [longitude, latitude, name, description, phonenumber, adresse, note, horaires];
 
   @override
   String toString() {
-    return 'ShopEntity { id: $id, longitude: $longitude, latitude: $latitude, name: $name, description: $description, phonenumber: $phonenumber, adresse: $adresse, note: $note, horaires: $horaires }';
+    return 'ShopEntity { longitude: $longitude, latitude: $latitude, name: $name, description: $description, phonenumber: $phonenumber, adresse: $adresse, note: $note, horaires: $horaires }';
   }
 }

@@ -41,6 +41,8 @@ dependencies:
     path: packages/user_repository
   shop_repository:
     path: packages/shop_repository
+  product_repository:
+    path: packages/product_repository
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -62,7 +64,7 @@ dependencies:
   flutter_osm_plugin: ^0.70.3
   geopoint: ^1.0.0
 
-  sliding_up_panel: ^2.0.0+1
+  sliding_up_panel2: ^3.3.0+1
 
 
 dev_dependencies:
