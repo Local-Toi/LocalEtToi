@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
@@ -15,6 +17,23 @@ void main()  {
   ));
 }
 
+Future<bool> getProducerStatus(AuthenticationBloc bloc) async {
+  print('---------');
+  print(bloc);
+  print(bloc.state);
+  print(bloc.state.user);
+  print(bloc.state.user?.email);
+  String? currentUser = bloc.state.user?.email;
+  print(currentUser);
+  print('Entering repo');
+  final user = await bloc.userRepository.getUserTest(currentUser!);
+  bool isProducer = user['isProducer'];
+  print('out of repo');
+  print(user['isProducer']);
+  print('---------');
+  return isProducer;
+}
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -25,6 +44,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
+    Future<bool> status = getProducerStatus(Bloc);
     return Scaffold(
         body: Container(
           clipBehavior: Clip.antiAlias,
@@ -88,25 +109,30 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
               ),
               Container(
-                  alignment : const FractionalOffset(0.5, 0.75),
-                  child: Builder(
-                      builder: (context) {
-                        if (true) {
-                          GreenRoundedButton(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (
-                                        context) => const becomeProducer(),
-                                  ),
-                                );
-                              },
-                              buttonText: 'Tu es producteur ?'
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      }
-
+                alignment: const FractionalOffset(0.5, 0.75),
+                child: FutureBuilder<bool>(
+                  future: status,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Erreur: ${snapshot.error}');
+                    } else if (snapshot.data == false) {
+                      return GreenRoundedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (
+                                    context) => const becomeProducer(),
+                              ),
+                            );
+                          },
+                          buttonText: 'Tu es producteur ?'
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
                 ),
               ),
             ],

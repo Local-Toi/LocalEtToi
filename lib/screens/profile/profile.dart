@@ -121,7 +121,6 @@ class _ProfilPageState extends State<ProfilPage> {
                             buttonText: 'Mes points de vente',
                           );
                         } else {
-                          // Le Future a été résolu avec succès, mais la valeur est false ou null
                           return const SizedBox.shrink();
                         }
                       },
