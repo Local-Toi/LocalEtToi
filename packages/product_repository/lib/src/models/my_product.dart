@@ -3,10 +3,12 @@ import 'package:equatable/equatable.dart';
 import '../entities/entities.dart';
 
 class MyProduct extends Equatable {
-  const MyProduct({required this.name, required this.price, required this.description, required this.categories, required this.labels, required this.composition, required this.image, required this.producerId});
+  const MyProduct({required this.name, required this.price, this.quantity, required this.unit, this.description, required this.categories, required this.labels, this.composition, this.image, required this.producerId});
 
   final String? name;
   final double? price;
+  final int? quantity;
+  final String? unit;
   final String? description;
   final List<dynamic>? categories;
   final List<dynamic>? labels;
@@ -17,6 +19,8 @@ class MyProduct extends Equatable {
   static const empty = MyProduct(
     name: '',
     price: 0,
+    quantity: 0,
+    unit: '',
     description: '',
     categories: [],
     labels: [],
@@ -28,6 +32,8 @@ class MyProduct extends Equatable {
   MyProduct copyWith({
     String? name,
     double? price,
+    int? quantity,
+    String? unit,
     String? description,
     List<dynamic>? categories,
     List<dynamic>? labels,
@@ -38,6 +44,8 @@ class MyProduct extends Equatable {
     return MyProduct(
       name: name ?? this.name,
       price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      unit: unit ?? this.unit,
       description: description ?? this.description,
       categories: categories ?? this.categories,
       labels: labels ?? this.labels,
@@ -54,6 +62,8 @@ class MyProduct extends Equatable {
     return MyProductEntity(
       name: name,
       price: price,
+      quantity: quantity,
+      unit: unit,
       description: description,
       categories: categories,
       labels: labels,
@@ -64,7 +74,7 @@ class MyProduct extends Equatable {
   }
 
   @override
-  List<Object> get props => [ name ?? '', price ?? '', description ?? '', categories ?? '', labels ?? '', composition ?? '', image ?? '', producerId];
+  List<Object> get props => [ name ?? '', price ?? '', quantity ?? '', unit ??'', description ?? '', categories ?? '', labels ?? '', composition ?? '', image ?? '', producerId];
 
   static fromEntity(fromDocument) {}
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:local_et_toi/screens/profile/pointOfSale/addProduct.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
@@ -64,19 +65,19 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment : const FractionalOffset(0.5, 0.09),
                       child: Image.asset("assets/images/logo1.png", scale: 1)
               ),
-/*              Container(
-                  alignment : const FractionalOffset(0.5, 0.45),
+              Container(
+                  alignment : const FractionalOffset(0.5, 0.95),
                 child: GreenRoundedButton(
                     onPressed: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const SecurityView(),
+                          builder: (context) => const AddProduct(),
                         ),
                       );
                     },
-                    buttonText: 'Sécurité'
+                    buttonText: 'addproduct'
                     )
-              ),*/
+              ),
               Container(
                   alignment : const FractionalOffset(0.5, 0.45),
                   child: GreenRoundedButton(
