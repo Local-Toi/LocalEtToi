@@ -22,15 +22,12 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   File? _image;
   late String name, unit;
-  late List<dynamic> category;
+  late List<dynamic> category = [];
   late String selectedCategory;
   late double price;
   late int quantity;
   late String? description, _imageUrl, composition;
-  List<String> labels = [];
-
-  //get the producer id that is logged in
-  //TODO
+  late List<dynamic> labels = [];
 
   // variables pour stocker les valeurs des champs du formulaire
   late TextEditingController nameController;
@@ -94,12 +91,12 @@ class _AddProductState extends State<AddProduct> {
   void initState() {
     super.initState();
     unit = 'g';
-    category = ('Pièce' as List?)!;
-
+    selectedCategory = 'Fruit'; // Initialize with a default category
     nameController = TextEditingController();
     priceController = TextEditingController();
     quantityController = TextEditingController();
     descriptionController = TextEditingController();
+    compositionController = TextEditingController();
   }
 
   @override
@@ -112,17 +109,6 @@ class _AddProductState extends State<AddProduct> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 0.0),
-                alignment: const FractionalOffset(0.01, 0.03),
-                // arrow back
-                child: arrow_back.ArrowBack(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-
               // Titre
               Container(
                 margin: const EdgeInsets.only(top: 0.0),
@@ -147,7 +133,7 @@ class _AddProductState extends State<AddProduct> {
                   child: _image != null
                       ? ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                    child: Image.file(_image!, fit: BoxFit.cover),
+                        child: Image.file(_image!, fit: BoxFit.cover),
                   )
                       : const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -354,6 +340,7 @@ class _AddProductState extends State<AddProduct> {
                               onChanged: (String? newValue) {
                                 setState(() {
                                   selectedCategory = newValue!;
+                                  category = [newValue];
                                 });
                               },
                               items: [
@@ -439,7 +426,8 @@ class _AddProductState extends State<AddProduct> {
                           );
                         } else {
                             // Si tous les champs sont remplis, on enregistre
-                            if (Form.of(context)!.validate()) {
+                            if (Form.of(context).validate()) {
+                              testAddProduct(Bloc);
                               FirebaseFirestore.instance.collection('products').add({
                                 'name': name,
                                 'price': price,
