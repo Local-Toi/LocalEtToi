@@ -19,7 +19,7 @@ class DiscoverLP extends StatefulWidget {
 class _DiscoverLPState extends State<DiscoverLP> {
   List<String> imageUrlsFruits_leg = [
     'discovery/fruits&legumes/janvier/fruits_janv.png',
-    'discovery/fruits&legumes/janvier/legumes_janv.png',
+    'discovery/fruits&legumes/janvier/leg_janv.png',
   ];
   List<String> imageUrlsRecettes = [
     'discovery/recettes/janvier/rec_janv_galette.png',
@@ -30,9 +30,6 @@ class _DiscoverLPState extends State<DiscoverLP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Carrousels d\'images Firebase Storage'),
-      ),
       body: Container(
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: constants.beige),
@@ -51,24 +48,6 @@ class _DiscoverLPState extends State<DiscoverLP> {
                         'A découvrir',
                         style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ),
-
-                  // Bouton filtres
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.tune,
-                        size: 30.0,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const MapFiltersState(),
-                          ),
-                        );
-                      },
                     ),
                   ),
                 ],
@@ -104,7 +83,8 @@ class _DiscoverLPState extends State<DiscoverLP> {
             itemBuilder: (context, index, realIndex) {
               return Image.network(
                 snapshot.data![index],
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
+                height: 120.0,
               );
             },
             options: CarouselOptions(
