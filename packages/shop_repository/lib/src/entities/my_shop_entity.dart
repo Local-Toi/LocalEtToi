@@ -9,16 +9,18 @@ class MyShopEntity extends Equatable {
   final String adresse;
   final double? note;
   final List<dynamic>? horaires;
+  final String id;
 
   const MyShopEntity({
     required this.longitude,
     required this.latitude,
-    this.name,
+    required this.name,
     this.description,
     this.phonenumber,
     required this.adresse,
     this.note,
     this.horaires,
+    required this.id,
   });
 
   Map<String, Object?> toDocument() {
@@ -30,7 +32,8 @@ class MyShopEntity extends Equatable {
       'phonenumber': phonenumber,
       'adresse': adresse,
       'note': note,
-      'horaires': horaires
+      'horaires': horaires,
+      'id': id,
     };
   }
 
@@ -44,20 +47,21 @@ class MyShopEntity extends Equatable {
     return MyShopEntity(
       longitude: doc['longitude'] as double,
       latitude: doc['latitude'] as double,
-      name: doc['name'] as String?,
+      name: doc['name'] as String,
       description: doc['description'] as String?,
       phonenumber: doc['phonenumber'] as String?,
       adresse: doc['adresse'] as String,
       note: doc['note'] as double?,
       horaires: doc['horaires'] as List<dynamic>?,
+      id: doc['id'] as String,
     );
   }
 
   @override
-  List<Object?> get props => [longitude, latitude, name, description, phonenumber, adresse, note, horaires];
+  List<Object?> get props => [longitude, latitude, name, description, phonenumber, adresse, note, horaires, id];
 
   @override
   String toString() {
-    return 'ShopEntity { longitude: $longitude, latitude: $latitude, name: $name, description: $description, phonenumber: $phonenumber, adresse: $adresse, note: $note, horaires: $horaires }';
+    return 'ShopEntity { longitude: $longitude, latitude: $latitude, name: $name, description: $description, phonenumber: $phonenumber, adresse: $adresse, note: $note, horaires: $horaires , id: $id}';
   }
 }
