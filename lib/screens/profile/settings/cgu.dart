@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 
 void main()  {
   runApp(const MaterialApp(
@@ -16,9 +17,14 @@ class CGUView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: ListView(children: const [
-          Text("les cgu" , style: constants.text),
-        ]),
+        body:               Container(
+          alignment : const FractionalOffset(0.01, 0.03),
+          child: arrow_back.ArrowBack(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
       ),
     );
   }

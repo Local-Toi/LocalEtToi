@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
 import 'package:local_et_toi/screens/home/home_screen.dart';
 import 'package:local_et_toi/screens/futurUpdate.dart';
 import 'package:local_et_toi/screens/profile/pointOfSale/sellPoint.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/screens/profile/settings/settings.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
-import 'package:user_repository/user_repository.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../utils/buttons/CheckBox.dart';
@@ -22,6 +20,17 @@ void main()  {
   ));
 }
 
+Future<bool> getProducerStatus(AuthenticationBloc bloc) async {
+  print('2');
+  String? currentUser = bloc.state.user?.email;
+  print(currentUser);
+  final user = await bloc.userRepository.getUserTest(currentUser!);
+  print(user);
+  print('3');
+  bool isProducer = user['isProducer'];
+  return isProducer;
+}
+
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
 
@@ -32,11 +41,11 @@ class ProfilPage extends StatefulWidget {
 class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
-    context.read<UserBloc>().add(GetMyUser(myUserId:context.read<AuthenticationBloc>().state.user!.uid));
-    bool isProducer = context.read<UserBloc>().state.user!.isProducer;
-    return BlocProvider(
-        create: (context) => SignInBloc(myUserRepository: context.read<AuthenticationBloc>().userRepository),
-        child: Scaffold(
+    final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
+    print('1');
+    Future<bool> status = getProducerStatus(Bloc);
+    print('4');
+    return Scaffold(
             body: Container(
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(color : constants.beige),
@@ -86,27 +95,30 @@ class _ProfilPageState extends State<ProfilPage> {
                       )
                   ),
                   Container(
-                      alignment : const FractionalOffset(0.5, 0.65),
-                      child: Builder(
-                        builder: (context) {
-                          if (isProducer) {
-                            GreenRoundedButton(
-                                onPressed: () {
-                                  //MyUser userData = MyUser(id: context.read<UserBloc>().state.user!.id, identifiant: context.read<UserBloc>().state.user!.identifiant, isProducer: true);
-                                  //context.read<AuthenticationBloc>().userRepository.setUserData(context.read<UserBloc>().state.user!.id, userData);
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (
-                                          context) => const pointOfSalePage(),
-                                    ),
-                                  );
-                                },
-                                buttonText: 'Mes points de vente'
-                            );
-                          }
+                    alignment: const FractionalOffset(0.5, 0.65),
+                    child: FutureBuilder<bool>(
+                      future: status,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator(color: constants.darkGreen);
+                        } else if (snapshot.hasError) {
+                          return Text('Erreur: ${snapshot.error}');
+                        } else if (snapshot.data == true) {
+                          return GreenRoundedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const pointOfSalePage(),
+                                ),
+                              );
+                            },
+                            buttonText: 'Mes points de vente',
+                          );
+                        } else {
                           return const SizedBox.shrink();
                         }
-                      )
+                      },
+                    ),
                   ),
                   Container(
                       alignment : const FractionalOffset(0.14, 0.81),
@@ -135,8 +147,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
 
             )
-        )
-    );
+        );
   }
 }
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'Security.dart';
 import 'about.dart';
-import 'assistance.dart';
+import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'cgu.dart';
 
 void main()  {
@@ -15,6 +15,23 @@ void main()  {
       body: SettingsPage(),
     ),
   ));
+}
+
+Future<bool> getProducerStatus(AuthenticationBloc bloc) async {
+  print('---------');
+  print(bloc);
+  print(bloc.state);
+  print(bloc.state.user);
+  print(bloc.state.user?.email);
+  String? currentUser = bloc.state.user?.email;
+  print(currentUser);
+  print('Entering repo');
+  final user = await bloc.userRepository.getUserTest(currentUser!);
+  bool isProducer = user['isProducer'];
+  print('out of repo');
+  print(user['isProducer']);
+  print('---------');
+  return isProducer;
 }
 
 class SettingsPage extends StatefulWidget {
@@ -27,6 +44,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
+    Future<bool> status = getProducerStatus(Bloc);
     return Scaffold(
         body: Container(
           clipBehavior: Clip.antiAlias,
@@ -34,15 +53,10 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Stack(
             children: [
               Container(
-                alignment : const FractionalOffset(0.90, 0.03),
-                child: IconButton(
-                  icon: const Icon(Icons.help, size : 50),
+                alignment : const FractionalOffset(0.01, 0.03),
+                child: arrow_back.ArrowBack(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const AssistancePage(),
-                      ),
-                    );
+                    Navigator.of(context).pop();
                   },
                 ),
               ),
@@ -50,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment : const FractionalOffset(0.5, 0.09),
                       child: Image.asset("assets/images/logo1.png", scale: 1)
               ),
-              Container(
+/*              Container(
                   alignment : const FractionalOffset(0.5, 0.45),
                 child: GreenRoundedButton(
                     onPressed: () {
@@ -62,9 +76,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                     buttonText: 'Sécurité'
                     )
-              ),
+              ),*/
               Container(
-                  alignment : const FractionalOffset(0.5, 0.55),
+                  alignment : const FractionalOffset(0.5, 0.45),
                   child: GreenRoundedButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
@@ -77,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
               ),
               Container(
-                  alignment : const FractionalOffset(0.5, 0.65),
+                  alignment : const FractionalOffset(0.5, 0.55),
                   child: GreenRoundedButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
@@ -90,26 +104,31 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
               ),
               Container(
-                  alignment : const FractionalOffset(0.5, 0.75),
-                  child: Builder(
-                      builder: (context) {
-                        if (context.read<UserBloc>().state.user!.isProducer) {
-                          GreenRoundedButton(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (
-                                        context) => const becomeProducer(),
-                                  ),
-                                );
-                              },
-                              buttonText: 'Tu es producteur ?'
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      }
-
-              ),
+                alignment: const FractionalOffset(0.5, 0.65),
+                child: FutureBuilder<bool>(
+                  future: status,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator(color: constants.darkGreen);
+                    } else if (snapshot.hasError) {
+                      return Text('Erreur: ${snapshot.error}');
+                    } else if (snapshot.data == false) {
+                      return GreenRoundedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (
+                                    context) => const becomeProducer(),
+                              ),
+                            );
+                          },
+                          buttonText: 'Tu es producteur ?'
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
+                ),
               ),
             ],
           ),

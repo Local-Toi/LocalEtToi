@@ -4,14 +4,16 @@ import '../user_repository.dart';
 abstract class UserRepository {
   Stream<User?> get user;
 
-  Future<void> signIn(String email, String password);
+  Future<String>getCurrentUserId();
+
+  Future<dynamic> signIn(String email, String password);
   Future<MyUser> signUp(
     String email,
     String password,
   );
   Future<void> signOut();
   Future<void> resetPassword(String email);
-
-  Future<MyUser> getUser(String userId);
+  Future<void> setUserToProducer(String email, String emailPro, String URL);
+  Future<dynamic> getUserTest(String email);
   Future<void> setUserData(String userId, userData);
 }
