@@ -3,13 +3,14 @@ import 'package:equatable/equatable.dart';
 import '../entities/entities.dart';
 
 class MyUser extends Equatable {
-  const MyUser({required this.id, required this.identifiant, this.email, this.firstName, this.lastName});
+  const MyUser({required this.id, required this.identifiant, this.email, this.firstName, this.lastName, required this.isProducer});
 
   final String id;
   final String identifiant;
   final String? email;
   final String? firstName;
   final String? lastName;
+  final bool isProducer;
 
   static const empty = MyUser(
     id: '',
@@ -17,6 +18,7 @@ class MyUser extends Equatable {
     email: '',
     firstName: '',
     lastName: '',
+    isProducer: false,
   );
 
   MyUser copyWith({
@@ -25,6 +27,7 @@ class MyUser extends Equatable {
     String? email,
     String? firstName,
     String? lastName,
+    bool? isProducer,
   }) {
     return MyUser(
       id: id ?? this.id,
@@ -32,6 +35,7 @@ class MyUser extends Equatable {
       email: email ?? this.email,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
+      isProducer: isProducer ?? this.isProducer,
     );
   }
 
@@ -44,11 +48,12 @@ class MyUser extends Equatable {
       email: email,
       firstName: firstName,
       lastName: lastName,
+      isProducer: isProducer,
     );
   }
 
   @override
-  List<Object> get props => [identifiant, email ?? '', firstName ?? '', lastName ?? ''];
+  List<Object> get props => [identifiant, email ?? '', firstName ?? '', lastName ?? '', isProducer];
 
   static fromEntity(fromDocument) {}
 }

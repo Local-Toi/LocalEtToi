@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/user_bloc/user_bloc.dart';
 import 'package:local_et_toi/screens/home/home_screen.dart';
-import 'package:local_et_toi/screens/profile/comments/comments.dart';
-import 'package:local_et_toi/screens/profile/pointOfSale/pointOfSale.dart';
+import 'package:local_et_toi/screens/futurUpdate.dart';
+import 'package:local_et_toi/screens/profile/pointOfSale/sellPoint.dart';
 import 'package:local_et_toi/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:local_et_toi/screens/profile/settings/settings.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:user_repository/user_repository.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../utils/buttons/CheckBox.dart';
@@ -30,6 +32,8 @@ class ProfilPage extends StatefulWidget {
 class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
+    context.read<UserBloc>().add(GetMyUser(myUserId:context.read<AuthenticationBloc>().state.user!.uid));
+    bool isProducer = context.read<UserBloc>().state.user!.isProducer;
     return BlocProvider(
         create: (context) => SignInBloc(myUserRepository: context.read<AuthenticationBloc>().userRepository),
         child: Scaffold(
@@ -74,7 +78,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) => const CommentsPage(),
+                                builder: (context) => const FuturUpdate(),
                               ),
                             );
                           },
@@ -83,15 +87,25 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                   Container(
                       alignment : const FractionalOffset(0.5, 0.65),
-                      child: GreenRoundedButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const pointOfSalePage(),
-                              ),
+                      child: Builder(
+                        builder: (context) {
+                          if (isProducer) {
+                            GreenRoundedButton(
+                                onPressed: () {
+                                  //MyUser userData = MyUser(id: context.read<UserBloc>().state.user!.id, identifiant: context.read<UserBloc>().state.user!.identifiant, isProducer: true);
+                                  //context.read<AuthenticationBloc>().userRepository.setUserData(context.read<UserBloc>().state.user!.id, userData);
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (
+                                          context) => const pointOfSalePage(),
+                                    ),
+                                  );
+                                },
+                                buttonText: 'Mes points de vente'
                             );
-                          },
-                          buttonText: 'Mes points de vente'
+                          }
+                          return const SizedBox.shrink();
+                        }
                       )
                   ),
                   Container(

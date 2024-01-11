@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const List<String> categoriesList = <String>['Fruits & Légumes', 'Produits Transforfmés', 'Viandes & Poissons', 'Alcool', 'Boissons sans alcool', 'Autres'];
+
 // Colors constant used for the entire app
 
 const Color darkGreen = Color(0xFF095D40);
@@ -27,6 +29,8 @@ const Color taupe = Color(0xFF7D7171);
 const TextStyle logo = TextStyle(fontFamily: 'CinzelDecorative', fontSize: 50);
 
 const TextStyle titre = TextStyle(fontFamily: 'Montserrat', fontSize: 24, fontWeight: FontWeight.w600);
+
+const TextStyle boldTitre = TextStyle(fontFamily: 'Montserrat', fontSize: 24, fontWeight: FontWeight.bold);
 
 const TextStyle textBig = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
 

@@ -42,6 +42,10 @@ dependencies:
     path: packages/user_repository
   shop_repository:
     path: packages/shop_repository
+  product_repository:
+    path: packages/product_repository
+  favorites_repository:
+    path: packages/favorites_repository
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -55,13 +59,16 @@ dependencies:
   firebase_auth: ^4.14.0
   cloud_firestore: ^4.13.1
   firebase_core: ^2.23.0
-  firebase_storage: ^11.0.1
+  firebase_storage: ^11.6.0
 
   email_validator: ^2.1.16
   flutter_pw_validator: ^1.6.0
 
   flutter_osm_plugin: ^0.70.3
   geopoint: ^1.0.0
+  image_field: ^0.0.8
+
+  sliding_up_panel2: ^3.3.0+1
 
 
 dev_dependencies:
