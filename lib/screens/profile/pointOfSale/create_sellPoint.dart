@@ -207,8 +207,9 @@ class _SellPointState extends State<SellPoint> {
                       // Bouton Enregistrer
                       GreenRoundedButton(
                         onPressed: () {
-                          if (Form.of(context).validate()) {
-                            Form.of(context).save();
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
+
                             registerNewShop(name, adresse, desc, horaires.split(', '), tel, Bloc.state.user!.uid);
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
