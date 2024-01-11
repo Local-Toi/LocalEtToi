@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:local_et_toi/screens/profile/pointOfSale/create_sellPoint.dart';
+import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
 
@@ -23,6 +27,8 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
+    searchFirebase(Bloc.state.user!.uid);
     return Scaffold(
       backgroundColor: beige,
       body: Padding(
@@ -44,6 +50,19 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
                 },
               ),
             ),
+            Container(
+                alignment : const FractionalOffset(0.5, 0.90),
+                child: GreenRoundedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const SellPoint(),
+                        ),
+                      );
+                    },
+                    buttonText: 'Ajouter un nouveau point de vente'
+                )
+            ),
           ],
         ),
       ),
@@ -51,13 +70,11 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
   }
 
   /// Search data from Firebase
-  void searchFirebase(String query) {
+  void searchFirebase(String id) {
     // Search shops
     FirebaseFirestore.instance
         .collection('shops')
-        .orderBy('name')
-        .startAt([query])
-        .endAt(['$query\uf8ff'])
+        .where('id', isEqualTo: id)
         .get()
         .then((QuerySnapshot shopQuerySnapshot) {
       setState(() {
@@ -71,6 +88,7 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
             phonenumber: shopDoc['phonenumber'],
             longitude: shopDoc['longitude'],
             latitude: shopDoc['latitude'],
+            id: shopDoc['id'],
           );
         }).toList();
       });
