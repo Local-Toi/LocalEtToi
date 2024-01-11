@@ -19,9 +19,15 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   File? _image;
-  late String name, price, quantity, unit, category;
+  late String name, unit;
+  late List<dynamic>? category;
+  late double price;
+  late int quantity;
   late String? description, _imageUrl, composition;
   List<String> labels = [];
+
+  //get the producer id that is logged in
+  //TODO
 
   // variables pour stocker les valeurs des champs du formulaire
   late TextEditingController nameController;
@@ -29,6 +35,24 @@ class _AddProductState extends State<AddProduct> {
   late TextEditingController quantityController;
   late TextEditingController descriptionController;
   late TextEditingController compositionController;
+
+  FirebaseProductRepository productRepository = FirebaseProductRepository();
+
+  testAddProduct() async {
+    MyProduct newProduct = const MyProduct(
+      name: name,
+      price: price,
+      quantity: quantity,
+      unit: unit,
+      description: description,
+      categories: category,
+      labels: labels,
+      composition: composition,
+      image: _imageUrl,
+      producerId: producerId,
+    );
+    await productRepository.addProduct(newProduct);
+  }
 
   Future<void> _getImage() async {
     final picker = ImagePicker();
@@ -67,7 +91,7 @@ class _AddProductState extends State<AddProduct> {
   void initState() {
     super.initState();
     unit = 'g';
-    category = 'Pièce';
+    category = 'Pièce' as List?;
 
     nameController = TextEditingController();
     priceController = TextEditingController();
@@ -191,7 +215,7 @@ class _AddProductState extends State<AddProduct> {
                                     ),
                                     GreenTextFieldWithGreenerBorder(
                                       controller: priceController,
-                                      onSaved: (val) => price = val!,
+                                      onSaved: (val) => price = val! as double,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Veuillez entrer le prix du produit *';
@@ -218,7 +242,7 @@ class _AddProductState extends State<AddProduct> {
                                   ),
                                   GreenTextFieldWithGreenerBorder(
                                     controller: quantityController,
-                                    onSaved: (val) => quantity = val!,
+                                    onSaved: (val) => quantity = val! as int,
                                     validator: (value) {
                                       return null;
                                     },
@@ -325,7 +349,7 @@ class _AddProductState extends State<AddProduct> {
                               value: category,
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  category = newValue!;
+                                  category = newValue! as List?;
                                 });
                               },
                               items: [
