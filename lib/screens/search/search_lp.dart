@@ -137,6 +137,7 @@ class _SearchPageState extends State<SearchPage> {
             phonenumber: shopDoc['phonenumber'],
             longitude: shopDoc['longitude'],
             latitude: shopDoc['latitude'],
+            id: shopDoc['id'],
           );
         }).toList();
       });
@@ -288,6 +289,7 @@ class _SearchProductCardState extends State<SearchProductCard> {
           phonenumber: shopSnapshot['phonenumber'],
           longitude: shopSnapshot['longitude'],
           latitude: shopSnapshot['latitude'],
+          id: shopSnapshot['id'],
         );
         return shop;
       } else {

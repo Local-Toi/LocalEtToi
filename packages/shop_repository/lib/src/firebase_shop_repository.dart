@@ -53,4 +53,18 @@ class FirebaseShopRepository implements ShopRepository {
     }
   }
 
+  @override
+  Future<void> addShop(MyShop shop) async {
+    await shopsCollection.add({
+      'name': shop.name,
+      'description': shop.description,
+      'adresse': shop.adresse,
+      'horaires': shop.horaires,
+      'phonenumber': shop.phonenumber,
+      'longitude': shop.longitude,
+      'latitude': shop.latitude,
+      'id': shop.id,
+    });
+  }
 }
+

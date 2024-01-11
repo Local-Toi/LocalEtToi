@@ -27,6 +27,7 @@ class _DropdownMenuWidgetState extends State<DropdownMenuWidget> {
           dropdownValue = value!;
         });
       },
+
       dropdownMenuEntries: widget.itemList.map<DropdownMenuEntry<String>>((String value) {
         return DropdownMenuEntry<String>(value: value, label: value);
       }).toList(),
