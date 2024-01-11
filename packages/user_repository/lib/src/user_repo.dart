@@ -13,7 +13,7 @@ abstract class UserRepository {
   );
   Future<void> signOut();
   Future<void> resetPassword(String email);
-
+  Future<void> setUserToProducer(String email, String emailPro, String URL);
   Future<dynamic> getUserTest(String email);
   Future<void> setUserData(String userId, userData);
 }

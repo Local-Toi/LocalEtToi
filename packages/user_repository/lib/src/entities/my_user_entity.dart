@@ -6,12 +6,16 @@ class MyUserEntity extends Equatable {
   final String? firstName;
   final String? lastName;
   final bool isProducer;
+  final String? emailPro;
+  final String? urlVerification;
 
   const MyUserEntity({
     required this.id,
     this.email,
+    this.emailPro,
     this.firstName,
     this.lastName,
+    this.urlVerification,
     required this.isProducer,
   });
 
@@ -22,6 +26,8 @@ class MyUserEntity extends Equatable {
       'firstName': firstName,
       'lastName': lastName,
       'isProducer': isProducer,
+      'emailPro': emailPro,
+      'urlVerification': urlVerification
     };
   }
 
@@ -32,14 +38,16 @@ class MyUserEntity extends Equatable {
       firstName: doc['firstName'] as String?,
       lastName: doc['lastName'] as String?,
       isProducer: doc['isProducer'] as bool,
+      emailPro: doc['emailPro'] as String?,
+      urlVerification: doc['urlVerification'] as String?,
     );
   }
 
   @override
-  List<Object?> get props => [id, email, firstName, lastName, isProducer];
+  List<Object?> get props => [id, email, firstName, lastName, isProducer, emailPro, urlVerification];
 
   @override
   String toString() {
-    return 'UserEntity { id: $id, email: $email, firstName: $firstName, lastName: $lastName , isProducer: $isProducer}';
+    return 'UserEntity { id: $id, email: $email, firstName: $firstName, lastName: $lastName , isProducer: $isProducer, emailPro: $emailPro , urlVerification: $urlVerification}';
   }
 }
