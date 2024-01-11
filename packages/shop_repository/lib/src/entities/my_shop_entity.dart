@@ -31,7 +31,7 @@ class MyShopEntity extends Equatable {
       'description': description,
       'phonenumber': phonenumber,
       'adresse': adresse,
-      'note': note,
+      'note': 0,
       'horaires': horaires,
       'id': id,
     };
@@ -51,7 +51,7 @@ class MyShopEntity extends Equatable {
       description: doc['description'] as String?,
       phonenumber: doc['phonenumber'] as String?,
       adresse: doc['adresse'] as String,
-      note: doc['note'] as double?,
+      note: 0,
       horaires: doc['horaires'] as List<dynamic>?,
       id: doc['id'] as String,
     );

@@ -24,9 +24,6 @@ class FirebaseUserRepository implements UserRepository {
       Completer c = new Completer();
       usersCollection.where('email', isEqualTo: email).get().then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
-          print('------');
-          print(doc['email']);
-          print('------');
           c.complete(doc);
         });
       });;

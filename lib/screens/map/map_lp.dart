@@ -43,12 +43,15 @@ class MapLPState extends StatefulWidget {
 }
 
 class MapLP extends State<MapLPState> {
-  final controller = MapController.withUserPosition(
-    trackUserLocation: const UserTrackingOption(
-      enableTracking: true,
-      unFollowUser: false,
-    ),
-  );
+  late MapController controller;
+  void initializeStateController() {
+    controller = MapController.withUserPosition(
+      trackUserLocation: const UserTrackingOption(
+        enableTracking: true,
+        unFollowUser: false,
+      ),
+    );
+}
 
   TextEditingController searchController = TextEditingController();
 
@@ -80,8 +83,6 @@ class MapLP extends State<MapLPState> {
           markerId: '',
         );
       }).toList();
-
-      _addMarkersToMap();
     } catch (e) {
       print('Error fetching shops: $e $customMarkers');
     }
@@ -104,6 +105,9 @@ class MapLP extends State<MapLPState> {
 
   void _checkMarkerTap(GeoPoint tapLocation) {
     debugPrintGestureArenaDiagnostics = true;
+
+    List<MyCustomMarker> nearbyMarkers = [];
+
     for (MyCustomMarker marker in customMarkers) {
       double distance = calculateDistance(
         tapLocation.latitude,
@@ -112,14 +116,31 @@ class MapLP extends State<MapLPState> {
         marker.longitude,
       );
 
-      if (distance < 50) {
-        print("Marker tapped: ${marker.shopName}");
-        setState(() {
-          selectedMarker = marker;
-          isPanelOpen = true;
-        });
-        _panelController.open();
+      if (distance < 10.0) {
+        nearbyMarkers.add(marker);
       }
+    }
+
+    if (nearbyMarkers.isNotEmpty) {
+      MyCustomMarker closestMarker = nearbyMarkers.reduce((a, b) =>
+      calculateDistance(
+          tapLocation.latitude,
+          tapLocation.longitude,
+          a.latitude,
+          a.longitude) <
+          calculateDistance(
+              tapLocation.latitude,
+              tapLocation.longitude,
+              b.latitude,
+              b.longitude)
+          ? a
+          : b);
+
+      setState(() {
+        selectedMarker = closestMarker;
+        isPanelOpen = true;
+      });
+      _panelController.open();
     }
   }
 
@@ -152,7 +173,9 @@ class MapLP extends State<MapLPState> {
   @override
   void initState() {
     super.initState();
+    initializeStateController();
     _fetchShopsFromFirebase();
+    _addMarkersToMap();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_panelController.isPanelAnimating) {
         _panelController.close();
