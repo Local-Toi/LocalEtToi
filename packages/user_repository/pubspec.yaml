@@ -9,3 +9,4 @@ dependencies:
   cloud_firestore: ^4.13.3
   equatable: ^2.0.0
   firebase_auth: ^4.15.0
+

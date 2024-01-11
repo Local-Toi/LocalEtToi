@@ -59,12 +59,13 @@ dependencies:
   cloud_firestore: ^4.13.1
   firebase_core: ^2.23.0
 
+
   email_validator: ^2.1.16
   flutter_pw_validator: ^1.6.0
 
   flutter_osm_plugin: ^0.70.3
   geopoint: ^1.0.0
-
+  geocoding: ^2.1.1
   sliding_up_panel2: ^3.3.0+1
 
 
