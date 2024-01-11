@@ -21,26 +21,18 @@ void main()  {
 }
 
 Future<bool> getProducerStatus(AuthenticationBloc bloc) async {
-  print('---------');
-  print(bloc);
-  print(bloc.state);
-  print(bloc.state.user);
-  print(bloc.state.user?.email);
+  print('2');
   String? currentUser = bloc.state.user?.email;
   print(currentUser);
-  print('Entering repo');
   final user = await bloc.userRepository.getUserTest(currentUser!);
+  print(user);
+  print('3');
   bool isProducer = user['isProducer'];
-  print('out of repo');
-  print(user['isProducer']);
-  print('---------');
   return isProducer;
 }
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
-
-
 
   @override
   _ProfilPageState createState() => _ProfilPageState();
@@ -50,7 +42,9 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
+    print('1');
     Future<bool> status = getProducerStatus(Bloc);
+    print('4');
     return Scaffold(
             body: Container(
               clipBehavior: Clip.antiAlias,
@@ -101,12 +95,12 @@ class _ProfilPageState extends State<ProfilPage> {
                       )
                   ),
                   Container(
-                    alignment: const FractionalOffset(0.5, 0.75),
+                    alignment: const FractionalOffset(0.5, 0.65),
                     child: FutureBuilder<bool>(
                       future: status,
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator(color: constants.darkGreen);
                         } else if (snapshot.hasError) {
                           return Text('Erreur: ${snapshot.error}');
                         } else if (snapshot.data == true) {

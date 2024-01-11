@@ -6,7 +6,7 @@ import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'Security.dart';
 import 'about.dart';
-import 'assistance.dart';
+import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'cgu.dart';
 
 void main()  {
@@ -53,15 +53,10 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Stack(
             children: [
               Container(
-                alignment : const FractionalOffset(0.90, 0.03),
-                child: IconButton(
-                  icon: const Icon(Icons.help, size : 50),
+                alignment : const FractionalOffset(0.01, 0.03),
+                child: arrow_back.ArrowBack(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const AssistancePage(),
-                      ),
-                    );
+                    Navigator.of(context).pop();
                   },
                 ),
               ),
@@ -69,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment : const FractionalOffset(0.5, 0.09),
                       child: Image.asset("assets/images/logo1.png", scale: 1)
               ),
-              Container(
+/*              Container(
                   alignment : const FractionalOffset(0.5, 0.45),
                 child: GreenRoundedButton(
                     onPressed: () {
@@ -81,9 +76,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                     buttonText: 'Sécurité'
                     )
-              ),
+              ),*/
               Container(
-                  alignment : const FractionalOffset(0.5, 0.55),
+                  alignment : const FractionalOffset(0.5, 0.45),
                   child: GreenRoundedButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
@@ -96,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
               ),
               Container(
-                  alignment : const FractionalOffset(0.5, 0.65),
+                  alignment : const FractionalOffset(0.5, 0.55),
                   child: GreenRoundedButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
@@ -109,12 +104,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
               ),
               Container(
-                alignment: const FractionalOffset(0.5, 0.75),
+                alignment: const FractionalOffset(0.5, 0.65),
                 child: FutureBuilder<bool>(
                   future: status,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator(color: constants.darkGreen);
                     } else if (snapshot.hasError) {
                       return Text('Erreur: ${snapshot.error}');
                     } else if (snapshot.data == false) {
