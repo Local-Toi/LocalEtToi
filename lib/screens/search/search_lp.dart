@@ -155,6 +155,8 @@ class _SearchPageState extends State<SearchPage> {
           return MyProduct(
             name: productDoc['name'],
             price: productDoc['price'],
+            quantity: productDoc['quantity'],
+            unit: productDoc['unit'],
             description: productDoc['description'],
             categories: productDoc['categories'],
             labels: productDoc['labels'],

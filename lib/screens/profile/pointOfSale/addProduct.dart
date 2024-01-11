@@ -22,7 +22,8 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   File? _image;
   late String name, unit;
-  late List<dynamic>? category;
+  late List<dynamic> category;
+  late String selectedCategory;
   late double price;
   late int quantity;
   late String? description, _imageUrl, composition;
@@ -93,7 +94,7 @@ class _AddProductState extends State<AddProduct> {
   void initState() {
     super.initState();
     unit = 'g';
-    category = 'Pièce' as List?;
+    category = ('Pièce' as List?)!;
 
     nameController = TextEditingController();
     priceController = TextEditingController();
@@ -349,10 +350,10 @@ class _AddProductState extends State<AddProduct> {
                               style: constants.text,
                             ),
                             DropdownButton<String>(
-                              value: category,
+                              value: selectedCategory,  // Utilisez selectedCategory ici
                               onChanged: (String? newValue) {
                                 setState(() {
-                                  category = newValue! as List?;
+                                  selectedCategory = newValue!;
                                 });
                               },
                               items: [
@@ -374,6 +375,7 @@ class _AddProductState extends State<AddProduct> {
                           ],
                         ),
                       ),
+
 
                       // Labels avec menu déroulant à choix multiples
                       Container(
