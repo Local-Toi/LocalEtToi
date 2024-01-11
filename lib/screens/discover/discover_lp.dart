@@ -18,13 +18,13 @@ class DiscoverLP extends StatefulWidget {
 
 class _DiscoverLPState extends State<DiscoverLP> {
   List<String> imageUrlsFruits_leg = [
-    'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png',
-    'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/leg_janv.png'
+    'discovery/fruits&legumes/janvier/fruits_janv.png',
+    'discovery/fruits&legumes/janvier/legumes_janv.png',
   ];
   List<String> imageUrlsRecettes = [
-    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_galette.png',
-    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_poireaux.png',
-    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_topi.png'
+    'discovery/recettes/janvier/rec_janv_galette.png',
+    'discovery/recettes/janvier/rec_janv_poireaux.png',
+    'discovery/recettes/janvier/rec_janv_topi.png'
   ];
 
   @override
@@ -128,10 +128,14 @@ class _DiscoverLPState extends State<DiscoverLP> {
 
     for (String imageUrl in imageUrls) {
       // Récupérer l'URL de l'image depuis Firebase Storage
-      String downloadURL = await FirebaseStorage.instance
-          .ref(imageUrl)
-          .getDownloadURL();
-      downloadURLs.add(downloadURL);
+      try {
+        for (String imageUrl in imageUrls) {
+          String downloadURL = await FirebaseStorage.instance.ref().child(imageUrl).getDownloadURL();
+          downloadURLs.add(downloadURL);
+        }
+      } catch (error) {
+        print('Erreur lors de la récupération des URL d\'images : $error');
+      }
     }
 
     return downloadURLs;
