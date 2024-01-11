@@ -7,12 +7,242 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class DiscoverLP extends StatelessWidget {
+// CODE FINAL ????? retirer la barre en haut si ça fonctionne
+
+class DiscoverLP extends StatefulWidget {
   const DiscoverLP({super.key});
 
-  final String imageUrl = 'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png';
+  @override
+  _DiscoverLPState createState() => _DiscoverLPState();
+}
 
-  Future<String> getImageUrl() async {
+class _DiscoverLPState extends State<DiscoverLP> {
+  List<String> imageUrlsFruits_leg = [
+    'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png',
+    'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/leg_janv.png'
+  ];
+  List<String> imageUrlsRecettes = [
+    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_galette.png',
+    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_poireaux.png',
+    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_topi.png'
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Carrousels d\'images Firebase Storage'),
+      ),
+      body: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: const BoxDecoration(color: constants.beige),
+        child: Column(
+          children: [
+            // Titre
+            Padding(
+              padding: const EdgeInsets.only(top: 45.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'A découvrir',
+                        style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+
+                  // Bouton filtres
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.tune,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const MapFiltersState(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Premier carrousel pour imageUrlsFruits_leg
+            buildCarousel(imageUrlsFruits_leg),
+
+            // Espacement entre les carrousels
+            const SizedBox(height: 20),
+
+            // Deuxième carrousel pour imageUrlsRecettes
+            buildCarousel(imageUrlsRecettes),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildCarousel(List<String> imageUrls) {
+    return FutureBuilder<List<String>>(
+      future: getImageUrls(imageUrls),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text('Erreur: ${snapshot.error}');
+          }
+
+          // Affichage des images
+          return CarouselSlider.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index, realIndex) {
+              return Image.network(
+                snapshot.data![index],
+                fit: BoxFit.cover,
+              );
+            },
+            options: CarouselOptions(
+              aspectRatio: 16 / 9,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+            ),
+          );
+        }
+
+        return CircularProgressIndicator();
+      },
+    );
+  }
+
+  Future<List<String>> getImageUrls(List<String> imageUrls) async {
+    List<String> downloadURLs = [];
+
+    for (String imageUrl in imageUrls) {
+      // Récupérer l'URL de l'image depuis Firebase Storage
+      String downloadURL = await FirebaseStorage.instance
+          .ref(imageUrl)
+          .getDownloadURL();
+      downloadURLs.add(downloadURL);
+    }
+
+    return downloadURLs;
+  }
+}
+
+
+
+
+
+// MON CODE AVEC SEULEMENT LES DEUX CARROUSELS SI BESOIN
+
+/*class DiscoverLP extends StatefulWidget {
+  const DiscoverLP({super.key});
+
+  @override
+  _DiscoverLPState createState() => _DiscoverLPState();
+}
+
+class _DiscoverLPState extends State<DiscoverLP> {
+  List<String> imageUrlsFruits_leg = [
+    'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png',
+    'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/leg_janv.png'
+  ];
+  List<String> imageUrlsRecettes = [
+    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_galette.png',
+    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_poireaux.png',
+    'gs://local-et-toi.appspot.com/discovery/recettes/janvier/rec_janv_topi.png'
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Carrousels d\'images Firebase Storage'),
+      ),
+      body: Column(
+        children: [
+          // Premier carrousel pour imageUrlsFruits_leg
+          buildCarousel(imageUrlsFruits_leg),
+
+          // Espacement entre les carrousels
+          const SizedBox(height: 20),
+
+          // Deuxième carrousel pour imageUrlsRecettes
+          buildCarousel(imageUrlsRecettes),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCarousel(List<String> imageUrls) {
+    return FutureBuilder<List<String>>(
+      future: getImageUrls(imageUrls),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text('Erreur: ${snapshot.error}');
+          }
+
+          // Utilisez CarouselSlider pour afficher les images
+          return CarouselSlider.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index, realIndex) {
+              return Image.network(
+                snapshot.data![index],
+                fit: BoxFit.cover,
+              );
+            },
+            options: CarouselOptions(
+              aspectRatio: 16 / 9,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+            ),
+          );
+        }
+
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
+  Future<List<String>> getImageUrls(List<String> imageUrls) async {
+    List<String> downloadURLs = [];
+
+    for (String imageUrl in imageUrls) {
+      // Récupérer l'URL de l'image depuis Firebase Storage
+      String downloadURL = await FirebaseStorage.instance
+          .ref(imageUrl)
+          .getDownloadURL();
+      downloadURLs.add(downloadURL);
+    }
+
+    return downloadURLs;
+  }
+}*/
+
+
+
+
+
+
+
+// TON CODE
+
+//final String imageUrl = 'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png';
+
+  /*Future<String> getImageUrl() async {
     // Récupérer l'URL de l'image depuis Firebase Storage
     String downloadURL = await FirebaseStorage.instance.ref(imageUrl).getDownloadURL();
 
@@ -44,9 +274,16 @@ class DiscoverLP extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 
+
+
+
+
+
+
+// MON PREMIER CODE
     /*
     return Scaffold(
       body: Container(
