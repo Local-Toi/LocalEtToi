@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'package:image_picker/image_picker.dart';
@@ -38,8 +40,8 @@ class _AddProductState extends State<AddProduct> {
 
   FirebaseProductRepository productRepository = FirebaseProductRepository();
 
-  testAddProduct() async {
-    MyProduct newProduct = const MyProduct(
+  testAddProduct(AuthenticationBloc bloc) async {
+    MyProduct newProduct = MyProduct(
       name: name,
       price: price,
       quantity: quantity,
@@ -49,7 +51,7 @@ class _AddProductState extends State<AddProduct> {
       labels: labels,
       composition: composition,
       image: _imageUrl,
-      producerId: producerId,
+      producerId: bloc.state.user!.uid,
     );
     await productRepository.addProduct(newProduct);
   }
@@ -101,6 +103,7 @@ class _AddProductState extends State<AddProduct> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
       body: Container(
         clipBehavior: Clip.antiAlias,
