@@ -83,8 +83,8 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
             name: shopDoc['name'],
             description: shopDoc['description'],
             adresse: shopDoc['adresse'],
-            note: shopDoc['note'],
             horaires: shopDoc['horaires'],
+            note: 0,
             phonenumber: shopDoc['phonenumber'],
             longitude: shopDoc['longitude'],
             latitude: shopDoc['latitude'],
@@ -170,6 +170,42 @@ class _SearchProducerCardState extends State<SearchProducerCard> {
     );
   }
 }
+/*
+getProductFromShop(String name) {
+  // Search products
+  var id = FirebaseFirestore.instance
+      .collection('shops')
+      .where('name', isEqualTo: name)
+      .getId();
+
+    try {
+      DocumentSnapshot shopSnapshot =
+          await FirebaseFirestore.instance.collection('shops').doc().get();
+
+      if (shopSnapshot.exists) {
+        MyShop shop = MyShop(
+          name: shopSnapshot['name'],
+          description: shopSnapshot['description'],
+          adresse: shopSnapshot['adresse'],
+          note: shopSnapshot['note'],
+          horaires: shopSnapshot['horaires'],
+          phonenumber: shopSnapshot['phonenumber'],
+          longitude: shopSnapshot['longitude'],
+          latitude: shopSnapshot['latitude'],
+        );
+        return shop;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Erreur lors de la récupération du shop associé : $e');
+      return null;
+    }
+    });
+  });
+
+}*/
+
 
 class ShopDetailsPage extends StatelessWidget {
   final String shopName;

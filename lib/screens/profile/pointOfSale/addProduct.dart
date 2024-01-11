@@ -154,9 +154,8 @@ class _AddProductState extends State<AddProduct> {
               ),
 
               // Formulaire
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Form(
+                Builder(builder: (context) =>
+                  Form(
                   key: GlobalKey<FormState>(),
                   child: Column(
                     children: [

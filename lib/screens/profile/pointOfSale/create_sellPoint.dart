@@ -26,6 +26,14 @@ registerNewShop(String name, String address, String? description, List<dynamic>?
   final double latitudeResult;
   final double longitudeResult;
   final String adressResult;
+  print('================================================');
+  print(name);
+  print(address);
+  print(description);
+  print(horaires);
+  print(phonenumber);
+  print(id);
+  print('================================================');
   List<Location> locations = await locationFromAddress(address);
   if (locations.isNotEmpty) {
     latitudeResult = locations[0].latitude;
@@ -44,6 +52,7 @@ registerNewShop(String name, String address, String? description, List<dynamic>?
     adresse: adressResult,
     description: description,
     horaires: horaires,
+    note: 0,
     phonenumber: phonenumber,
     latitude: latitudeResult,
     longitude:longitudeResult,
@@ -136,7 +145,7 @@ class _SellPointState extends State<SellPoint> {
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                             ),
                           ],
                         ),
@@ -176,7 +185,7 @@ class _SellPointState extends State<SellPoint> {
                                 validator: (value) {
                                   return null;
                                 },
-                                keyboardType: TextInputType.text,
+                                keyboardType: TextInputType.number,
                               ),
                             ],
                           )
@@ -188,7 +197,7 @@ class _SellPointState extends State<SellPoint> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
-                                'Les horaires de votre point de vente (facultatif, format : Lundi 8h-18h, Mardi 7h-11h, etc.)',
+                                'Les horaires de votre point de vente (Pour les 7 jours, chaques jours séparés par des virgules, au format : 8h-12h/14h-19h, 7h-11h, etc.)',
                                 style: constants.text,
                               ),
                               GreenTextFieldWithGreenerBorder(
@@ -209,8 +218,11 @@ class _SellPointState extends State<SellPoint> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
-
-                            registerNewShop(name, adresse, desc, horaires.split(', '), tel, Bloc.state.user!.uid);
+                            List<String> horaireslist = horaires.split(', ');
+                            while (horaireslist.length < 7) {
+                              horaireslist.add('Fermé');
+                            }
+                            registerNewShop(name, adresse, desc, horaireslist, tel, Bloc.state.user!.uid);
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) => const pointOfSalePage(),

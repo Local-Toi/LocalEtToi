@@ -132,7 +132,7 @@ class _SearchPageState extends State<SearchPage> {
             name: shopDoc['name'],
             description: shopDoc['description'],
             adresse: shopDoc['adresse'],
-            note: shopDoc['note'],
+            note: 0,
             horaires: shopDoc['horaires'],
             phonenumber: shopDoc['phonenumber'],
             longitude: shopDoc['longitude'],
