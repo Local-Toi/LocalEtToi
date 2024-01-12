@@ -54,10 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
           decoration: const BoxDecoration(color : constants.beige),
           child: Stack(
             children: [
-              Container(
-                alignment : const FractionalOffset(0.01, 0.03),
-                child: const arrow_back.ArrowBack(),
-              ),
+              const arrow_back.ArrowBack(),
               Container(
                   alignment : const FractionalOffset(0.5, 0.09),
                       child: Image.asset("assets/images/logo1.png", scale: 1)

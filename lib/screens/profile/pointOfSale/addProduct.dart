@@ -38,6 +38,8 @@ class _AddProductState extends State<AddProduct> {
 
   FirebaseProductRepository productRepository = FirebaseProductRepository();
 
+  final formKey = GlobalKey<FormState>();
+
   testAddProduct(AuthenticationBloc bloc) async {
     MyProduct newProduct = MyProduct(
       name: name,
@@ -97,6 +99,7 @@ class _AddProductState extends State<AddProduct> {
     quantity = 0;
     description = '';
     composition = '';
+    _imageUrl = '';
     selectedCategory = 'Fruit'; // Initialize with a default category
     nameController = TextEditingController();
     priceController = TextEditingController();
@@ -109,10 +112,14 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
-      body: Container(
+        body: Container(
         clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color: constants.beige),
-        child: SingleChildScrollView(
+        decoration: const BoxDecoration(color : constants.beige),
+        child: Stack(
+          children: [
+          const arrow_back.ArrowBack(),
+            Container(
+            child: SingleChildScrollView(
           child: Column(
             children: [
               // Titre
@@ -139,7 +146,7 @@ class _AddProductState extends State<AddProduct> {
                   child: _image != null
                       ? ClipRRect(
                     borderRadius: BorderRadius.circular(15.0),
-                        child: Image.file(_image!, fit: BoxFit.cover),
+                    child: Image.file(_image!, fit: BoxFit.cover),
                   )
                       : const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -160,61 +167,85 @@ class _AddProductState extends State<AddProduct> {
               ),
 
               // Formulaire
-                Builder(builder: (context) =>
+              Builder(builder: (context) =>
                   Form(
-                    key: GlobalKey<FormState>(),
+                    key: formKey,
                     child: Column(
                       children: [
 
-                      // Nom produit
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20.0),
-                        alignment: const FractionalOffset(0.5, 0.5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Nom',
-                              style: constants.text,
-                            ),
-                            GreenTextFieldWithGreenerBorder(
-                              controller: nameController,
-                              onSaved: (val) => name = val!,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Veuillez entrer un nom de produit *';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                            ),
-                          ],
+                        // Nom produit
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Nom',
+                                style: constants.text,
+                              ),
+                              GreenTextFieldWithGreenerBorder(
+                                controller: nameController,
+                                onSaved: (val) => name = val!,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Veuillez entrer un nom de produit *';
+                                  }
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
 
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20.0),
-                        child: Row(
-                          children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          child: Row(
+                            children: [
 
-                            // Prix
-                            Expanded(
-                              child: Container(
+                              // Prix
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Prix',
+                                        style: constants.text,
+                                      ),
+                                      GreenTextFieldWithGreenerBorder(
+                                        controller: priceController,
+                                        onSaved: (val) => price = val! as double,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Veuillez entrer le prix du produit *';
+                                          }
+                                          return null;
+                                        },
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              // Quantité
+                              Container(
+                                width: 200.0,
                                 margin: const EdgeInsets.only(right: 8.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text(
-                                      'Prix',
+                                      'Quantité',
                                       style: constants.text,
                                     ),
                                     GreenTextFieldWithGreenerBorder(
-                                      controller: priceController,
-                                      onSaved: (val) => price = val! as double,
+                                      controller: quantityController,
+                                      onSaved: (val) => quantity = val! as int,
                                       validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Veuillez entrer le prix du produit *';
-                                        }
                                         return null;
                                       },
                                       keyboardType: TextInputType.number,
@@ -222,258 +253,237 @@ class _AddProductState extends State<AddProduct> {
                                   ],
                                 ),
                               ),
-                            ),
 
-                            // Quantité
-                            Container(
-                              width: 200.0,
-                              margin: const EdgeInsets.only(right: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Quantité',
-                                    style: constants.text,
-                                  ),
-                                  GreenTextFieldWithGreenerBorder(
-                                    controller: quantityController,
-                                    onSaved: (val) => quantity = val! as int,
-                                    validator: (value) {
-                                      return null;
-                                    },
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            // Unité avec menu déroulant
-                            Expanded(
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Unité',
-                                      style: constants.text,
-                                    ),
-                                    DropdownButton<String>(
-                                      value: unit,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          unit = newValue!;
-                                        });
-                                      },
-                                      items: ['Pièce', 'Kg', 'g', 'L', 'cl', 'ml'].map<DropdownMenuItem<String>>((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Composition
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20.0),
-                        alignment: const FractionalOffset(0.5, 0.5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Composition',
-                              style: constants.text,
-                            ),
-                            GreenTextFieldWithGreenerBorder(
-                              controller: compositionController,
-                              onSaved: (val) => name = val!,
-                              validator: (value) {
-                                return null;
-                              },
-                              keyboardType: TextInputType.text,
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Description
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20.0),
-                        alignment: const FractionalOffset(0.5, 0.5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Description',
-                              style: constants.text,
-                            ),
-                            TextField(
-                              controller: descriptionController,
-                              maxLines: null,
-                              onChanged: (val) => description = val,
-                              keyboardType: TextInputType.multiline,
-                              decoration: const InputDecoration(
-                                filled: true,
-                                fillColor: constants.lightGreen,
-                                border: OutlineInputBorder(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Catégorie
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20.0),
-                        alignment: const FractionalOffset(0.5, 0.5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Catégorie',
-                              style: constants.text,
-                            ),
-                            DropdownButton<String>(
-                              value: selectedCategory,  // Utilisez selectedCategory ici
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedCategory = newValue!;
-                                  category = [newValue];
-                                });
-                              },
-                              items: [
-                                'Fruit',
-                                'Légume',
-                                'Viande',
-                                'Œuf',
-                                'Produit laitier',
-                                'Boisson',
-                                'Boisson alcoolisée',
-                                'Autre',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
-                      ),
-
-
-                      // Labels avec menu déroulant à choix multiples
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 20.0),
-                        alignment: const FractionalOffset(0.5, 0.5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Labels (choix multiples)',
-                              style: constants.text,
-                            ),
-                            DropdownButton<String>(
-                              value: null,
-                              onChanged: (String? newValue) {
-                              },
-                              items: [
-                                'Aucun label',
-                                'Bio',
-                                'Label rouge',
-                                'Élevé en plein air',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Row(
+                              // Unité avec menu déroulant
+                              Expanded(
+                                child: Container(
+                                  margin: const EdgeInsets.only(left: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Checkbox(
-                                        value: labels.contains(value),
-                                        onChanged: (bool? checked) {
+                                      const Text(
+                                        'Unité',
+                                        style: constants.text,
+                                      ),
+                                      DropdownButton<String>(
+                                        value: unit,
+                                        onChanged: (String? newValue) {
                                           setState(() {
-                                            if (checked != null) {
-                                              if (checked) {
-                                                labels.add(value);
-                                              } else {
-                                                labels.remove(value);
-                                              }
-                                            }
+                                            unit = newValue!;
                                           });
                                         },
+                                        items: ['Pièce', 'Kg', 'g', 'L', 'cl', 'ml'].map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                       ),
-                                      Text(value),
                                     ],
                                   ),
-                                );
-                              }).toList(),
-                            ),
-                          ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
 
-                      // Bouton Enregistrer
-                      GreenRoundedButton(
-                        onPressed: () {
-                        // Vérifier que les champs obligatoires sont remplis
-                        if (nameController.text.isEmpty || priceController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Veuillez remplir les champs obligatoires : Nom et Prix'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        } else {
-                            // Si tous les champs sont remplis, on enregistre
-                            if (Form.of(context).validate()) {
-                              testAddProduct(Bloc);
-                              FirebaseFirestore.instance.collection('products').add({
-                                'name': name,
-                                'price': price,
-                                'quantity': quantity,
-                                'unit': unit,
-                                'category': category,
-                                'description': description,
-                                'labels': labels,
-                                'composition': composition,
-                              }).then((value) {
-                                // recupération de l'id du produit
-                                String productId = value.id;
-                                // enregistremrnt de l'URL de l'image dans un document
-                                FirebaseFirestore.instance.collection('products').doc(productId).update({
-                                  'image': _imageUrl,
+                        // Composition
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Composition',
+                                style: constants.text,
+                              ),
+                              GreenTextFieldWithGreenerBorder(
+                                controller: compositionController,
+                                onSaved: (val) => name = val!,
+                                validator: (value) {
+                                  return null;
+                                },
+                                keyboardType: TextInputType.text,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Description
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Description',
+                                style: constants.text,
+                              ),
+                              TextField(
+                                controller: descriptionController,
+                                maxLines: null,
+                                onChanged: (val) => description = val,
+                                keyboardType: TextInputType.multiline,
+                                decoration: const InputDecoration(
+                                  filled: true,
+                                  fillColor: constants.lightGreen,
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Catégorie
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Catégorie',
+                                style: constants.text,
+                              ),
+                              DropdownButton<String>(
+                                value: selectedCategory,  // Utilisez selectedCategory ici
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedCategory = newValue!;
+                                    category = [newValue];
+                                  });
+                                },
+                                items: [
+                                  'Fruit',
+                                  'Légume',
+                                  'Viande',
+                                  'Œuf',
+                                  'Produit laitier',
+                                  'Boisson',
+                                  'Boisson alcoolisée',
+                                  'Autre',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+
+
+                        // Labels avec menu déroulant à choix multiples
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20.0),
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Labels (choix multiples)',
+                                style: constants.text,
+                              ),
+                              DropdownButton<String>(
+                                value: null,
+                                onChanged: (String? newValue) {
+                                },
+                                items: [
+                                  'Aucun label',
+                                  'Bio',
+                                  'Label rouge',
+                                  'Élevé en plein air',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                          value: labels.contains(value),
+                                          onChanged: (bool? checked) {
+                                            setState(() {
+                                              if (checked != null) {
+                                                if (checked) {
+                                                  labels.add(value);
+                                                } else {
+                                                  labels.remove(value);
+                                                }
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        Text(value),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Bouton Enregistrer
+                        GreenRoundedButton(
+                          onPressed: () {
+                            // Vérifier que les champs obligatoires sont remplis
+                            if (nameController.text.isEmpty || priceController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Veuillez remplir les champs obligatoires : Nom et Prix'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            } else {
+                              // Si tous les champs sont remplis, on enregistre
+                              if (formKey.currentState!.validate()) {
+                                testAddProduct(Bloc);
+                                FirebaseFirestore.instance.collection('products').add({
+                                  'name': name,
+                                  'price': price,
+                                  'quantity': quantity,
+                                  'unit': unit,
+                                  'category': category,
+                                  'description': description,
+                                  'labels': labels,
+                                  'composition': composition,
+                                }).then((value) {
+                                  // recupération de l'id du produit
+                                  String productId = value.id;
+                                  // enregistremrnt de l'URL de l'image dans un document
+                                  FirebaseFirestore.instance.collection('products').doc(productId).update({
+                                    'image': _imageUrl,
+                                  });
+
+                                  // succès
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Produit enregistré avec succès'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                  // échec
+                                }).catchError((error) {
+                                  print('Erreur d\'enregistrement: $error');
                                 });
-
-                                // succès
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Produit enregistré avec succès'),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                                // échec
-                              }).catchError((error) {
-                                print('Erreur d\'enregistrement: $error');
-                              });
+                              }
                             }
-                          }
-                        },
-                        buttonText: 'Enregistrer',
-                      ),
-                    ],
+                          },
+                          buttonText: 'Enregistrer',
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ),
             ],
           ),
         ),
       ),
+    ]
+        )
+        )
     );
   }
 }
