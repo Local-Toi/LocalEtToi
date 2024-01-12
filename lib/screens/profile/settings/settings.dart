@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:local_et_toi/screens/profile/pointOfSale/addProduct.dart';
+import 'package:local_et_toi/screens/futurUpdate.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
-import 'package:local_et_toi/screens/profile/profile.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
-import 'Security.dart';
-import 'about.dart';
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
-import 'cgu.dart';
-
-void main()  {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: SettingsPage(),
-    ),
-  ));
-}
 
 Future<bool> getProducerStatus(AuthenticationBloc bloc) async {
   print('---------');
@@ -37,17 +25,19 @@ Future<bool> getProducerStatus(AuthenticationBloc bloc) async {
 }
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  SettingsPage({super.key});
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool prod = false;
   @override
   Widget build(BuildContext context) {
     final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
     Future<bool> status = getProducerStatus(Bloc);
+
     return Scaffold(
         body: Container(
           clipBehavior: Clip.antiAlias,
@@ -65,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const CGUView(),
+                            builder: (context) => const FuturUpdate(),
                           ),
                         );
                       },
@@ -78,7 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const AboutView(),
+                            builder: (context) => const FuturUpdate(),
                           ),
                         );
                       },

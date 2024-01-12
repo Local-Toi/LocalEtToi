@@ -28,6 +28,12 @@ class _SearchPageState extends State<SearchPage> {
   List<MyProduct> productResults = [];
 
   @override
+  void initState() {
+    searchFirebase("");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: beige,
@@ -86,9 +92,15 @@ class _SearchPageState extends State<SearchPage> {
                   if (index < shopResults.length) {
                     // Display shop card
                     final shop = shopResults[index];
+                    String adrtmp;
+                    if(shop.adresse.length>35) {
+                      adrtmp = shop.adresse.substring(0, 35) + '...';
+                    } else {
+                      adrtmp = shop.adresse;
+                    }
                     return SearchProducerCard(
                       title: shop.name ?? 'N/A',
-                      address: shop.adresse ?? 'N/A',
+                      address: adrtmp ?? 'N/A',
                       description: shop.description ?? 'N/A',
                       schedule: shop.horaires ?? [],
                       phoneNumber: shop.phonenumber ?? 'N/A',
@@ -155,9 +167,9 @@ class _SearchPageState extends State<SearchPage> {
         productResults = productQuerySnapshot.docs.map((productDoc) {
           return MyProduct(
             name: productDoc['name'],
-            price: productDoc['price'],
-            quantity: productDoc['quantity'],
-            unit: productDoc['unit'],
+            price: productDoc['price'].toString(),
+            quantity: "0",
+            unit: "0",
             description: productDoc['description'],
             categories: productDoc['categories'],
             labels: productDoc['labels'],
@@ -169,6 +181,8 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
   }
+
+
 
 }
 
