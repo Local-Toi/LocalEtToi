@@ -6,6 +6,7 @@ import 'package:local_et_toi/screens/profile/pointOfSale/addProduct.dart';
 import 'package:local_et_toi/screens/profile/pointOfSale/create_sellPoint.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/constants.dart';
+import 'package:product_repository/product_repository.dart';
 import 'package:shop_repository/shop_repository.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
@@ -170,41 +171,36 @@ class _SearchProducerCardState extends State<SearchProducerCard> {
     );
   }
 }
-/*
-getProductFromShop(String name) {
+
+
+
+getProductFromShop(String name) async {
   // Search products
-  var id = FirebaseFirestore.instance
-      .collection('shops')
-      .where('name', isEqualTo: name)
-      .getId();
-
     try {
-      DocumentSnapshot shopSnapshot =
-          await FirebaseFirestore.instance.collection('shops').doc().get();
-
-      if (shopSnapshot.exists) {
-        MyShop shop = MyShop(
-          name: shopSnapshot['name'],
-          description: shopSnapshot['description'],
-          adresse: shopSnapshot['adresse'],
-          note: shopSnapshot['note'],
-          horaires: shopSnapshot['horaires'],
-          phonenumber: shopSnapshot['phonenumber'],
-          longitude: shopSnapshot['longitude'],
-          latitude: shopSnapshot['latitude'],
+      QuerySnapshot<Map<String, dynamic>> shopSnapshot =
+          await FirebaseFirestore.instance.collection('product').where("producerId", isEqualTo: name).get();
+      List<MyProduct> productResults = shopSnapshot.docs.map((productDoc) {
+        return MyProduct(
+          name: productDoc['name'],
+          price: productDoc['price'],
+          quantity:"0",
+          unit: "0",
+          description: productDoc['description'],
+          categories: productDoc['categories'],
+          labels: productDoc['labels'],
+          image: productDoc['image'],
+          composition: productDoc['composition'],
+          producerId: productDoc['producerId'],
         );
-        return shop;
-      } else {
-        return null;
-      }
+      }).toList();
+
+      return productResults;
     } catch (e) {
       print('Erreur lors de la récupération du shop associé : $e');
       return null;
     }
-    });
-  });
+}
 
-}*/
 
 
 class ShopDetailsPage extends StatelessWidget {
@@ -225,6 +221,7 @@ class ShopDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future productList = getProductFromShop(shopName);
     return Scaffold(
       backgroundColor: beige,
       appBar: AppBar(
@@ -314,7 +311,7 @@ class ShopDetailsPage extends StatelessWidget {
               ),
             );
           },
-          buttonText: 'addproduct',
+          buttonText: 'Ajouter un produit',
         ),
       ),
     );

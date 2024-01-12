@@ -28,6 +28,12 @@ class _SearchPageState extends State<SearchPage> {
   List<MyProduct> productResults = [];
 
   @override
+  void initState() {
+    searchFirebase("");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: beige,
@@ -161,9 +167,9 @@ class _SearchPageState extends State<SearchPage> {
         productResults = productQuerySnapshot.docs.map((productDoc) {
           return MyProduct(
             name: productDoc['name'],
-            price: productDoc['price'],
-            quantity: productDoc['quantity'],
-            unit: productDoc['unit'],
+            price: productDoc['price'].toString(),
+            quantity: "0",
+            unit: "0",
             description: productDoc['description'],
             categories: productDoc['categories'],
             labels: productDoc['labels'],
