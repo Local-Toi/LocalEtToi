@@ -13,7 +13,9 @@ import '../../../utils/buttons/buttons.dart';
 import '../../../utils/textfields/textfields.dart';
 
 class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+  final String shopName;
+
+  const AddProduct({required this.shopName, super.key});
 
   @override
   _AddProductState createState() => _AddProductState();
@@ -34,7 +36,7 @@ class _AddProductState extends State<AddProduct> {
 
   final formKey = GlobalKey<FormState>();
 
-  testAddProduct(AuthenticationBloc bloc, String name, String price, String quantity, String unit, List<dynamic> category, String? description, List<dynamic> labels, String composition) async {
+  testAddProduct(AuthenticationBloc bloc, String name, String price, String quantity, String unit, List<dynamic> category, String? description, List<dynamic> labels, String composition, String shopName) async {
     MyProduct newProduct = MyProduct(
       name: name,
       price: price,
@@ -45,7 +47,7 @@ class _AddProductState extends State<AddProduct> {
       labels: labels,
       composition: composition,
       image: "",
-      producerId: bloc.state.user!.uid,
+      producerId: shopName,
     );
     await productRepository.addProduct(newProduct);
   }
@@ -413,7 +415,7 @@ class _AddProductState extends State<AddProduct> {
                                         // Si tous les champs sont remplis, on enregistre
                                         if (formKey.currentState!.validate()) {
                                           formKey.currentState!.save();
-                                          testAddProduct(Bloc, name, price, quantity, unit, category, description, labels, composition!);
+                                          testAddProduct(Bloc, name, price, quantity, unit, category, description, labels, composition!, widget.shopName);
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(
                                               content: Text('Produit enregistré avec succès'),
@@ -435,14 +437,4 @@ class _AddProductState extends State<AddProduct> {
                     ),
                   );
   }
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: AddProduct(),
-    ),
-  ));
 }
