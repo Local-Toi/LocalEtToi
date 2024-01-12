@@ -108,19 +108,13 @@ class _AddProductState extends State<AddProduct> {
             child: Stack(
                 children: [
                   const arrow_back.ArrowBack(),
-                  Container(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          // Titre
-                          Container(
-                            margin: const EdgeInsets.only(top: 0.0),
-                            alignment: const FractionalOffset(0.5, 0.5),
-                            child: const Text(
-                              "Ajout d'un produit",
-                              style: constants.titre,
-                            ),
-                          ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 45.0, left: 100.0, right: 20.0),
+                    child: Text(
+                      "Ajout d'un produit",
+                      style: constants.titre,
+                    ),
+                  ),
 
                           // Image picker
                           /*GestureDetector(
@@ -155,7 +149,9 @@ class _AddProductState extends State<AddProduct> {
                               ),
                             ),
                           ),*/
-
+                    Padding(
+                      padding: const EdgeInsets.only(top: 160.0, left: 20.0, right: 20.0),
+                      child:
                           // Formulaire
                           Builder(builder: (context) =>
                               Form(
@@ -433,14 +429,11 @@ class _AddProductState extends State<AddProduct> {
                                 ),
                               ),
                           ),
+                          )
                         ],
                       ),
                     ),
-                  ),
-                ]
-            )
-        )
-    );
+                  );
   }
 }
 
