@@ -28,6 +28,12 @@ class _SearchPageState extends State<SearchPage> {
   List<MyProduct> productResults = [];
 
   @override
+  void initState() {
+    searchFirebase("");
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: beige,
@@ -86,8 +92,7 @@ class _SearchPageState extends State<SearchPage> {
                     String adrtmp;
                     if(shop.adresse.length>35) {
                       adrtmp = shop.adresse.substring(0, 35) + '...';
-                    }
-                    else {
+                    } else {
                       adrtmp = shop.adresse;
                     }
                     return SearchProducerCard(
@@ -159,9 +164,9 @@ class _SearchPageState extends State<SearchPage> {
         productResults = productQuerySnapshot.docs.map((productDoc) {
           return MyProduct(
             name: productDoc['name'],
-            price: productDoc['price'],
-            quantity: productDoc['quantity'],
-            unit: productDoc['unit'],
+            price: productDoc['price'].toString(),
+            quantity: "0",
+            unit: "0",
             description: productDoc['description'],
             categories: productDoc['categories'],
             labels: productDoc['labels'],
@@ -173,6 +178,8 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
   }
+
+
 
 }
 
@@ -593,9 +600,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           color: darkGreen,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                          child: Text(
-                            widget.labels.join(','), style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600),
-                          ),
+                        child: Text(
+                          widget.labels.join(','), style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ],
                   ),
