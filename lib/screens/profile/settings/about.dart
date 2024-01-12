@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 
 void main()  {
   runApp(const MaterialApp(
@@ -14,11 +15,13 @@ class AboutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
-        body: ListView(children: const [
-          Text("A propos" , style: constants.text),
-        ]),
+        body: Stack (
+          children: [
+            arrow_back.ArrowBack(),
+          ],
+        ),
       ),
     );
   }

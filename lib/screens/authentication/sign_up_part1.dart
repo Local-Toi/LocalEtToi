@@ -77,7 +77,7 @@ class _SignUpPageState1 extends State<SignUpPage1> {
                                   identifiant: identifiant,
                                   nom: nom,
                                   prenom: prenom,
-                                  email: email,
+                                  email: email.toLowerCase(),
                                 ),
                               ),
                             );

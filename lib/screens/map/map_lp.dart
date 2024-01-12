@@ -6,6 +6,7 @@ import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart'
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import 'map_filters.dart';
 
@@ -43,12 +44,15 @@ class MapLPState extends StatefulWidget {
 }
 
 class MapLP extends State<MapLPState> {
-  final controller = MapController.withUserPosition(
-    trackUserLocation: const UserTrackingOption(
-      enableTracking: true,
-      unFollowUser: false,
-    ),
-  );
+  late MapController controller;
+  void initializeStateController() {
+    controller = MapController.withUserPosition(
+      trackUserLocation: const UserTrackingOption(
+        enableTracking: true,
+        unFollowUser: false,
+      ),
+    );
+}
 
   TextEditingController searchController = TextEditingController();
 
@@ -67,7 +71,7 @@ class MapLP extends State<MapLPState> {
 
       print("LES SHOPS $shops");
 
-      customMarkers = shops.map((shop) {
+      customMarkers = await shops.map((shop) {
         return MyCustomMarker(
           latitude: shop.latitude,
           longitude: shop.longitude,
@@ -80,7 +84,6 @@ class MapLP extends State<MapLPState> {
           markerId: '',
         );
       }).toList();
-
       _addMarkersToMap();
     } catch (e) {
       print('Error fetching shops: $e $customMarkers');
@@ -89,11 +92,12 @@ class MapLP extends State<MapLPState> {
 
   void _addMarkersToMap() async {
     for (MyCustomMarker marker in customMarkers) {
+      print("MARKER $marker");
       await controller.addMarker(
         GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
         markerIcon: const MarkerIcon(
           icon: Icon(
-            Icons.pin_drop,
+            Icons.location_on,
             color: darkGreen,
             size: 52,
           ),
@@ -104,6 +108,9 @@ class MapLP extends State<MapLPState> {
 
   void _checkMarkerTap(GeoPoint tapLocation) {
     debugPrintGestureArenaDiagnostics = true;
+
+    List<MyCustomMarker> nearbyMarkers = [];
+
     for (MyCustomMarker marker in customMarkers) {
       double distance = calculateDistance(
         tapLocation.latitude,
@@ -112,14 +119,31 @@ class MapLP extends State<MapLPState> {
         marker.longitude,
       );
 
-      if (distance < 50) {
-        print("Marker tapped: ${marker.shopName}");
-        setState(() {
-          selectedMarker = marker;
-          isPanelOpen = true;
-        });
-        _panelController.open();
+      if (distance < 10.0) {
+        nearbyMarkers.add(marker);
       }
+    }
+
+    if (nearbyMarkers.isNotEmpty) {
+      MyCustomMarker closestMarker = nearbyMarkers.reduce((a, b) =>
+      calculateDistance(
+          tapLocation.latitude,
+          tapLocation.longitude,
+          a.latitude,
+          a.longitude) <
+          calculateDistance(
+              tapLocation.latitude,
+              tapLocation.longitude,
+              b.latitude,
+              b.longitude)
+          ? a
+          : b);
+
+      setState(() {
+        selectedMarker = closestMarker;
+        isPanelOpen = true;
+      });
+      _panelController.open();
     }
   }
 
@@ -152,7 +176,9 @@ class MapLP extends State<MapLPState> {
   @override
   void initState() {
     super.initState();
+    initializeStateController();
     _fetchShopsFromFirebase();
+    print("CUSTOM MARKERS $customMarkers");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_panelController.isPanelAnimating) {
         _panelController.close();
@@ -184,46 +210,13 @@ class MapLP extends State<MapLPState> {
                 child: AppBar(
                   backgroundColor: Colors.white,
                   elevation: 0,
-                  title: Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.search,
-                          color: Colors.black54,
-                        ),
-                        const SizedBox(width: 8.0),
-                        Expanded(
-                          child: TextField(
-                            controller: searchController,
-                            decoration: const InputDecoration(
-                              hintText: 'Rechercher...',
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: Colors.black54),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.tune),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const MapFiltersState(),
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
+                  title: const Text(
+                    'Carte',
+                    style: TextStyle(fontFamily: 'CinzelDecorative', fontSize: 24, color: darkGreen),
                   ),
+                  )
                 ),
               ),
-            ),
             Positioned(
               top: 50,
               bottom: 0,
@@ -303,20 +296,6 @@ class MapLP extends State<MapLPState> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  _panelController.close();
-                  setState(() {
-                    isPanelOpen = false;
-                  });
-                },
-              ),
-            ],
-          ),
           if (selectedMarker != null)
             Row(
               children: [

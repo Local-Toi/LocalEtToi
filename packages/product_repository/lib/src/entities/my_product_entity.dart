@@ -2,7 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class MyProductEntity extends Equatable {
   final String? name;
-  final double? price;
+  final String? price;
+  final String? quantity;
+  final String? unit;
   final String? description;
   final List<dynamic>? categories;
   final List<dynamic>? labels;
@@ -13,11 +15,13 @@ class MyProductEntity extends Equatable {
   const MyProductEntity({
     required this.name,
     required this.price,
-    required this.description,
+    this.quantity,
+    required this.unit,
+    this.description,
     required this.categories,
     required this.labels,
-    required this.composition,
-    required this.image,
+    this.composition,
+    this.image,
     required this.producerId,
   });
 
@@ -25,6 +29,8 @@ class MyProductEntity extends Equatable {
     return {
       'name': name,
       'price': price,
+      'quantity': quantity,
+      'unit': unit,
       'description': description,
       'categories': categories,
       'labels': labels,
@@ -37,7 +43,9 @@ class MyProductEntity extends Equatable {
   static MyProductEntity fromDocument(Map<String, Object?> doc) {
     return MyProductEntity(
       name: doc['name'] as String?,
-      price: doc['price'] as double?,
+      price: doc['price'] as String?,
+      quantity: doc['quantity'] as String?,
+      unit: doc['unit'] as String?,
       description: doc['description'] as String?,
       categories: doc['categories'] as List<dynamic>?,
       labels: doc['labels'] as List<dynamic>?,
@@ -48,10 +56,10 @@ class MyProductEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [name, price, description, categories, labels, composition, image, producerId];
+  List<Object?> get props => [name, price, quantity, unit, description, categories, labels, composition, image, producerId];
 
   @override
   String toString() {
-    return 'UserEntity { name: $name, price: $price, description: $description, categories: $categories, labels: $labels, composition: $composition, image: $image, producerId: $producerId }';
+    return 'UserEntity { name: $name, price: $price, quantity: $quantity, unit: $unit, description: $description, categories: $categories, labels: $labels, composition: $composition, image: $image, producerId: $producerId }';
   }
 }

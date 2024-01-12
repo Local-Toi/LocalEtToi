@@ -35,7 +35,6 @@ dependencies:
   flutter:
     sdk: flutter
   carousel_slider: ^4.0.0
-  image_picker: ^1.0.6
   sqflite: ^2.3.0
   flutter_bloc: ^8.1.1
   formz: ^0.6.0
@@ -54,22 +53,23 @@ dependencies:
   json_annotation: ^4.8.1
   path: ^1.8.3
   dio: ^5.3.3
-  flutter_login: ^5.0.0
+  flutter_login: ^4.2.1
   google_fonts: ^6.1.0
 
   firebase_auth: ^4.14.0
   cloud_firestore: ^4.13.1
   firebase_core: ^2.23.0
-  firebase_storage: ^11.6.0
 
+  firebase_storage: ^11.6.0
   email_validator: ^2.1.16
   flutter_pw_validator: ^1.6.0
 
   flutter_osm_plugin: ^0.70.3
   geopoint: ^1.0.0
-  image_field: ^0.0.8
-
+  geocoding: ^2.1.1
   sliding_up_panel2: ^3.3.0+1
+
+  image_picker: ^1.0.7
 
 
 dev_dependencies:

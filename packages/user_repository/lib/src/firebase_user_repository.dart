@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,12 +15,19 @@ class FirebaseUserRepository implements UserRepository {
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
   @override
-  Future<void> signIn(String email, String password) async {
+  Future<dynamic> signIn(String email, String password) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email.toLowerCase(),
         password: password,
       );
+      Completer c = new Completer();
+      usersCollection.where('email', isEqualTo: email).get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          c.complete(doc);
+        });
+      });;
+      return c.future;
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -43,26 +51,30 @@ class FirebaseUserRepository implements UserRepository {
   ) async {
     try {
       UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
+        email: email.toLowerCase(),
         password: password,
       );
 
       MyUser myUser = MyUser(
         id: user.user!.uid,
         identifiant: '',
-        email: email,
+        email: email.toLowerCase(),
         firstName: '',
         lastName: '',
         isProducer: false,
+        emailPro: '',
+        urlVerification: '',
       );
 
       myUser = myUser.copyWith(
         id: user.user!.uid,
         identifiant: '',
-        email: email,
+        email: email.toLowerCase(),
         firstName: '',
         lastName: '',
         isProducer: false,
+        emailPro: '',
+        urlVerification: '',
       );
 
       return myUser;
@@ -82,14 +94,54 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
-  @override
-  Future<MyUser> getUser(String userId) async {
+  Future<dynamic> getUserTest(String email) async {
     try {
-      return usersCollection.doc(userId).get().then(
-            (value) => MyUser.fromEntity(
-              MyUserEntity.fromDocument(value.data()!),
-            ),
-          );
+      print("here 1");
+      print(email);
+      Completer c = new Completer();
+      usersCollection.where('email'.toLowerCase(), isEqualTo: email).get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          print("IDHYGGG");
+          c.complete(doc);
+        });
+      });;
+      print("here 2");
+      return c.future;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> setUserToProducer(String email, String emailPro, String URL) async {
+    try {
+      print('WHERE THE FUCK AM I');
+      QuerySnapshot querySnapshot = await usersCollection.where('email'.toLowerCase(), isEqualTo: email).get();
+      print(querySnapshot);
+      if (querySnapshot.docs.isNotEmpty) {
+        String userId = querySnapshot.docs.first.id;
+        await usersCollection.doc(userId).update({
+          'isProducer': true,
+          'emailPro': emailPro,
+          'urlVerification': URL,
+        });
+        print('OK -> OUT');
+      } else {
+        throw Exception('Utilisateur non trouvé avec l\'email spécifié');
+      }
+    } catch (e) {
+      print('ERROR ????');
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+
+
+  Future<String> getCurrentUserId() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      return user?.uid ?? '';
     } catch (e) {
       log(e.toString());
       rethrow;

@@ -98,7 +98,7 @@ class _SearchPageState extends State<SearchPage> {
                     final product = productResults[index - shopResults.length];
                     return SearchProductCard(
                       title: product.name ?? 'N/A',
-                      price: product.price ?? 0,
+                      price: product.price ?? 'N/A',
                       description: product.description ?? 'N/A',
                       categories: product.categories ?? [],
                       labels: product.labels ?? [],
@@ -132,11 +132,12 @@ class _SearchPageState extends State<SearchPage> {
             name: shopDoc['name'],
             description: shopDoc['description'],
             adresse: shopDoc['adresse'],
-            note: shopDoc['note'],
+            note: 0,
             horaires: shopDoc['horaires'],
             phonenumber: shopDoc['phonenumber'],
             longitude: shopDoc['longitude'],
             latitude: shopDoc['latitude'],
+            id: shopDoc['id'],
           );
         }).toList();
       });
@@ -155,6 +156,8 @@ class _SearchPageState extends State<SearchPage> {
           return MyProduct(
             name: productDoc['name'],
             price: productDoc['price'],
+            quantity: productDoc['quantity'],
+            unit: productDoc['unit'],
             description: productDoc['description'],
             categories: productDoc['categories'],
             labels: productDoc['labels'],
@@ -245,7 +248,7 @@ class _SearchProducerCardState extends State<SearchProducerCard> {
 
 class SearchProductCard extends StatefulWidget {
   final String title;
-  final double price;
+  final String price;
   final String description;
   final List<dynamic> categories;
   final List<dynamic> labels;
@@ -288,6 +291,7 @@ class _SearchProductCardState extends State<SearchProductCard> {
           phonenumber: shopSnapshot['phonenumber'],
           longitude: shopSnapshot['longitude'],
           latitude: shopSnapshot['latitude'],
+          id: shopSnapshot['id'],
         );
         return shop;
       } else {
@@ -479,7 +483,7 @@ class ShopDetailsPage extends StatelessWidget {
 
 class ProductDetailsPage extends StatefulWidget {
   final String name;
-  final double price;
+  final String price;
   final String description;
   final String composition;
   final List<dynamic> labels;

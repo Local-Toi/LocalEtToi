@@ -12,6 +12,7 @@ class MyShop extends Equatable {
     required this.adresse,
     this.note,
     this.horaires,
+    required this.id,
   });
 
   final double longitude;
@@ -22,6 +23,7 @@ class MyShop extends Equatable {
   final String adresse;
   final double? note;
   final List<dynamic>? horaires;
+  final String id;
 
   static const empty = MyShop(
     longitude: 0.0,
@@ -32,6 +34,7 @@ class MyShop extends Equatable {
     adresse: '',
     note: 0.0,
     horaires: [],
+    id: '',
   );
 
   /// Creates a copy of the current [MyShop] with its properties
@@ -45,6 +48,7 @@ class MyShop extends Equatable {
     String? adresse,
     double? note,
     List<dynamic>? horaires,
+    String? id,
   }) {
     return MyShop(
       longitude: longitude ?? this.longitude,
@@ -55,6 +59,7 @@ class MyShop extends Equatable {
       adresse: adresse ?? this.adresse,
       note: note ?? this.note,
       horaires: horaires ?? this.horaires,
+      id: id ?? this.id,
     );
   }
 
@@ -72,6 +77,7 @@ class MyShop extends Equatable {
       adresse: adresse,
       note: note,
       horaires: horaires,
+      id: id,
     );
   }
 
@@ -86,9 +92,10 @@ class MyShop extends Equatable {
       adresse: entity.adresse,
       note: entity.note,
       horaires: entity.horaires,
+      id: entity.id,
     );
   }
 
   @override
-  List<Object> get props => [longitude, latitude, name ?? '', description ?? '', phonenumber ?? '', adresse, note ?? 0.0, horaires ?? []];
+  List<Object> get props => [longitude, latitude, name ?? '', description ?? '', phonenumber ?? '', adresse, note ?? 0.0, horaires ?? [], id ?? ''];
 }
