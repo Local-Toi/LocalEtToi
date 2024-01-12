@@ -15,7 +15,7 @@ class ArrowBack extends StatelessWidget{
         icon: const Icon(Icons.arrow_back),
         iconSize: 35,
         onPressed: () {
-          Navigator.of(context).pop();
+          Navigator.pop(context);
         },
       ),
     );

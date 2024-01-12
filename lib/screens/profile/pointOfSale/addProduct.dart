@@ -434,13 +434,3 @@ class _AddProductState extends State<AddProduct> {
                   );
   }
 }
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: AddProduct(),
-    ),
-  ));
-}
