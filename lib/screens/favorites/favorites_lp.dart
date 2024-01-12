@@ -15,7 +15,7 @@ class FavoritesLP extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseFavoriteRepository favoriteRepository = FirebaseFavoriteRepository();
 
-    List<String> productFavorites = favoriteRepository.getFavoritesData();
+    //List<String> productFavorites = favoriteRepository.getFavoritesData();
 
     return DefaultTabController(
       length: 2,
@@ -49,8 +49,7 @@ class FavoritesLP extends StatelessWidget {
       ),
     );
   }
-}
-*/
+}*/
 
 class FavoritesLP extends StatelessWidget {
   const FavoritesLP({Key? key});
