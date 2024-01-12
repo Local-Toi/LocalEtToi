@@ -6,8 +6,8 @@ class MyProduct extends Equatable {
   const MyProduct({required this.name, required this.price, this.quantity, required this.unit, this.description, required this.categories, required this.labels, this.composition, this.image, required this.producerId});
 
   final String? name;
-  final double? price;
-  final int? quantity;
+  final String? price;
+  final String? quantity;
   final String? unit;
   final String? description;
   final List<dynamic>? categories;
@@ -18,8 +18,8 @@ class MyProduct extends Equatable {
 
   static const empty = MyProduct(
     name: '',
-    price: 0,
-    quantity: 0,
+    price: "",
+    quantity: "",
     unit: '',
     description: '',
     categories: [],
@@ -31,8 +31,8 @@ class MyProduct extends Equatable {
 
   MyProduct copyWith({
     String? name,
-    double? price,
-    int? quantity,
+    String? price,
+    String? quantity,
     String? unit,
     String? description,
     List<dynamic>? categories,

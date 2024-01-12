@@ -98,7 +98,7 @@ class _SearchPageState extends State<SearchPage> {
                     final product = productResults[index - shopResults.length];
                     return SearchProductCard(
                       title: product.name ?? 'N/A',
-                      price: product.price ?? 0,
+                      price: product.price ?? 'N/A',
                       description: product.description ?? 'N/A',
                       categories: product.categories ?? [],
                       labels: product.labels ?? [],
@@ -248,7 +248,7 @@ class _SearchProducerCardState extends State<SearchProducerCard> {
 
 class SearchProductCard extends StatefulWidget {
   final String title;
-  final double price;
+  final String price;
   final String description;
   final List<dynamic> categories;
   final List<dynamic> labels;
@@ -483,7 +483,7 @@ class ShopDetailsPage extends StatelessWidget {
 
 class ProductDetailsPage extends StatefulWidget {
   final String name;
-  final double price;
+  final String price;
   final String description;
   final String composition;
   final List<dynamic> labels;

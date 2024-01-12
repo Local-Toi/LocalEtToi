@@ -6,6 +6,7 @@ import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart'
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
 import 'package:sliding_up_panel2/sliding_up_panel2.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import 'map_filters.dart';
 
@@ -96,7 +97,7 @@ class MapLP extends State<MapLPState> {
         GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
         markerIcon: const MarkerIcon(
           icon: Icon(
-            Icons.pin_drop,
+            Icons.location_on,
             color: darkGreen,
             size: 52,
           ),
@@ -209,46 +210,13 @@ class MapLP extends State<MapLPState> {
                 child: AppBar(
                   backgroundColor: Colors.white,
                   elevation: 0,
-                  title: Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.search,
-                          color: Colors.black54,
-                        ),
-                        const SizedBox(width: 8.0),
-                        Expanded(
-                          child: TextField(
-                            controller: searchController,
-                            decoration: const InputDecoration(
-                              hintText: 'Rechercher...',
-                              border: InputBorder.none,
-                              hintStyle: TextStyle(color: Colors.black54),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.tune),
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const MapFiltersState(),
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
+                  title: const Text(
+                    'Carte',
+                    style: TextStyle(fontFamily: 'CinzelDecorative', fontSize: 24, color: darkGreen),
                   ),
+                  )
                 ),
               ),
-            ),
             Positioned(
               top: 50,
               bottom: 0,
@@ -328,20 +296,6 @@ class MapLP extends State<MapLPState> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  _panelController.close();
-                  setState(() {
-                    isPanelOpen = false;
-                  });
-                },
-              ),
-            ],
-          ),
           if (selectedMarker != null)
             Row(
               children: [

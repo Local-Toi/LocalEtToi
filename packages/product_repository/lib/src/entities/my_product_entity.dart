@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 
 class MyProductEntity extends Equatable {
   final String? name;
-  final double? price;
-  final int? quantity;
+  final String? price;
+  final String? quantity;
   final String? unit;
   final String? description;
   final List<dynamic>? categories;
@@ -43,8 +43,8 @@ class MyProductEntity extends Equatable {
   static MyProductEntity fromDocument(Map<String, Object?> doc) {
     return MyProductEntity(
       name: doc['name'] as String?,
-      price: doc['price'] as double?,
-      quantity: doc['quantity'] as int?,
+      price: doc['price'] as String?,
+      quantity: doc['quantity'] as String?,
       unit: doc['unit'] as String?,
       description: doc['description'] as String?,
       categories: doc['categories'] as List<dynamic>?,

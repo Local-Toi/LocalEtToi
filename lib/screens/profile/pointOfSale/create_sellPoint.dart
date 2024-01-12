@@ -73,23 +73,20 @@ class _SellPointState extends State<SellPoint> {
       body: Container(
         clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(color: constants.beige),
-        child: SingleChildScrollView(
-          child: Stack(
+        child: Stack(
             children: [
-              Container(
-                alignment : const FractionalOffset(0.01, 0.03),
-                child: const arrow_back.ArrowBack(),
-              ),
-
+              const arrow_back.ArrowBack(),
               // Titre
               const Padding(
-                padding: EdgeInsets.only(top: 45.0),
+                padding: EdgeInsets.only(top: 45.0, left: 100.0, right: 20.0),
                 child: Text(
                   "Ajout d'un point de vente",
                   style: constants.titre,
                 ),
               ),
-
+              Padding(
+                padding: const EdgeInsets.only(top: 160.0, left: 20.0, right: 20.0),
+                child:
               // Formulaire
               Builder(builder: (context) =>
                   Form(
@@ -206,6 +203,8 @@ class _SellPointState extends State<SellPoint> {
                           )
                       ),
                       // Bouton Enregistrer
+                      Padding(padding: const EdgeInsets.only(top: 20.0),
+                      child:
                       GreenRoundedButton(
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
@@ -224,15 +223,16 @@ class _SellPointState extends State<SellPoint> {
                         },
                         buttonText: 'Enregistrer',
                       ),
+                      )
                     ],
                   ),
                 ),
               ),
+              ),
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
 

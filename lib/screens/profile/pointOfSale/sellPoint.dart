@@ -155,17 +155,6 @@ class _SearchProducerCardState extends State<SearchProducerCard> {
               Text(widget.address, style: textMedium),
             ],
           ),
-          trailing: IconButton(
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite ? red : null,
-            ),
-            onPressed: () {
-              setState(() {
-                isFavorite = !isFavorite;
-              });
-            },
-          ),
         ),
       ),
     );
