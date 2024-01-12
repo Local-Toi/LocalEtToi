@@ -86,9 +86,15 @@ class _SearchPageState extends State<SearchPage> {
                   if (index < shopResults.length) {
                     // Display shop card
                     final shop = shopResults[index];
+                    String adrtmp;
+                    if(shop.adresse.length>35) {
+                      adrtmp = shop.adresse.substring(0, 35) + '...';
+                    } else {
+                      adrtmp = shop.adresse;
+                    }
                     return SearchProducerCard(
                       title: shop.name ?? 'N/A',
-                      address: shop.adresse ?? 'N/A',
+                      address: adrtmp ?? 'N/A',
                       description: shop.description ?? 'N/A',
                       schedule: shop.horaires ?? [],
                       phoneNumber: shop.phonenumber ?? 'N/A',
@@ -169,6 +175,8 @@ class _SearchPageState extends State<SearchPage> {
       });
     });
   }
+
+
 
 }
 
