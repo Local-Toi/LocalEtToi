@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorites_repository/favorite_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:user_repository/user_repository.dart';
 
 class FavoritesProducers extends StatelessWidget {
   final List<Map<String, dynamic>> favorites;
@@ -39,27 +41,12 @@ class FavoriteWidgetProducer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(id.id);
-
     return Card(
       child: SizedBox(
         height: 100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Placeholder(
-                  fallbackHeight: 100,
-                  fallbackWidth: 100,
-                ),
-                Icon(
-                  Icons.favorite,
-                  color: Colors.red, // Couleur du cœur (à adapter)
-                ),
-              ],
-            ),
             FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               future: FirebaseFirestore.instance.collection('shops').doc(id.id).get(),
               builder: (context, snapshot) {
@@ -75,29 +62,48 @@ class FavoriteWidgetProducer extends StatelessWidget {
                 Map<String, dynamic> data = snapshot.data!.data()!;
 
                 // Utiliser les données pour afficher les informations sur le produit
-                return Column(
+                return Row(
                   children: [
-                    Row(
+                    Stack(
+                      alignment: Alignment.topRight,
                       children: [
-                        Text(data['name'] ?? 'Nom du shop manquant', style: constants.titre),
+                        Placeholder(
+                          fallbackHeight: 100,
+                          fallbackWidth: 100,
+                        ),
+                        IconButton(
+                            onPressed: () => {
+                                  // delete favorite from
+                                  print('delete favorite from user'),
+                                },
+                            icon: Icon(Icons.favorite, color: constants.red)),
                       ],
                     ),
-                    Row(
+                    Column(
                       children: [
-                        Icon(Icons.location_on, color: constants.grey85),
-                        Text(data['adresse'] ?? 'Adresse du shop manquante'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        // description
-                        Text(data['description'] ?? 'Description du shop manquante'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        // note (numéro type int)
-                        //Text(data['note'] ?? 'Note du shop manquante'),
+                        Row(
+                          children: [
+                            Text(data['name'] ?? 'Nom du shop manquant', style: constants.titre),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.location_on, color: constants.grey85),
+                            Text(data['adresse'] ?? 'Adresse du shop manquante'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            // description
+                            Text(data['description'] ?? 'Description du shop manquante'),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            // note (numéro type int)
+                            //Text(data['note'] ?? 'Note du shop manquante'),
+                          ],
+                        ),
                       ],
                     ),
                   ],
