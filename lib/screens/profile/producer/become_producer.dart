@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
-import 'package:local_et_toi/screens/profile/profile.dart';
+import 'package:local_et_toi/screens/discover/discover_lp.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'package:local_et_toi/utils/constants.dart' as constants;
@@ -119,11 +119,13 @@ class _becomeProducerState extends State<becomeProducer> {
                         onPressed: () {
                           if (_formKey.currentState?.validate() == true) {
                             updateStatus(Bloc, emailpro, url);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const ProfilPage(),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Vous êtes devenu producteur, quittez et revenez dans "profil" pour pouvoir consulter vos points de vente'),
+                                duration: Duration(seconds: 4),
                               ),
                             );
+                            Navigator.pop(context);
                           }
                         },
                         buttonText: 'Enregistrer',

@@ -306,7 +306,6 @@ class ShopDetailsPage extends StatelessWidget {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => AddProduct(
-                      shopName: shopName
                 ),
               ),
             );

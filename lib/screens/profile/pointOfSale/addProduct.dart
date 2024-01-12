@@ -13,9 +13,7 @@ import '../../../utils/buttons/buttons.dart';
 import '../../../utils/textfields/textfields.dart';
 
 class AddProduct extends StatefulWidget {
-  final String shopName;
-
-  const AddProduct({required this.shopName, super.key});
+  const AddProduct({super.key});
 
   @override
   _AddProductState createState() => _AddProductState();
@@ -36,7 +34,7 @@ class _AddProductState extends State<AddProduct> {
 
   final formKey = GlobalKey<FormState>();
 
-  testAddProduct(AuthenticationBloc bloc, String name, String price, String quantity, String unit, List<dynamic> category, String? description, List<dynamic> labels, String composition, String shopName) async {
+  testAddProduct(AuthenticationBloc bloc, String name, String price, String quantity, String unit, List<dynamic> category, String? description, List<dynamic> labels, String composition) async {
     MyProduct newProduct = MyProduct(
       name: name,
       price: price,
@@ -47,7 +45,7 @@ class _AddProductState extends State<AddProduct> {
       labels: labels,
       composition: composition,
       image: "",
-      producerId: shopName,
+      producerId: bloc.state.user!.uid,
     );
     await productRepository.addProduct(newProduct);
   }
@@ -415,7 +413,7 @@ class _AddProductState extends State<AddProduct> {
                                         // Si tous les champs sont remplis, on enregistre
                                         if (formKey.currentState!.validate()) {
                                           formKey.currentState!.save();
-                                          testAddProduct(Bloc, name, price, quantity, unit, category, description, labels, composition!, widget.shopName);
+                                          testAddProduct(Bloc, name, price, quantity, unit, category, description, labels, composition!);
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             const SnackBar(
                                               content: Text('Produit enregistré avec succès'),
