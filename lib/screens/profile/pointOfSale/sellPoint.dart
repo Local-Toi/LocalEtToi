@@ -7,6 +7,8 @@ import 'package:local_et_toi/screens/profile/pointOfSale/create_sellPoint.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/constants.dart';
 import 'package:shop_repository/shop_repository.dart';
+import 'package:local_et_toi/utils/constants.dart' as constants;
+import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 
 void main()  {
   runApp(const MaterialApp(
@@ -31,9 +33,14 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
     final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
     searchFirebase(Bloc.state.user!.uid);
     return Scaffold(
-      backgroundColor: beige,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        body: Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: const BoxDecoration(color: constants.beige),
+          child: Stack(
+              children: [
+                  const arrow_back.ArrowBack(),
+                Padding(
+        padding: const EdgeInsets.only(top: 100.0, left: 16.0, right: 16.0, bottom: 16.0),
         child: Column(
           children: [
             Expanded(
@@ -67,6 +74,9 @@ class _pointOfSalePageState extends State<pointOfSalePage> {
           ],
         ),
       ),
+    ]
+    )
+    )
     );
   }
 
