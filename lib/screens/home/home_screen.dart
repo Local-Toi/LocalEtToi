@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                 child: GreenRoundedButton(
                   onPressed: () {
                     // BlocProvider.of<SignInBloc>(context).add(SignInEvent());
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => BlocProvider<SignInBloc>(
                           create: (context) => SignInBloc(
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
               child: SizedBox(
                 child: GreenRoundedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const SignUpPage1(),
                       ),

@@ -48,11 +48,7 @@ class _becomeProducerState extends State<becomeProducer> {
                       children: [
                       Container(
                         alignment : const FractionalOffset(0.01, 0.03),
-                        child: arrow_back.ArrowBack(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
+                        child: arrow_back.ArrowBack(),
                       ),
                       Container(
                         alignment : const FractionalOffset(0.05, 0.05),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:local_et_toi/screens/profile/pointOfSale/addProduct.dart';
 import 'package:local_et_toi/screens/profile/pointOfSale/create_sellPoint.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/constants.dart';
@@ -277,6 +278,7 @@ class ShopDetailsPage extends StatelessWidget {
               Text("Sam : ${schedule[5]}", style: text,),
               Text("Dim : ${schedule[6]}", style: text,),
 
+
               const SizedBox(height: 16.0),
               Row(
                 children: [
@@ -290,14 +292,31 @@ class ShopDetailsPage extends StatelessWidget {
                       color: darkGreen,
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Text(phoneNumber, style: const TextStyle(color: Colors.white),),),
+                    child: Text(
+                      phoneNumber,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
-
             ],
           ),
         ),
       ),
+      floatingActionButton: Container(
+        alignment: const FractionalOffset(0.5, 0.95),
+        child: GreenRoundedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const AddProduct(),
+              ),
+            );
+          },
+          buttonText: 'addproduct',
+        ),
+      ),
     );
+
   }
 }

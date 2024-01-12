@@ -15,17 +15,14 @@ class CGUView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
-        body:               Container(
-          alignment : const FractionalOffset(0.01, 0.03),
-          child: arrow_back.ArrowBack(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+        body: Stack (
+            children: [
+              arrow_back.ArrowBack(),
+            ],
           ),
         ),
-      ),
-    );
+      );
   }
 }

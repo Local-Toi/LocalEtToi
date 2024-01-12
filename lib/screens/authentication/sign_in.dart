@@ -35,17 +35,6 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
     loginResponse = LoginResponse(this);
   }
 
-  /**
-   * This function is used to navigate to the home screen
-   */
-  get onPressed => () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
-      };
-
   void _toggleObscured() {
     setState(() {
       _obscured = !_obscured;
@@ -73,7 +62,7 @@ class _SignInPageState extends State<SignInPage> implements LoginCallBack {
           child: Stack(
             children: [
               //arrow back
-              arrow_back.ArrowBack(onPressed: onPressed),
+              const arrow_back.ArrowBack(),
 
               //Title
               const Positioned(

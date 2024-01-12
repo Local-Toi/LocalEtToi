@@ -70,7 +70,7 @@ class MapLP extends State<MapLPState> {
 
       print("LES SHOPS $shops");
 
-      customMarkers = shops.map((shop) {
+      customMarkers = await shops.map((shop) {
         return MyCustomMarker(
           latitude: shop.latitude,
           longitude: shop.longitude,
@@ -83,6 +83,7 @@ class MapLP extends State<MapLPState> {
           markerId: '',
         );
       }).toList();
+      _addMarkersToMap();
     } catch (e) {
       print('Error fetching shops: $e $customMarkers');
     }
@@ -90,6 +91,7 @@ class MapLP extends State<MapLPState> {
 
   void _addMarkersToMap() async {
     for (MyCustomMarker marker in customMarkers) {
+      print("MARKER $marker");
       await controller.addMarker(
         GeoPoint(latitude: marker.latitude, longitude: marker.longitude),
         markerIcon: const MarkerIcon(
@@ -175,7 +177,7 @@ class MapLP extends State<MapLPState> {
     super.initState();
     initializeStateController();
     _fetchShopsFromFirebase();
-    _addMarkersToMap();
+    print("CUSTOM MARKERS $customMarkers");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_panelController.isPanelAnimating) {
         _panelController.close();

@@ -56,7 +56,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     child: IconButton(
                       icon: const Icon(Icons.settings, size : 50),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const SettingsPage(),
                           ),
@@ -72,7 +72,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       alignment : const FractionalOffset(0.5, 0.45),
                       child: GreenRoundedButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const InformationPage(),
                               ),
@@ -85,7 +85,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       alignment : const FractionalOffset(0.5, 0.55),
                       child: GreenRoundedButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const FuturUpdate(),
                               ),
@@ -106,7 +106,7 @@ class _ProfilPageState extends State<ProfilPage> {
                         } else if (snapshot.data == true) {
                           return GreenRoundedButton(
                             onPressed: () {
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const pointOfSalePage(),
                                 ),

@@ -78,15 +78,7 @@ class _SellPointState extends State<SellPoint> {
             children: [
               Container(
                 alignment : const FractionalOffset(0.01, 0.03),
-                child: arrow_back.ArrowBack(
-                  onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const pointOfSalePage(),
-                        ),
-                      );
-                    },
-                ),
+                child: const arrow_back.ArrowBack(),
               ),
 
               // Titre

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/screens/profile/pointOfSale/addProduct.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
+import 'package:local_et_toi/screens/profile/profile.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'Security.dart';
@@ -55,34 +56,17 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               Container(
                 alignment : const FractionalOffset(0.01, 0.03),
-                child: arrow_back.ArrowBack(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
+                child: const arrow_back.ArrowBack(),
               ),
               Container(
                   alignment : const FractionalOffset(0.5, 0.09),
                       child: Image.asset("assets/images/logo1.png", scale: 1)
               ),
               Container(
-                  alignment : const FractionalOffset(0.5, 0.95),
-                child: GreenRoundedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const AddProduct(),
-                        ),
-                      );
-                    },
-                    buttonText: 'addproduct'
-                    )
-              ),
-              Container(
                   alignment : const FractionalOffset(0.5, 0.45),
                   child: GreenRoundedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const CGUView(),
                           ),
@@ -95,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignment : const FractionalOffset(0.5, 0.55),
                   child: GreenRoundedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const AboutView(),
                           ),
@@ -116,7 +100,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     } else if (snapshot.data == false) {
                       return GreenRoundedButton(
                           onPressed: () {
-                            Navigator.of(context).pushReplacement(
+                            Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (
                                     context) => const becomeProducer(),

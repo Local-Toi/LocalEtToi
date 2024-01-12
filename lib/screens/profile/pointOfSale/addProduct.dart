@@ -91,6 +91,12 @@ class _AddProductState extends State<AddProduct> {
   void initState() {
     super.initState();
     unit = 'g';
+    category = [];
+    name = '';
+    price = 0;
+    quantity = 0;
+    description = '';
+    composition = '';
     selectedCategory = 'Fruit'; // Initialize with a default category
     nameController = TextEditingController();
     priceController = TextEditingController();
@@ -156,9 +162,9 @@ class _AddProductState extends State<AddProduct> {
               // Formulaire
                 Builder(builder: (context) =>
                   Form(
-                  key: GlobalKey<FormState>(),
-                  child: Column(
-                    children: [
+                    key: GlobalKey<FormState>(),
+                    child: Column(
+                      children: [
 
                       // Nom produit
                       Container(

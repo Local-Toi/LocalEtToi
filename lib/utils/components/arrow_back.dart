@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import '../../screens/home/home_screen.dart';
 
 class ArrowBack extends StatelessWidget{
-  final VoidCallback onPressed;
 
   const ArrowBack({
-    required this.onPressed,
     super.key,
   });
 
@@ -18,11 +16,7 @@ class ArrowBack extends StatelessWidget{
         icon: const Icon(Icons.arrow_back),
         iconSize: 35,
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
-            ),
-          );
+          Navigator.of(context).pop();
         },
       ),
     );
