@@ -24,23 +24,17 @@ class _AddProductState extends State<AddProduct> {
   late String name, unit;
   late List<dynamic> category = [];
   late String selectedCategory;
-  late double price;
-  late int quantity;
+  late String price;
+  late String quantity;
   late String? description, _imageUrl, composition;
   late List<dynamic> labels = [];
 
-  // variables pour stocker les valeurs des champs du formulaire
-  late TextEditingController nameController;
-  late TextEditingController priceController;
-  late TextEditingController quantityController;
-  late TextEditingController descriptionController;
-  late TextEditingController compositionController;
 
   FirebaseProductRepository productRepository = FirebaseProductRepository();
 
   final formKey = GlobalKey<FormState>();
 
-  testAddProduct(AuthenticationBloc bloc) async {
+  testAddProduct(AuthenticationBloc bloc, String name, String price, String quantity, String unit, List<dynamic> category, String? description, List<dynamic> labels, String composition) async {
     MyProduct newProduct = MyProduct(
       name: name,
       price: price,
@@ -50,13 +44,13 @@ class _AddProductState extends State<AddProduct> {
       categories: category,
       labels: labels,
       composition: composition,
-      image: _imageUrl,
+      image: "",
       producerId: bloc.state.user!.uid,
     );
     await productRepository.addProduct(newProduct);
   }
 
-  Future<void> _getImage() async {
+  /*Future<void> _getImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
@@ -87,7 +81,7 @@ class _AddProductState extends State<AddProduct> {
         ),
       );
     }
-  }
+  }*/
 
   @override
   void initState() {
@@ -95,17 +89,13 @@ class _AddProductState extends State<AddProduct> {
     unit = 'g';
     category = [];
     name = '';
-    price = 0;
-    quantity = 0;
+    price = "";
+    quantity = "";
     description = '';
     composition = '';
     _imageUrl = '';
     selectedCategory = 'Fruit'; // Initialize with a default category
-    nameController = TextEditingController();
-    priceController = TextEditingController();
-    quantityController = TextEditingController();
-    descriptionController = TextEditingController();
-    compositionController = TextEditingController();
+
   }
 
   @override
@@ -113,376 +103,342 @@ class _AddProductState extends State<AddProduct> {
     final AuthenticationBloc Bloc = BlocProvider.of<AuthenticationBloc>(context);
     return Scaffold(
         body: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(color : constants.beige),
-        child: Stack(
-          children: [
-          const arrow_back.ArrowBack(),
-            Container(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Titre
-              Container(
-                margin: const EdgeInsets.only(top: 0.0),
-                alignment: const FractionalOffset(0.5, 0.5),
-                child: const Text(
-                  "Ajout d'un produit",
-                  style: constants.titre,
-                ),
-              ),
-
-              // Image picker
-              GestureDetector(
-                onTap: _getImage,
-                child: Container(
-                  margin: const EdgeInsets.all(20.0),
-                  width: 250.0,
-                  height: 250.0,
-                  decoration: BoxDecoration(
-                    color: constants.taupe,
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: _image != null
-                      ? ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: Image.file(_image!, fit: BoxFit.cover),
-                  )
-                      : const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_a_photo,
-                        size: 50.0,
-                        color: Colors.white,
-                      ),
-                      SizedBox(height: 8.0),
-                      Text(
-                        "Ajouter une photo du produit",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Formulaire
-              Builder(builder: (context) =>
-                  Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-
-                        // Nom produit
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          alignment: const FractionalOffset(0.5, 0.5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Nom',
-                                style: constants.text,
-                              ),
-                              GreenTextFieldWithGreenerBorder(
-                                controller: nameController,
-                                onSaved: (val) => name = val!,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Veuillez entrer un nom de produit *';
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                              ),
-                            ],
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(color : constants.beige),
+            child: Stack(
+                children: [
+                  const arrow_back.ArrowBack(),
+                  Container(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          // Titre
+                          Container(
+                            margin: const EdgeInsets.only(top: 0.0),
+                            alignment: const FractionalOffset(0.5, 0.5),
+                            child: const Text(
+                              "Ajout d'un produit",
+                              style: constants.titre,
+                            ),
                           ),
-                        ),
 
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          child: Row(
-                            children: [
-
-                              // Prix
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Prix',
-                                        style: constants.text,
-                                      ),
-                                      GreenTextFieldWithGreenerBorder(
-                                        controller: priceController,
-                                        onSaved: (val) => price = val! as double,
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Veuillez entrer le prix du produit *';
-                                          }
-                                          return null;
-                                        },
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          // Image picker
+                          /*GestureDetector(
+                            //onTap: _getImage,
+                            child: Container(
+                              margin: const EdgeInsets.all(20.0),
+                              width: 250.0,
+                              height: 250.0,
+                              decoration: BoxDecoration(
+                                color: constants.taupe,
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
+                              child: _image != null
+                                  ? ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.file(_image!, fit: BoxFit.cover),
+                              )
+                                  : const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add_a_photo,
+                                    size: 50.0,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Text(
+                                    "Ajouter une photo du produit",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),*/
 
-                              // Quantité
-                              Container(
-                                width: 200.0,
-                                margin: const EdgeInsets.only(right: 8.0),
+                          // Formulaire
+                          Builder(builder: (context) =>
+                              Form(
+                                key: formKey,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      'Quantité',
-                                      style: constants.text,
+
+                                    // Nom produit
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 20.0),
+                                      alignment: const FractionalOffset(0.5, 0.5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Nom',
+                                            style: constants.text,
+                                          ),
+                                          GreenTextFieldWithGreenerBorder(
+                                            onSaved: (val) => name = val!,
+                                            validator: (value) {
+                                              if (value == null || value.isEmpty) {
+                                                return 'Veuillez entrer un nom de produit *';
+                                              }
+                                              return null;
+                                            },
+                                            keyboardType: TextInputType.text,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    GreenTextFieldWithGreenerBorder(
-                                      controller: quantityController,
-                                      onSaved: (val) => quantity = val! as int,
-                                      validator: (value) {
-                                        return null;
+
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 20.0),
+                                      child: Row(
+                                        children: [
+
+                                          // Prix
+                                          Expanded(
+                                            child: Container(
+                                              margin: const EdgeInsets.only(right: 8.0),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    'Prix',
+                                                    style: constants.text,
+                                                  ),
+                                                  GreenTextFieldWithGreenerBorder(
+                                                    onSaved: (val) => price = val!,
+                                                    validator: (value) {
+                                                      if (value == null) {
+                                                        return 'Veuillez entrer le prix du produit *';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    keyboardType: TextInputType.number,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+
+                                          // Quantité
+                                          Container(
+                                            width: 200.0,
+                                            margin: const EdgeInsets.only(right: 8.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  'Quantité',
+                                                  style: constants.text,
+                                                ),
+                                                GreenTextFieldWithGreenerBorder(
+                                                  onSaved: (val) => quantity = val!,
+                                                  validator: (value) {
+                                                    return null;
+                                                  },
+                                                  keyboardType: TextInputType.number,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                          // Unité avec menu déroulant
+                                          Expanded(
+                                            child: Container(
+                                              margin: const EdgeInsets.only(left: 8.0),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    'Unité',
+                                                    style: constants.text,
+                                                  ),
+                                                  DropdownButton<String>(
+                                                    value: unit,
+                                                    onChanged: (String? newValue) {
+                                                      setState(() {
+                                                        unit = newValue!;
+                                                      });
+                                                    },
+                                                    items: ['Pièce', 'Kg', 'g', 'L', 'cl', 'ml'].map<DropdownMenuItem<String>>((String value) {
+                                                      return DropdownMenuItem<String>(
+                                                        value: value,
+                                                        child: Text(value),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    // Composition
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 20.0),
+                                      alignment: const FractionalOffset(0.5, 0.5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Composition',
+                                            style: constants.text,
+                                          ),
+                                          GreenTextFieldWithGreenerBorder(
+                                            onSaved: (val) => composition = val!,
+                                            validator: (value) {
+                                              return null;
+                                            },
+                                            keyboardType: TextInputType.text,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    // Description
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 20.0),
+                                      alignment: const FractionalOffset(0.5, 0.5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Description',
+                                            style: constants.text,
+                                          ),
+                                          TextField(
+                                            maxLines: null,
+                                            onChanged: (val) => description = val,
+                                            keyboardType: TextInputType.multiline,
+                                            decoration: const InputDecoration(
+                                              filled: true,
+                                              fillColor: constants.lightGreen,
+                                              border: OutlineInputBorder(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    // Catégorie
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 20.0),
+                                      alignment: const FractionalOffset(0.5, 0.5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Catégorie',
+                                            style: constants.text,
+                                          ),
+                                          DropdownButton<String>(
+                                            value: selectedCategory,  // Utilisez selectedCategory ici
+                                            onChanged: (String? newValue) {
+                                              setState(() {
+                                                selectedCategory = newValue!;
+                                                category = [newValue];
+                                              });
+                                            },
+                                            items: [
+                                              'Fruit',
+                                              'Légume',
+                                              'Viande',
+                                              'Œuf',
+                                              'Produit laitier',
+                                              'Boisson',
+                                              'Boisson alcoolisée',
+                                              'Autre',
+                                            ].map<DropdownMenuItem<String>>((String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+
+                                    // Labels avec menu déroulant à choix multiples
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 20.0),
+                                      alignment: const FractionalOffset(0.5, 0.5),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            'Labels (choix multiples)',
+                                            style: constants.text,
+                                          ),
+                                          DropdownButton<String>(
+                                            value: null,
+                                            onChanged: (String? newValue) {
+                                            },
+                                            items: [
+                                              'Aucun label',
+                                              'Bio',
+                                              'Label rouge',
+                                              'Élevé en plein air',
+                                            ].map<DropdownMenuItem<String>>((String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Row(
+                                                  children: [
+                                                    Checkbox(
+                                                      value: labels.contains(value),
+                                                      onChanged: (bool? checked) {
+                                                        setState(() {
+                                                          if (checked != null) {
+                                                            if (checked) {
+                                                              labels.add(value);
+                                                            } else {
+                                                              labels.remove(value);
+                                                            }
+                                                          }
+                                                        });
+                                                      },
+                                                    ),
+                                                    Text(value),
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    // Bouton Enregistrer
+                                    GreenRoundedButton(
+                                      onPressed: () {
+                                        // Vérifier que les champs obligatoires sont remplis
+                                        // Si tous les champs sont remplis, on enregistre
+                                        if (formKey.currentState!.validate()) {
+                                          formKey.currentState!.save();
+                                          testAddProduct(Bloc, name, price, quantity, unit, category, description, labels, composition!);
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text('Produit enregistré avec succès'),
+                                              duration: Duration(seconds: 2),
+                                            ),
+                                          );
+                                          Navigator.of(context).pop();
+                                        }
                                       },
-                                      keyboardType: TextInputType.number,
+                                      buttonText: 'Enregistrer',
                                     ),
                                   ],
                                 ),
                               ),
-
-                              // Unité avec menu déroulant
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 8.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text(
-                                        'Unité',
-                                        style: constants.text,
-                                      ),
-                                      DropdownButton<String>(
-                                        value: unit,
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            unit = newValue!;
-                                          });
-                                        },
-                                        items: ['Pièce', 'Kg', 'g', 'L', 'cl', 'ml'].map<DropdownMenuItem<String>>((String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
-
-                        // Composition
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          alignment: const FractionalOffset(0.5, 0.5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Composition',
-                                style: constants.text,
-                              ),
-                              GreenTextFieldWithGreenerBorder(
-                                controller: compositionController,
-                                onSaved: (val) => name = val!,
-                                validator: (value) {
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Description
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          alignment: const FractionalOffset(0.5, 0.5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Description',
-                                style: constants.text,
-                              ),
-                              TextField(
-                                controller: descriptionController,
-                                maxLines: null,
-                                onChanged: (val) => description = val,
-                                keyboardType: TextInputType.multiline,
-                                decoration: const InputDecoration(
-                                  filled: true,
-                                  fillColor: constants.lightGreen,
-                                  border: OutlineInputBorder(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Catégorie
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          alignment: const FractionalOffset(0.5, 0.5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Catégorie',
-                                style: constants.text,
-                              ),
-                              DropdownButton<String>(
-                                value: selectedCategory,  // Utilisez selectedCategory ici
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedCategory = newValue!;
-                                    category = [newValue];
-                                  });
-                                },
-                                items: [
-                                  'Fruit',
-                                  'Légume',
-                                  'Viande',
-                                  'Œuf',
-                                  'Produit laitier',
-                                  'Boisson',
-                                  'Boisson alcoolisée',
-                                  'Autre',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        ),
-
-
-                        // Labels avec menu déroulant à choix multiples
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20.0),
-                          alignment: const FractionalOffset(0.5, 0.5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Labels (choix multiples)',
-                                style: constants.text,
-                              ),
-                              DropdownButton<String>(
-                                value: null,
-                                onChanged: (String? newValue) {
-                                },
-                                items: [
-                                  'Aucun label',
-                                  'Bio',
-                                  'Label rouge',
-                                  'Élevé en plein air',
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Row(
-                                      children: [
-                                        Checkbox(
-                                          value: labels.contains(value),
-                                          onChanged: (bool? checked) {
-                                            setState(() {
-                                              if (checked != null) {
-                                                if (checked) {
-                                                  labels.add(value);
-                                                } else {
-                                                  labels.remove(value);
-                                                }
-                                              }
-                                            });
-                                          },
-                                        ),
-                                        Text(value),
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        // Bouton Enregistrer
-                        GreenRoundedButton(
-                          onPressed: () {
-                            // Vérifier que les champs obligatoires sont remplis
-                            if (nameController.text.isEmpty || priceController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Veuillez remplir les champs obligatoires : Nom et Prix'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                            } else {
-                              // Si tous les champs sont remplis, on enregistre
-                              if (formKey.currentState!.validate()) {
-                                testAddProduct(Bloc);
-                                FirebaseFirestore.instance.collection('products').add({
-                                  'name': name,
-                                  'price': price,
-                                  'quantity': quantity,
-                                  'unit': unit,
-                                  'category': category,
-                                  'description': description,
-                                  'labels': labels,
-                                  'composition': composition,
-                                }).then((value) {
-                                  // recupération de l'id du produit
-                                  String productId = value.id;
-                                  // enregistremrnt de l'URL de l'image dans un document
-                                  FirebaseFirestore.instance.collection('products').doc(productId).update({
-                                    'image': _imageUrl,
-                                  });
-
-                                  // succès
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Produit enregistré avec succès'),
-                                      duration: Duration(seconds: 2),
-                                    ),
-                                  );
-                                  // échec
-                                }).catchError((error) {
-                                  print('Erreur d\'enregistrement: $error');
-                                });
-                              }
-                            }
-                          },
-                          buttonText: 'Enregistrer',
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ]
-        )
+                ]
+            )
         )
     );
   }
