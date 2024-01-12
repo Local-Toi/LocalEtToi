@@ -38,26 +38,6 @@ class MyShopEntity extends Equatable {
   }
 
   static MyShopEntity fromDocument(Map<String, Object?> doc) {
-
-    print('Data from Firebase: $doc');
-
-    final horaires = doc['horaires'];
-    print('Type of horaires: ${horaires?.runtimeType}');
-
-    print("--------------------");
-    print(doc['longitude']);
-    print(doc['latitude']);
-    print(doc['name']);
-    print(doc['description']);
-    print(doc['phonenumber']);
-    print(doc['adresse']);
-    print(doc['note']);
-    print(doc['horaires']);
-    print(doc['id']);
-    print(doc);
-    print("--------------------");
-
-
     return MyShopEntity(
       longitude: doc['longitude'] as double,
       latitude: doc['latitude'] as double,

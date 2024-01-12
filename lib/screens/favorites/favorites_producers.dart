@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorites_repository/favorite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 

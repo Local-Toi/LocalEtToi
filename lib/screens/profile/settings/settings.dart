@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:local_et_toi/screens/profile/pointOfSale/addProduct.dart';
 import 'package:local_et_toi/screens/profile/producer/become_producer.dart';
-import 'package:local_et_toi/screens/profile/profile.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/buttons/buttons.dart';
-import 'Security.dart';
 import 'about.dart';
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'cgu.dart';

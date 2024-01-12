@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:local_et_toi/screens/home/landing_page_connexion.dart';
 import 'package:local_et_toi/screens/authentication/sign_up_part2.dart';
 
 import '../../utils/buttons/buttons.dart';

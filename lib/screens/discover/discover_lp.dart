@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../map/map_filters.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
-// CODE FINAL ????? retirer la barre en haut si ça fonctionne
 
 class DiscoverLP extends StatefulWidget {
   const DiscoverLP({super.key});
@@ -126,7 +120,7 @@ class _DiscoverLPState extends State<DiscoverLP> {
 
 
 
-// MON CODE AVEC SEULEMENT LES DEUX CARROUSELS SI BESOIN
+//CODE AVEC SEULEMENT LES DEUX CARROUSELS SI BESOIN
 
 /*class DiscoverLP extends StatefulWidget {
   const DiscoverLP({super.key});
@@ -222,7 +216,7 @@ class _DiscoverLPState extends State<DiscoverLP> {
 
 
 
-// TON CODE
+// Autre implémentation
 
 //final String imageUrl = 'gs://local-et-toi.appspot.com/discovery/fruits&legumes/janvier/fruits_janv.png';
 
@@ -267,7 +261,7 @@ class _DiscoverLPState extends State<DiscoverLP> {
 
 
 
-// MON PREMIER CODE
+// Première implémentation
     /*
     return Scaffold(
       body: Container(

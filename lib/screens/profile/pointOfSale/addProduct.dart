@@ -4,10 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:product_repository/product_repository.dart';
 import '../../../utils/buttons/buttons.dart';
 import '../../../utils/textfields/textfields.dart';
@@ -50,6 +47,7 @@ class _AddProductState extends State<AddProduct> {
     await productRepository.addProduct(newProduct);
   }
 
+  // Implémentation pour récupérer une image
   /*Future<void> _getImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);

@@ -96,16 +96,12 @@ class FirebaseUserRepository implements UserRepository {
 
   Future<dynamic> getUserTest(String email) async {
     try {
-      print("here 1");
-      print(email);
       Completer c = new Completer();
       usersCollection.where('email'.toLowerCase(), isEqualTo: email).get().then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
-          print("IDHYGGG");
           c.complete(doc);
         });
       });;
-      print("here 2");
       return c.future;
     } catch (e) {
       log(e.toString());
@@ -115,9 +111,7 @@ class FirebaseUserRepository implements UserRepository {
 
   Future<void> setUserToProducer(String email, String emailPro, String URL) async {
     try {
-      print('WHERE THE FUCK AM I');
       QuerySnapshot querySnapshot = await usersCollection.where('email'.toLowerCase(), isEqualTo: email).get();
-      print(querySnapshot);
       if (querySnapshot.docs.isNotEmpty) {
         String userId = querySnapshot.docs.first.id;
         await usersCollection.doc(userId).update({
@@ -125,12 +119,10 @@ class FirebaseUserRepository implements UserRepository {
           'emailPro': emailPro,
           'urlVerification': URL,
         });
-        print('OK -> OUT');
       } else {
         throw Exception('Utilisateur non trouvé avec l\'email spécifié');
       }
     } catch (e) {
-      print('ERROR ????');
       log(e.toString());
       rethrow;
     }

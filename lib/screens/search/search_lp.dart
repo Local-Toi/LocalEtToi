@@ -36,6 +36,7 @@ class _SearchPageState extends State<SearchPage> {
         child: Container(
           margin: const EdgeInsets.only(top: 8.0),
           child: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: beige,
             elevation: 0,
             title: Container(
@@ -65,10 +66,6 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.tune),
-                    onPressed: () {},
-                  )
                 ],
               ),
             ),
@@ -86,9 +83,16 @@ class _SearchPageState extends State<SearchPage> {
                   if (index < shopResults.length) {
                     // Display shop card
                     final shop = shopResults[index];
+                    String adrtmp;
+                    if(shop.adresse.length>35) {
+                      adrtmp = shop.adresse.substring(0, 35) + '...';
+                    }
+                    else {
+                      adrtmp = shop.adresse;
+                    }
                     return SearchProducerCard(
                       title: shop.name ?? 'N/A',
-                      address: shop.adresse ?? 'N/A',
+                      address: adrtmp ?? 'N/A',
                       description: shop.description ?? 'N/A',
                       schedule: shop.horaires ?? [],
                       phoneNumber: shop.phonenumber ?? 'N/A',

@@ -1,3 +1,5 @@
+// Ce modèle n'est plus utilisé mais nous le gardons au cas où il viendrait à servir
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'favorite_shops.g.dart';

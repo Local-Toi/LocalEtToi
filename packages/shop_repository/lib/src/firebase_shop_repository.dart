@@ -40,18 +40,11 @@ class FirebaseShopRepository implements ShopRepository {
   @override
   Future<List<MyShop>> getAllShops() async {
     try {
-      print("=====================");
-      print("1");
       final QuerySnapshot<Map<String, dynamic>> querySnapshot = await shopsCollection.get();
-      print("2");
-      print(querySnapshot);
 
       final List<MyShop> shops = querySnapshot.docs.map<MyShop>((doc) {
-        print("HERE");
         return MyShop.fromEntity(MyShopEntity.fromDocument(doc.data()));
       }).toList();
-      print("3");
-      print("=====================");
       return shops;
     } catch (e) {
       log(e.toString());

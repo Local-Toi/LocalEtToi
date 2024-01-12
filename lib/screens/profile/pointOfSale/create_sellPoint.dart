@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/screens/profile/pointOfSale/sellPoint.dart';
-import 'package:local_et_toi/utils/buttons/drop_down_menu.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'package:local_et_toi/utils/textfields/textfields.dart';
@@ -26,14 +23,6 @@ registerNewShop(String name, String address, String? description, List<dynamic>?
   final double latitudeResult;
   final double longitudeResult;
   final String adressResult;
-  print('================================================');
-  print(name);
-  print(address);
-  print(description);
-  print(horaires);
-  print(phonenumber);
-  print(id);
-  print('================================================');
   List<Location> locations = await locationFromAddress(address);
   if (locations.isNotEmpty) {
     latitudeResult = locations[0].latitude;

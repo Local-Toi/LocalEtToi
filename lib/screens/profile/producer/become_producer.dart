@@ -2,20 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/components/strings.dart';
-import 'package:local_et_toi/screens/profile/profile.dart';
 import 'package:local_et_toi/utils/buttons/buttons.dart';
 import 'package:local_et_toi/utils/components/arrow_back.dart' as arrow_back;
 import 'package:local_et_toi/utils/constants.dart' as constants;
 import 'package:local_et_toi/utils/textfields/textfields.dart';
-
-
-void main()  {
-  runApp(const MaterialApp(
-    home: Scaffold(
-      body: becomeProducer(),
-    ),
-  ));
-}
 
 updateStatus(AuthenticationBloc bloc, String emailPro, String URL) async {
   print(bloc.state.user?.email);
@@ -26,8 +16,6 @@ updateStatus(AuthenticationBloc bloc, String emailPro, String URL) async {
 
 class becomeProducer extends StatefulWidget {
   const becomeProducer({super.key});
-
-
   @override
   _becomeProducerState createState() => _becomeProducerState();
 }
@@ -44,21 +32,9 @@ class _becomeProducerState extends State<becomeProducer> {
               decoration: const BoxDecoration(color : constants.beige),
               child: Form(
                   key: _formKey,
-                  child: Column(
+                  child: Stack(
                       children: [
-                      Container(
-                        alignment : const FractionalOffset(0.01, 0.03),
-                        child: arrow_back.ArrowBack(),
-                      ),
-                      Container(
-                        alignment : const FractionalOffset(0.05, 0.05),
-                        child: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          onPressed: () {
-                            Navigator.of(context).maybePop();
-                          },
-                        ),
-                      ),
+                      const arrow_back.ArrowBack(),
                       Container(
                         alignment : const FractionalOffset(0.5, 0.05),
                         child: const Text(
@@ -99,13 +75,13 @@ class _becomeProducerState extends State<becomeProducer> {
                           ),
                   ),
                         Container(
-                            alignment : const FractionalOffset(0.5, 0.57),
+                            alignment : const FractionalOffset(0.5, 0.60),
                             margin: const EdgeInsets.all(8.0),
                             child: GreenTextFieldWithGreenerBorder(
                               onSaved: (val) => url = val!,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Veuillez entrer une adresse email';
+                                  return 'Veuillez entrer une url';
                                 }
                                 return null;
                               },
@@ -119,9 +95,11 @@ class _becomeProducerState extends State<becomeProducer> {
                         onPressed: () {
                           if (_formKey.currentState?.validate() == true) {
                             updateStatus(Bloc, emailpro, url);
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => const ProfilPage(),
+                            Navigator.pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Vous êtes devenu producteur, quittez et revenez dans "profil" pour pouvoir consulter vos points de vente'),
+                                duration: Duration(seconds: 4),
                               ),
                             );
                           }

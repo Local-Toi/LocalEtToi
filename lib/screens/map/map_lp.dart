@@ -208,6 +208,7 @@ class MapLP extends State<MapLPState> {
               child: PreferredSize(
                 preferredSize: const Size.fromHeight(50),
                 child: AppBar(
+                  automaticallyImplyLeading: false,
                   backgroundColor: Colors.white,
                   elevation: 0,
                   title: const Text(

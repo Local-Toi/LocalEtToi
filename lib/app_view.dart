@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_et_toi/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:local_et_toi/screens/navigation.dart';
-import 'package:user_repository/user_repository.dart';
 
 import 'screens/home/home_screen.dart';
 

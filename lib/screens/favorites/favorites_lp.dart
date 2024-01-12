@@ -1,12 +1,12 @@
 import 'package:favorites_repository/favorite_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_et_toi/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:local_et_toi/utils/constants.dart' as constants;
 
 import 'favorites_producers.dart';
 import 'favorites_products.dart';
 
+
+// Implémentation en cours
 /*
 class FavoritesLP extends StatelessWidget {
   const FavoritesLP({super.key});
@@ -62,6 +62,7 @@ class FavoritesLP extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: const TabBar(
             tabs: [
               Tab(
